@@ -1,0 +1,3002 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>The 12-Month Beginner Investor Plan</title>
+<style>
+:root{
+  --bg:#f6f5f2; --panel:#ffffff; --panel2:#fbfaf8; --ink:#1e1f1d; --muted:#6b6f6a;
+  --line:#e3e1db; --accent:#2f5d50; --accent-soft:#e8efec; --accent-ink:#20443a;
+  --warn:#9c5a24; --warn-soft:#fbf1e6; --danger:#942c2c; --danger-soft:#fbeaea;
+  --ok:#2c6a45; --ok-soft:#e8f2ec;
+  --radius:10px; --radius-sm:7px;
+  --shadow:0 1px 2px rgba(20,20,18,.05), 0 6px 20px -12px rgba(20,20,18,.18);
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+}
+html[data-theme="dark"]{
+  --bg:#131518; --panel:#1b1e22; --panel2:#20242a; --ink:#e9e7e2; --muted:#99a0a5;
+  --line:#2c3138; --accent:#7fb3a2; --accent-soft:#1e2a27; --accent-ink:#a8d3c5;
+  --warn:#e0a878; --warn-soft:#2a2119; --danger:#e08585; --danger-soft:#2b1a1a;
+  --ok:#7fc79b; --ok-soft:#1a2a21;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--sans);
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent-ink); text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{line-height:1.25; margin:0 0 .4em}
+h1{font-family:var(--serif); font-size:1.7rem; font-weight:600; letter-spacing:-.01em}
+h2{font-family:var(--serif); font-size:1.3rem; font-weight:600; margin-top:1.6em}
+h3{font-size:1rem; font-weight:650; letter-spacing:.01em}
+h4{font-size:.82rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--muted)}
+p{margin:0 0 .8em}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:8px;top:8px;background:var(--panel);padding:8px 12px;border-radius:6px;z-index:99}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky; top:0; z-index:40; display:flex; align-items:center; gap:12px;
+  padding:10px 18px; background:var(--panel); border-bottom:1px solid var(--line);
+}
+.brand{display:flex; align-items:center; gap:10px; min-width:0}
+.brand-mark{
+  width:30px;height:30px;flex:0 0 30px;border-radius:8px;background:var(--accent);color:#fff;
+  display:grid;place-items:center;font-weight:700;font-size:.8rem;letter-spacing:-.02em;
+}
+html[data-theme="dark"] .brand-mark{color:#0f1214}
+.brand-text{font-family:var(--serif); font-weight:600; font-size:1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.top-actions{margin-left:auto; display:flex; align-items:center; gap:8px}
+.pill{
+  font-size:.72rem; font-weight:650; padding:4px 10px; border-radius:999px;
+  background:var(--accent-soft); color:var(--accent-ink); white-space:nowrap;
+}
+.icon-btn, .menu-btn{
+  background:transparent; border:1px solid var(--line); color:var(--ink);
+  width:34px;height:34px;border-radius:8px; cursor:pointer; font-size:1rem; display:grid;place-items:center;
+}
+.icon-btn:hover,.menu-btn:hover{background:var(--panel2)}
+.menu-btn{display:none}
+
+/* ---------- layout ---------- */
+.layout{display:flex; align-items:flex-start; max-width:1400px; margin:0 auto}
+.sidebar{
+  position:sticky; top:55px; width:236px; flex:0 0 236px; height:calc(100vh - 55px);
+  overflow-y:auto; padding:18px 12px 60px; border-right:1px solid var(--line);
+}
+.nav-group{margin-bottom:18px}
+.nav-group-title{
+  font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.09em;
+  color:var(--muted); padding:0 10px; margin-bottom:6px;
+}
+.nav-item{
+  display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:var(--radius-sm);
+  color:var(--ink); font-size:.875rem; cursor:pointer; border:none; background:none; width:100%; text-align:left;
+}
+.nav-item:hover{background:var(--panel2); text-decoration:none}
+.nav-item.active{background:var(--accent-soft); color:var(--accent-ink); font-weight:600}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--line);flex:0 0 6px}
+.nav-item.active .nav-dot{background:var(--accent)}
+.nav-item.done .nav-dot{background:var(--ok)}
+main{flex:1; min-width:0; padding:26px 32px 90px; max-width:1000px}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:18px 20px; margin-bottom:16px; box-shadow:var(--shadow);
+}
+.card.tight{padding:14px 16px}
+.card-head{display:flex; align-items:flex-start; gap:12px; margin-bottom:10px}
+.card-head h3{margin:0}
+.card-head .sub{font-size:.82rem; color:var(--muted); margin-top:2px}
+.grid{display:grid; gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+
+/* ---------- notices ---------- */
+.notice{
+  border-radius:var(--radius); padding:12px 15px; font-size:.86rem; margin-bottom:16px;
+  border:1px solid var(--line); background:var(--panel2);
+}
+.notice strong{font-weight:650}
+.notice.warn{background:var(--warn-soft); border-color:transparent; color:var(--ink)}
+.notice.danger{background:var(--danger-soft); border-color:transparent}
+.notice.ok{background:var(--ok-soft); border-color:transparent}
+.notice.accent{background:var(--accent-soft); border-color:transparent}
+
+/* ---------- forms ---------- */
+label{display:block; font-size:.78rem; font-weight:650; color:var(--muted); margin-bottom:4px; letter-spacing:.01em}
+input,select,textarea{
+  width:100%; font:inherit; font-size:.875rem; color:var(--ink); background:var(--panel2);
+  border:1px solid var(--line); border-radius:var(--radius-sm); padding:8px 10px;
+}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent); outline-offset:-1px; border-color:transparent}
+textarea{resize:vertical; min-height:70px; line-height:1.5}
+.field{margin-bottom:12px}
+.row{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.inline{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; gap:7px; font:inherit; font-size:.85rem; font-weight:600;
+  padding:8px 15px; border-radius:var(--radius-sm); border:1px solid var(--line);
+  background:var(--panel2); color:var(--ink); cursor:pointer;
+}
+.btn:hover{background:var(--accent-soft); border-color:transparent}
+.btn.primary{background:var(--accent); color:#fff; border-color:transparent}
+html[data-theme="dark"] .btn.primary{color:#0f1214}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--danger); border-color:var(--line)}
+.btn.danger:hover{background:var(--danger-soft)}
+.btn:disabled{opacity:.45; cursor:not-allowed}
+.btn.sm{padding:5px 10px; font-size:.78rem}
+
+/* ---------- checks ---------- */
+.check{
+  display:flex; gap:11px; align-items:flex-start; padding:9px 11px; border-radius:var(--radius-sm);
+  border:1px solid transparent; cursor:pointer; transition:background .12s;
+}
+.check:hover{background:var(--panel2)}
+.check input{width:17px; height:17px; flex:0 0 17px; margin-top:2px; accent-color:var(--accent); cursor:pointer}
+.check .lbl{font-size:.875rem; font-weight:500}
+.check .hint{font-size:.78rem; color:var(--muted); margin-top:2px}
+.check.done .lbl{color:var(--muted); text-decoration:line-through; text-decoration-color:var(--line)}
+
+/* ---------- progress ---------- */
+.bar{height:7px; background:var(--line); border-radius:999px; overflow:hidden}
+.bar > i{display:block; height:100%; background:var(--accent); border-radius:999px; transition:width .3s}
+.bar.ok > i{background:var(--ok)}
+
+/* ---------- timeline ---------- */
+.timeline{display:grid; gap:8px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.tl-item{
+  border:1px solid var(--line); border-radius:var(--radius); padding:11px 13px; background:var(--panel2);
+  position:relative;
+}
+.tl-item.current{border-color:var(--accent); background:var(--accent-soft)}
+.tl-item.done{border-color:var(--ok)}
+.tl-num{font-family:var(--mono); font-size:.7rem; color:var(--muted); letter-spacing:.06em}
+.tl-name{font-weight:650; font-size:.9rem; margin:2px 0 6px}
+.tl-meta{font-size:.73rem; color:var(--muted); margin-bottom:8px}
+.tl-item.done .tl-num::after{content:" ✓"; color:var(--ok); font-weight:700}
+
+/* ---------- stats ---------- */
+.stat{border:1px solid var(--line); border-radius:var(--radius); padding:12px 14px; background:var(--panel2)}
+.stat .k{font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:650}
+.stat .v{font-family:var(--mono); font-size:1.35rem; font-weight:600; margin-top:3px; letter-spacing:-.02em}
+.stat .v.pos{color:var(--ok)} .stat .v.neg{color:var(--danger)}
+.stat .n{font-size:.73rem; color:var(--muted); margin-top:2px}
+
+/* ---------- tables ---------- */
+.tbl-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); background:var(--panel)}
+table{border-collapse:collapse; width:100%; font-size:.83rem}
+th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); white-space:nowrap}
+th{font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:700; background:var(--panel2); position:sticky; top:0}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--panel2)}
+td.num,th.num{text-align:right; font-family:var(--mono)}
+.pos{color:var(--ok)} .neg{color:var(--danger)}
+
+/* ---------- misc ---------- */
+.kv{display:grid; grid-template-columns:auto 1fr; gap:6px 16px; font-size:.85rem}
+.kv dt{color:var(--muted); font-weight:600}
+.kv dd{margin:0; font-family:var(--mono)}
+.small{font-size:.79rem; color:var(--muted)}
+.mono{font-family:var(--mono)}
+.tag{
+  display:inline-block; font-size:.7rem; font-weight:650; padding:2px 8px; border-radius:999px;
+  background:var(--accent-soft); color:var(--accent-ink); margin-right:5px;
+}
+.tag.warn{background:var(--warn-soft); color:var(--warn)}
+.tag.danger{background:var(--danger-soft); color:var(--danger)}
+.tag.ok{background:var(--ok-soft); color:var(--ok)}
+hr{border:none; border-top:1px solid var(--line); margin:20px 0}
+.divider{height:1px; background:var(--line); margin:14px 0}
+details{border:1px solid var(--line); border-radius:var(--radius); padding:11px 14px; margin-bottom:9px; background:var(--panel2)}
+details summary{cursor:pointer; font-weight:620; font-size:.88rem}
+details[open] summary{margin-bottom:9px}
+.quote{
+  font-family:var(--serif); font-size:.95rem; line-height:1.6; border-left:3px solid var(--accent);
+  padding-left:15px; color:var(--ink); margin:0;
+}
+.empty{text-align:center; padding:34px 16px; color:var(--muted); font-size:.87rem}
+svg.chart{width:100%; height:auto; display:block; overflow:visible}
+.legend{display:flex; gap:14px; flex-wrap:wrap; font-size:.76rem; color:var(--muted); margin-top:8px}
+.legend i{display:inline-block; width:10px;height:10px;border-radius:2px; margin-right:5px; vertical-align:-1px}
+.swatch{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:6px}
+
+@media(max-width:900px){
+  .menu-btn{display:grid}
+  .sidebar{
+    position:fixed; top:55px; left:0; z-index:35; background:var(--panel);
+    transform:translateX(-100%); transition:transform .2s; box-shadow:var(--shadow); width:262px; flex-basis:262px;
+  }
+  .sidebar.open{transform:none}
+  main{padding:20px 16px 80px}
+  h1{font-size:1.4rem}
+}
+@media print{
+  .topbar,.sidebar,.no-print{display:none!important}
+  main{padding:0; max-width:none}
+  .card{box-shadow:none; break-inside:avoid}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <button class="menu-btn" data-act="toggle-nav" aria-label="Toggle navigation">☰</button>
+  <div class="brand">
+    <span class="brand-mark">12</span>
+    <span class="brand-text">The 12-Month Beginner Investor Plan</span>
+  </div>
+  <div class="top-actions">
+    <span class="pill" id="phase-pill">Phase 0 · Setup</span>
+    <button class="icon-btn" data-act="toggle-theme" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Main navigation"></nav>
+  <main id="main" tabindex="-1"></main>
+</div>
+
+<footer style="border-top:1px solid var(--line); padding:22px 32px 40px; max-width:1000px; margin:0 auto">
+  <p class="quote" style="margin-bottom:12px">
+    Judge the year by the quality of your decisions, the consistency of your risk controls,
+    your understanding of what you own, and your honesty about the evidence. A profitable trade
+    that broke your rules can teach a dangerous habit, and a planned loss can be the right result
+    of a disciplined decision. The goal is not to trade more. It is to decide better and protect what you have.
+  </p>
+  <p class="small" style="margin:0">
+    This is an educational plan, not a promise of returns. Nothing here is financial advice.
+    Data is stored only in this browser.
+  </p>
+</footer>
+
+<script>
+"use strict";
+
+/* ============================================================
+   1. CONSTANTS
+   ============================================================ */
+
+const STORE_KEY = "t12mip_v1";
+
+const PHASES = [
+  { n:0, name:"Setup",           when:"Week 0",       focus:"Accounts, tools, written rules",              real:"No" },
+  { n:1, name:"Foundation",      when:"Months 1–3",   focus:"How markets and orders work",                 real:"No — paper only" },
+  { n:2, name:"Analysis",        when:"Months 4–6",   focus:"Reading companies, charts, your own biases",  real:"No — paper only" },
+  { n:3, name:"Risk",            when:"Months 7–9",   focus:"Position sizing, loss limits, portfolios",    real:"No — paper only" },
+  { n:4, name:"Small live test", when:"Months 10–12", focus:"Follow your rules with up to $500",           real:"Yes — small" }
+];
+
+const PRINCIPLES = [
+  "Protect your money before chasing returns.",
+  "Never enter a trade without understanding the risk.",
+  "Keep long-term investing and short-term trading separate.",
+  "Decide with evidence, not emotion.",
+  "Record every trade and review every mistake.",
+  "Never borrow money to trade in the first year.",
+  "Raise risk only when your process and results justify it.",
+  "Holding cash is a valid position when nothing meets your criteria."
+];
+
+const P0_ITEMS = [
+  { id:"brokerage",  label:"Open a reputable, regulated brokerage account", hint:"Use one that supports the markets you want. Verify registration via Investor.gov or your local regulator." },
+  { id:"paper",      label:"Open a paper-trading account (simulated money)", hint:"Most major brokers offer one. This is where months 1–9 happen." },
+  { id:"journal",    label:"Build a trade journal spreadsheet",              hint:"The Trade Journal page here works. You can also export CSV." },
+  { id:"thesis",     label:"Copy the one-page thesis template",              hint:"Available in the Thesis Builder." },
+  { id:"calc",       label:"Build a position-size calculator",               hint:"The Position Calculator is ready to use." },
+  { id:"watchlist",  label:"Start a watchlist of 5–10 companies and broad ETFs", hint:"Use the Watchlist page." },
+  { id:"goals",      label:"Write down goals, time horizon and max acceptable loss", hint:"Saved in Settings." },
+  { id:"contract",   label:"Sign the rules contract",                        hint:"Signed below, stored in your profile." }
+];
+
+const RESTRICTIONS = [
+  "Borrow to trade (no margin).",
+  "Trade options, leveraged ETFs or inverse ETFs.",
+  "Buy penny stocks or speculate in crypto within this program.",
+  "Buy on a social-media tip you cannot explain.",
+  "Revenge trade, or raise position sizes to win back losses.",
+  "Average down (buy more of a loser) unless your written thesis says why.",
+  "Risk money you need for essential expenses."
+];
+
+const CONTRACT_TEXT = `I will not enter a position I cannot explain.
+I will not risk money because I feel an opportunity is passing me by.
+I will record my decisions honestly and accept losses when my thesis is proven wrong.
+I will judge my performance over many decisions, not by any single outcome.`;
+
+const P1_MILESTONES = [
+  { id:"m1", label:"Explain market, limit, stop-market and stop-limit orders in your own words", input:true },
+  { id:"m2", label:"Explain the difference between market cap and valuation ratios such as P/E", input:true },
+  { id:"m3", label:"Explain why diversification reduces some risks but never removes the chance of loss", input:true },
+  { id:"m4", label:"Compare an individual stock with a diversified ETF", input:true },
+  { id:"m5", label:"Complete at least 20 simulated orders and log each execution mistake and its fix", auto:"paper20" },
+  { id:"m6", label:"Pass a self-quiz on at least 20 key terms", auto:"quiz" }
+];
+
+const P2_MILESTONES = [
+  { id:"a1", label:"Complete three company analyses from real filings", auto:"companies3" },
+  { id:"a2", label:"Compare two companies in the same industry", input:true },
+  { id:"a3", label:"Name your strongest recurring bias", input:true },
+  { id:"a4", label:"Complete 20 more simulated trades using written rules", auto:"paper40" },
+  { id:"a5", label:"Explain the difference between a compelling business, an attractive valuation and a valid trading setup", input:true }
+];
+
+const P3_MILESTONES = [
+  { id:"r1", label:"Written trading plan completed and signed", auto:"plan" },
+  { id:"r2", label:"20 consecutive simulated trades with no material rule violation", auto:"clean20" },
+  { id:"r3", label:"Risk calculator used on every simulated position", input:false },
+  { id:"r4", label:"Calculate position size and portfolio heat correctly", input:false },
+  { id:"r5", label:"Explain the difference between planned risk, actual loss and total drawdown", input:true }
+];
+
+const P4_READINESS = [
+  { id:"l1", label:"At least 50 documented live trades that followed your rules (if your strategy produces that many)" },
+  { id:"l2", label:"Your journal is complete" },
+  { id:"l3", label:"Results show positive expectancy after costs over a meaningful sample" },
+  { id:"l4", label:"You have seen more than one kind of market condition, where possible" },
+  { id:"l5", label:"Drawdowns stayed within your limits" },
+  { id:"l6", label:"No serious or repeated risk violations" },
+  { id:"l7", label:"You can afford to lose the extra money without hurting your obligations" }
+];
+
+const BIASES = [
+  { id:"loss",  name:"Loss aversion",     q:"Am I holding a loser because selling makes the loss real?" },
+  { id:"over",  name:"Overconfidence",    q:"Am I taking bigger risks after a few wins?" },
+  { id:"conf",  name:"Confirmation bias", q:"Am I only seeking evidence that agrees with me?" },
+  { id:"herd",  name:"Herd behavior",     q:"Am I copying others without my own analysis?" },
+  { id:"rec",   name:"Recency bias",      q:"Am I assuming recent performance will continue forever?" }
+];
+
+const RED_FLAGS = [
+  "You feel an urgent need to chase a price move.",
+  "You are panicking over a short-term loss.",
+  "You broke a material rule.",
+  "Planned risk or portfolio heat is above your limit.",
+  "Your drawdown hit a review threshold.",
+  "You keep skipping the journal.",
+  "You are averaging down to avoid admitting you were wrong.",
+  "You are trading to win back losses.",
+  "You cannot explain your thesis in three clear sentences.",
+  "You are using money you need for essentials.",
+  "You raised risk because of a winning streak."
+];
+
+const RESOURCES = {
+  "Books": [
+    ["The Psychology of Money — Morgan Housel", "Behavior and long-term thinking (a good first read)"],
+    ["The Intelligent Investor — Benjamin Graham", "Valuation, margin of safety, discipline"],
+    ["One Up On Wall Street — Peter Lynch", "Finding and researching ideas"],
+    ["Trade Your Way to Financial Freedom — Van K. Tharp", "Trading systems, sizing, risk"],
+    ["The Richest Man in Babylon — George S. Clason", "Saving and money habits"],
+    ["Same as Ever (Housel) · Market Wizards (Schwager)", "Bonus: perspective and trader interviews"]
+  ],
+  "Podcasts": [
+    ["We Study Billionaires", "Business analysis"],
+    ["Invest Like the Best", "Interviews on investing and decisions"],
+    ["The Acquirers Podcast", "Value investing and capital allocation"]
+  ],
+  "Websites": [
+    ["Investor.gov", "Investor education and fraud warnings"],
+    ["SEC EDGAR", "Company filings and annual reports"],
+    ["StockCharts", "Charting and technical-analysis education"],
+    ["CFA Institute", "Investment research and learning"],
+    ["Bogleheads Wiki", "Diversification and low-cost investing"]
+  ]
+};
+
+const GLOSSARY = [
+  ["Bid / ask / spread","The highest price a buyer offers, the lowest a seller accepts, and the gap between them."],
+  ["Market order","An order to buy or sell immediately at the best available price. Fast, but the price is not guaranteed."],
+  ["Limit order","An order to buy or sell only at your price or better. Price control, but it may never fill."],
+  ["Stop order","An order that triggers once a set price is hit; it does not guarantee that price."],
+  ["Stop-limit order","A stop that, once triggered, places a limit order. Protects price but risks no fill."],
+  ["Trailing stop","A stop that follows the price as it moves in your favour and never moves backward."],
+  ["Slippage","The difference between the price you expected and the price you got."],
+  ["Liquidity","How easily a security can be bought or sold without moving its price."],
+  ["Volume","The number of shares traded over a period. Thin volume means wider spreads and more slippage."],
+  ["Settlement","The date a trade officially clears and cash or shares change hands."],
+  ["ETF","A fund that trades like a stock and holds many investments."],
+  ["Index investing","Buying a fund that tracks a whole market instead of picking individual stocks."],
+  ["Market cap","Share price multiplied by the number of shares. The market's price tag on the whole company."],
+  ["EPS","Earnings per share: profit divided by the number of shares."],
+  ["P/E ratio","Share price divided by earnings per share. What you pay per dollar of current profit."],
+  ["P/S ratio","Share price divided by revenue per share. Useful when a company has no profit yet."],
+  ["Free cash flow","Cash left after running the business and paying for its assets. Harder to dress up than profit."],
+  ["Dividend","A cash payment to shareholders out of profits."],
+  ["Margin","Borrowing money from your broker to trade. Prohibited in this plan's first year."],
+  ["Diversification","Spreading exposure so no single outcome can ruin you. Reduces some risk; never removes loss."],
+  ["Asset allocation","How your money is split between stocks, bonds and cash."],
+  ["Compound growth","Growth earned on previous growth. Slow at first, powerful over long periods."],
+  ["Support / resistance","Price levels where buying or selling has repeatedly appeared."],
+  ["Moving average","The average price over a set number of days, used to smooth out noise (50-day, 200-day)."],
+  ["ATR (average true range)","A measure of how much a security typically moves in a day. Useful for sizing stops."],
+  ["Breakout / failed breakout","A move beyond a level, and a move beyond a level that immediately reverses."],
+  ["Position sizing","Deciding how many shares to buy based on how much you can lose, not how much you want to make."],
+  ["Risk budget","Trading capital × risk percentage. The most a single trade may cost you."],
+  ["R-multiple","A trade's result divided by the amount you planned to risk. +2R means you made twice what you risked."],
+  ["Portfolio heat","Total planned loss across open positions if all stops were hit."],
+  ["Sector overlap","Owning several things that all move on the same forces. Looks diversified, is not."],
+  ["Rebalancing","Bringing your allocation back to target after the market moves it."],
+  ["Drawdown","A fall in account value from its peak."],
+  ["Expectancy","The average amount you expect to win or lose per trade: (win rate × avg win) − (loss rate × avg loss)."],
+  ["Win rate","Winning trades ÷ closed trades. Meaningless on its own."],
+  ["Profit factor","Total gains ÷ total losses. Above 1 means gross gains exceed gross losses."],
+  ["Rule-adherence rate","Percentage of trades where you followed your own written rules."],
+  ["Paper trading","Simulated trading with fake money. Where most of this plan happens."],
+  ["Leveraged / inverse ETF","Funds that multiply or invert daily market moves. Prohibited in the first year."],
+  ["Penny stock","A very low-priced, thinly traded stock. Prohibited in this program."],
+  ["10-K","The annual report US public companies file with the SEC."],
+  ["MD&A","Management's Discussion and Analysis: management's own account of results and challenges."],
+  ["Loss aversion","Holding a loser because selling makes the loss real."],
+  ["Overconfidence","Taking bigger risks after a few wins."],
+  ["Confirmation bias","Only seeking evidence that agrees with you."],
+  ["Herd behavior","Copying others without your own analysis."],
+  ["Recency bias","Assuming recent performance will continue forever."]
+];
+
+/* ============================================================
+   2. STATE
+   ============================================================ */
+
+function defaultState(){
+  return {
+    version:1,
+    profile:{
+      name:"", startDate: todayISO(), currentPhase:0, theme:"light",
+      goal:"", horizon:"", maxLoss:"", newsSources:""
+    },
+    phase0:{
+      checklist:{}, restrictionsRead:false,
+      contract:{ name:"", date:"" },
+      allocation:{ safeHeld:"", sandboxHeld:"", debtFlag:false, emergencyFlag:false, shortHorizonFlag:false, reviewed:false }
+    },
+    phase1:{ milestones:{}, milestoneText:{}, dailyLog:{}, quizDone:false },
+    phase2:{ milestones:{}, milestoneText:{} },
+    phase3:{ milestones:{}, milestoneText:{}, plan:{}, planSigned:{ name:"", date:"" }, heat:{ capital:500, positions:[] } },
+    phase4:{ readiness:{}, choice:"" },
+    paperOrders: [],
+    companies: [],
+    theses: [],
+    watchlist: [],
+    biasLog: [],
+    journal: [],
+    redFlags: {},
+    routine: {},
+    customGlossary: []
+  };
+}
+
+let S;
+try {
+  const raw = localStorage.getItem(STORE_KEY);
+  S = raw ? Object.assign(defaultState(), JSON.parse(raw)) : defaultState();
+} catch(e){ S = defaultState(); }
+
+function save(){
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); }
+  catch(e){ console.warn("Could not save to localStorage", e); }
+}
+
+/* ============================================================
+   3. UTILITIES
+   ============================================================ */
+
+function esc(s){
+  return String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+}
+function todayISO(d){
+  const x = d ? new Date(d) : new Date();
+  return x.getFullYear() + "-" + String(x.getMonth()+1).padStart(2,"0") + "-" + String(x.getDate()).padStart(2,"0");
+}
+function num(v){ const n = parseFloat(v); return isNaN(n) ? 0 : n; }
+function money(v, dp){
+  if (v === null || v === undefined || isNaN(v)) return "—";
+  const d = dp === undefined ? 2 : dp;
+  const neg = v < 0;
+  const s = Math.abs(v).toLocaleString(undefined,{minimumFractionDigits:d, maximumFractionDigits:d});
+  return (neg ? "−$" : "$") + s;
+}
+function pct(v, dp){ return (v*100).toFixed(dp === undefined ? 1 : dp) + "%"; }
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+function getPath(path){
+  return path.split(".").reduce((o,k)=> (o == null ? undefined : o[k]), S);
+}
+function setPath(path, value){
+  const parts = path.split(".");
+  let o = S;
+  for (let i=0;i<parts.length-1;i++){
+    if (o[parts[i]] == null) o[parts[i]] = {};
+    o = o[parts[i]];
+  }
+  o[parts[parts.length-1]] = value;
+  save();
+}
+function download(filename, text, mime){
+  const blob = new Blob([text], { type: mime || "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+function ratio(done,total){ return total === 0 ? 0 : done/total; }
+
+/* ============================================================
+   4. DERIVED / METRICS
+   ============================================================ */
+
+function tradeRisk(t){
+  if (t.plannedRisk !== "" && t.plannedRisk != null && !isNaN(parseFloat(t.plannedRisk))) return Math.abs(parseFloat(t.plannedRisk));
+  const e = num(t.entry), s = num(t.stop), q = num(t.size);
+  if (e && s && q) return Math.abs((e - s) * q);
+  return 0;
+}
+
+function tradeNet(t){
+  if (t.status !== "closed") return null;
+  const e = num(t.entry), x = num(t.exitPrice), q = num(t.size);
+  if (e && x && q) {
+    const costs = num(t.costs);
+    return (x - e) * q - costs;
+  }
+  if (t.netPL !== "" && t.netPL != null && !isNaN(parseFloat(t.netPL))) return parseFloat(t.netPL);
+  return null;
+}
+
+function tradeR(t){
+  const net = tradeNet(t), risk = tradeRisk(t);
+  if (net === null || !risk) return null;
+  return net / risk;
+}
+
+function computeMetrics(scope){
+  const closed = S.journal
+    .filter(t => t.status === "closed")
+    .filter(t => scope === "live" ? t.mode === "live" : scope === "paper" ? t.mode === "paper" : true)
+    .filter(t => tradeNet(t) !== null)
+    .sort((a,b)=> (a.date||"").localeCompare(b.date||""));
+
+  const wins = closed.filter(t => tradeNet(t) > 0);
+  const losses = closed.filter(t => tradeNet(t) < 0);
+
+  const grossWin = wins.reduce((s,t)=> s + tradeNet(t), 0);
+  const grossLoss = Math.abs(losses.reduce((s,t)=> s + tradeNet(t), 0));
+
+  const avgWin = wins.length ? grossWin / wins.length : 0;
+  const avgLoss = losses.length ? grossLoss / losses.length : 0;
+  const winRate = closed.length ? wins.length / closed.length : 0;
+  const lossRate = closed.length ? losses.length / closed.length : 0;
+  const expectancy = (winRate * avgWin) - (lossRate * avgLoss);
+
+  const rs = closed.map(tradeR).filter(r => r !== null);
+  const avgR = rs.length ? rs.reduce((a,b)=>a+b,0) / rs.length : null;
+
+  // equity curve + max drawdown
+  let equity = 0, peak = 0, maxDD = 0, maxDDPct = 0;
+  const curve = [{ i:0, v:0 }];
+  closed.forEach((t,i)=>{
+    equity += tradeNet(t);
+    peak = Math.max(peak, equity);
+    const dd = peak - equity;
+    if (dd > maxDD) { maxDD = dd; maxDDPct = peak > 0 ? dd / peak : 0; }
+    curve.push({ i:i+1, v:equity });
+  });
+
+  const largestLoss = losses.length ? Math.min(...losses.map(tradeNet)) : 0;
+  const costs = closed.reduce((s,t)=> s + num(t.costs), 0);
+  const profitFactor = grossLoss > 0 ? grossWin / grossLoss : (grossWin > 0 ? Infinity : 0);
+
+  const withViolation = closed.filter(t => (t.violations||"").trim().length > 0).length;
+  const adherence = closed.length ? 1 - withViolation / closed.length : 1;
+
+  // by setup
+  const bySetup = {};
+  closed.forEach(t=>{
+    const k = (t.strategy || "Unlabelled").trim() || "Unlabelled";
+    if (!bySetup[k]) bySetup[k] = { n:0, total:0, wins:0 };
+    bySetup[k].n++;
+    bySetup[k].total += tradeNet(t);
+    if (tradeNet(t) > 0) bySetup[k].wins++;
+  });
+
+  // by market condition
+  const byCondition = {};
+  closed.forEach(t=>{
+    const k = (t.marketConditions || "Unlabelled").trim() || "Unlabelled";
+    if (!byCondition[k]) byCondition[k] = { n:0, total:0 };
+    byCondition[k].n++; byCondition[k].total += tradeNet(t);
+  });
+
+  // recurring mistakes
+  const mistakes = {};
+  closed.forEach(t=>{
+    (t.lessons||"").split(/[;\n.]/).map(x=>x.trim()).filter(x=>x.length>3).forEach(m=>{
+      mistakes[m] = (mistakes[m]||0) + 1;
+    });
+  });
+  const topMistakes = Object.entries(mistakes).sort((a,b)=>b[1]-a[1]).slice(0,3);
+
+  return {
+    closed, wins, losses, winRate, lossRate, avgWin, avgLoss, expectancy,
+    avgR, maxDD, maxDDPct, curve, largestLoss, costs, profitFactor,
+    adherence, bySetup, byCondition, topMistakes,
+    totalNet: closed.reduce((s,t)=> s + tradeNet(t), 0),
+    count: closed.length
+  };
+}
+
+function portfolioHeat(){
+  const capital = num(S.phase3.heat.capital) || 500;
+  const open = S.journal.filter(t => t.status === "open");
+  const total = open.reduce((s,t)=> s + tradeRisk(t), 0);
+  return { capital, total, pctOf: capital ? total / capital : 0, open };
+}
+
+function routineStreak(){
+  let n = 0;
+  const d = new Date();
+  if (!S.routine[todayISO(d)]) d.setDate(d.getDate() - 1);
+  while (S.routine[todayISO(d)]) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+
+function paperOrderStats(){
+  const orders = S.paperOrders;
+  const clean = [];
+  for (let i = orders.length - 1; i >= 0; i--){
+    if ((orders[i].violation||"").trim() === "") clean.unshift(orders[i]);
+    else break;
+  }
+  return {
+    total: orders.length,
+    cleanStreak: clean.length,
+    mistakesLogged: orders.filter(o => (o.mistake||"").trim()).length
+  };
+}
+
+/* ---- phase completion ---- */
+
+function phase0Progress(){
+  const done = P0_ITEMS.filter(i => S.phase0.checklist[i.id]).length;
+  const extra = (S.phase0.restrictionsRead ? 1 : 0) + (S.phase0.contract.name ? 1 : 0);
+  return ratio(done + extra, P0_ITEMS.length + 2);
+}
+function phase0Gate(){
+  return P0_ITEMS.every(i => S.phase0.checklist[i.id]) && S.phase0.restrictionsRead && !!S.phase0.contract.name;
+}
+
+function autoDone(key){
+  switch(key){
+    case "paper20":    return S.paperOrders.length >= 20;
+    case "companies3": return S.companies.length >= 3;
+    case "paper40":    return S.paperOrders.length >= 40;
+    case "plan":       return !!S.phase3.planSigned.name;
+    case "clean20":    return paperOrderStats().cleanStreak >= 20;
+    case "quiz":       return !!S.phase1.quizDone;
+  }
+  return false;
+}
+function msDone(m, store){
+  if (m.auto) return autoDone(m.auto);
+  return !!store[m.id];
+}
+function milestoneProgress(list, store){
+  const done = list.filter(m => msDone(m, store)).length;
+  return ratio(done, list.length);
+}
+function phase1Gate(){
+  const ms = S.phase1.milestones;
+  const textOk = ["m1","m2","m3","m4"].every(k => (S.phase1.milestoneText[k]||"").trim().length > 20);
+  const paperOk = S.paperOrders.length >= 20;
+  return P1_MILESTONES.every(m => msDone(m, ms)) && textOk && paperOk;
+}
+function phase2Gate(){
+  const ms = S.phase2.milestones;
+  const textOk = ["a2","a3","a5"].every(k => (S.phase2.milestoneText[k]||"").trim().length > 20);
+  return P2_MILESTONES.every(m => msDone(m, ms)) && textOk && S.companies.length >= 3 && S.paperOrders.length >= 40;
+}
+function phase3Gate(){
+  const ms = S.phase3.milestones;
+  const textOk = (S.phase3.milestoneText.r5||"").trim().length > 20;
+  const planOk = !!S.phase3.planSigned.name;
+  const stats = paperOrderStats();
+  return P3_MILESTONES.every(m => msDone(m, ms)) && textOk && planOk && stats.cleanStreak >= 20;
+}
+
+function phaseProgress(n){
+  switch(n){
+    case 0: return phase0Progress();
+    case 1: return milestoneProgress(P1_MILESTONES, S.phase1.milestones);
+    case 2: return milestoneProgress(P2_MILESTONES, S.phase2.milestones);
+    case 3: return milestoneProgress(P3_MILESTONES, S.phase3.milestones);
+    case 4: {
+      const done = P4_READINESS.filter(r => S.phase4.readiness[r.id]).length;
+      const live = S.journal.filter(t => t.mode === "live" && t.status === "closed").length;
+      return Math.max(ratio(done, P4_READINESS.length), ratio(Math.min(live,50), 50));
+    }
+  }
+  return 0;
+}
+
+function gatePassed(n){
+  switch(n){
+    case 0: return phase0Gate();
+    case 1: return phase1Gate();
+    case 2: return phase2Gate();
+    case 3: return phase3Gate();
+    case 4: return true;
+  }
+  return false;
+}
+
+/* ============================================================
+   5. NAVIGATION
+   ============================================================ */
+
+const NAV = [
+  { group:"", items:[ { id:"dashboard", label:"Dashboard" } ] },
+  { group:"Phases", items:[
+    { id:"phase0", label:"0 · Setup" },
+    { id:"phase1", label:"1 · Foundation" },
+    { id:"phase2", label:"2 · Analysis" },
+    { id:"phase3", label:"3 · Risk" },
+    { id:"phase4", label:"4 · Small live test" }
+  ]},
+  { group:"Practice", items:[
+    { id:"journal",    label:"Trade Journal" },
+    { id:"metrics",    label:"Metrics" },
+    { id:"thesis",     label:"Thesis Builder" },
+    { id:"calculator", label:"Position Calculator" },
+    { id:"watchlist",  label:"Watchlist" }
+  ]},
+  { group:"Reference", items:[
+    { id:"redflags",  label:"Red Flags" },
+    { id:"resources", label:"Resources" },
+    { id:"glossary",  label:"Glossary" },
+    { id:"settings",  label:"Settings" }
+  ]}
+];
+
+let route = (location.hash || "#dashboard").slice(1);
+const VALID = NAV.flatMap(g => g.items.map(i => i.id));
+if (!VALID.includes(route)) route = "dashboard";
+
+function renderNav(){
+  const nav = document.getElementById("sidebar");
+  let html = "";
+  NAV.forEach(g => {
+    html += '<div class="nav-group">';
+    if (g.group) html += `<div class="nav-group-title">${esc(g.group)}</div>`;
+    g.items.forEach(it => {
+      let cls = "nav-item";
+      if (it.id === route) cls += " active";
+      if (it.id.startsWith("phase")) {
+        const n = parseInt(it.id.slice(5),10);
+        if (gatePassed(n) && n < 4) cls += " done";
+      }
+      html += `<a class="${cls}" href="#${it.id}"><span class="nav-dot"></span><span>${esc(it.label)}</span></a>`;
+    });
+    html += "</div>";
+  });
+  nav.innerHTML = html;
+
+  const p = S.profile.currentPhase;
+  document.getElementById("phase-pill").textContent = `Phase ${p} · ${PHASES[p].name}`;
+}
+
+/* ============================================================
+   6. SHARED UI HELPERS
+   ============================================================ */
+
+function pageHeader(title, sub){
+  return `<h1>${esc(title)}</h1>${sub ? `<p class="small" style="margin-top:-4px;margin-bottom:20px">${sub}</p>` : '<div style="height:12px"></div>'}`;
+}
+function card(title, sub, body, cls){
+  return `<section class="card ${cls||''}">
+    ${title ? `<div class="card-head"><div><h3>${title}</h3>${sub?`<div class="sub">${sub}</div>`:""}</div></div>` : ""}
+    ${body}
+  </section>`;
+}
+function checkRow(id, label, hint, checked, act){
+  return `<label class="check ${checked?"done":""}">
+    <input type="checkbox" ${checked?"checked":""} data-act="${act||"toggle-p0"}" data-id="${esc(id)}">
+    <span><span class="lbl">${label}</span>${hint?`<span class="hint">${hint}</span>`:""}</span>
+  </label>`;
+}
+function progressBar(frac, ok){
+  return `<div class="bar ${ok?"ok":""}"><i style="width:${clamp(frac*100,0,100).toFixed(1)}%"></i></div>`;
+}
+function statBox(k, v, note, cls){
+  return `<div class="stat"><div class="k">${esc(k)}</div><div class="v ${cls||""}">${v}</div>${note?`<div class="n">${note}</div>`:""}</div>`;
+}
+function gateBox(passed, label, msg){
+  return `<div class="notice ${passed?"ok":"warn"}">
+    <strong>${passed ? "Gate passed — " : "Gate not yet passed — "}${esc(label)}</strong><br>
+    ${msg}
+  </div>`;
+}
+
+/* ============================================================
+   7. VIEWS — DASHBOARD
+   ============================================================ */
+
+function viewDashboard(){
+  const p = S.profile.currentPhase;
+  const streak = routineStreak();
+  const m = computeMetrics();
+  const stats = paperOrderStats();
+  const openFlags = RED_FLAGS.filter(f => S.redFlags[f]);
+
+  const daysToGate = (() => {
+    if (!S.profile.startDate) return null;
+    const start = new Date(S.profile.startDate);
+    const gateMonth = [0,3,6,9,12][Math.min(p,4)];
+    const target = new Date(start); target.setMonth(target.getMonth() + gateMonth);
+    const diff = Math.ceil((target - new Date()) / 86400000);
+    return diff;
+  })();
+
+  const timeline = PHASES.map(ph => {
+    const frac = phaseProgress(ph.n);
+    const done = gatePassed(ph.n) && ph.n < 4;
+    const cur = ph.n === p;
+    return `<div class="tl-item ${cur?"current":""} ${done?"done":""}">
+      <div class="tl-num">PHASE ${ph.n} · ${esc(ph.when)}</div>
+      <div class="tl-name">${esc(ph.name)}</div>
+      <div class="tl-meta">${esc(ph.focus)}<br>Real money: ${esc(ph.real)}</div>
+      ${progressBar(frac, frac >= 1)}
+      <div class="small" style="margin-top:5px">${(frac*100).toFixed(0)}% complete</div>
+    </div>`;
+  }).join("");
+
+  const today = todayISO();
+  const routineDone = !!S.routine[today];
+
+  return `
+  ${pageHeader("Dashboard", `${S.profile.name ? "Welcome back, " + esc(S.profile.name) + ". " : ""}You are in <strong>Phase ${p} · ${esc(PHASES[p].name)}</strong>.`)}
+
+  <div class="notice accent">
+    <strong>This is an educational plan, not a promise of returns.</strong>
+    You can finish all 12 months without being profitable and still have succeeded — if you learned,
+    protected your capital and followed your rules.
+  </div>
+
+  ${openFlags.length ? `<div class="notice danger">
+    <strong>⚠ ${openFlags.length} red flag${openFlags.length>1?"s":""} active.</strong>
+    Stop trading, write down what happened, review the evidence, and return to simulation if needed.
+    <a href="#redflags">Open Red Flags →</a>
+  </div>` : ""}
+
+  <section class="card">
+    <div class="card-head"><div><h3>Progress</h3>
+      <div class="sub">${daysToGate !== null ? (daysToGate > 0 ? `${daysToGate} days until the Phase ${p} gate month` : `Past the calendar gate for Phase ${p} — but calendar time is not the requirement.`) : "Set a start date in Settings."}</div>
+    </div></div>
+    <div class="timeline">${timeline}</div>
+  </section>
+
+  <div class="grid g4" style="margin-bottom:16px">
+    ${statBox("Routine streak", streak + (streak===1?" day":" days"), "Consecutive days logged")}
+    ${statBox("Paper orders", stats.total, "Target: 20 → 40")}
+    ${statBox("Journal entries", S.journal.length, `${m.count} closed`)}
+    ${statBox("Live trades", S.journal.filter(t=>t.mode==="live").length, "Max $500 sandbox")}
+  </div>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Today's routine</h3>
+      <div class="sub">About 45–60 minutes at full pace. Consistency beats volume.</div></div></div>
+    <label class="check ${routineDone?"done":""}">
+      <input type="checkbox" data-act="toggle-routine" ${routineDone?"checked":""}>
+      <span><span class="lbl">Mark today's routine complete (${today})</span>
+      <span class="hint">20–30 min reputable news · 10–15 min check open positions and risk limits · 5–10 min update the journal. Do not check prices constantly.</span></span>
+    </label>
+    <div class="inline" style="margin-top:12px">
+      <a class="btn sm" href="#journal">Open journal</a>
+      <a class="btn sm" href="#phase${p}">Go to Phase ${p}</a>
+      <a class="btn sm" href="#metrics">See metrics</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Alerts &amp; reminders</h3></div></div>
+    <ul style="margin:0;padding-left:20px;font-size:.87rem">
+      <li><strong>Weekly:</strong> one-page thesis · one company's financial statements · paper trades only when written criteria are met · name one bias and its impact.</li>
+      <li><strong>Saturday (2h):</strong> review the market, read one section of an annual report, update the watchlist, review completed trades, name one recurring mistake.</li>
+      <li><strong>Sunday (1h):</strong> write or update one thesis, set price alerts, review planned entries and exits, reread your rules contract, plan the week.</li>
+      <li><strong>Monthly (2h):</strong> review all trades, calculate metrics, reconcile costs, check allocation and concentration, pick one behavioural issue to fix.</li>
+      <li><strong>Quarterly (3h):</strong> full performance review, rebalance only if your policy says so, review tax and reporting obligations, check whether your goals changed.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>The eight principles</h3></div></div>
+    <ol style="margin:0;padding-left:22px;font-size:.89rem;line-height:1.9">
+      ${PRINCIPLES.map(x=>`<li>${esc(x)}</li>`).join("")}
+    </ol>
+  </section>
+  `;
+}
+
+/* ============================================================
+   8. VIEW — PHASE 0
+   ============================================================ */
+
+function viewPhase0(){
+  const c = S.phase0;
+  const done = P0_ITEMS.filter(i => c.checklist[i.id]).length;
+  const gate = phase0Gate();
+  const a = c.allocation;
+
+  const warnActive = a.debtFlag || a.emergencyFlag || a.shortHorizonFlag;
+
+  return `
+  ${pageHeader("Phase 0 · Setup", "Week 0. By the end of this week you have accounts, tools and written rules in place — and $4,500 of your $5,000 stays out of trading entirely.")}
+
+  <section class="card">
+    <div class="card-head"><div><h3>Checklist</h3><div class="sub">${done} of ${P0_ITEMS.length} complete</div></div></div>
+    ${progressBar(phase0Progress())}
+    <div style="margin-top:12px">
+      ${P0_ITEMS.map(i => checkRow(i.id, esc(i.label), esc(i.hint), !!c.checklist[i.id])).join("")}
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>How to split the $5,000</h3>
+      <div class="sub">A suggested split, not a requirement.</div></div></div>
+    <div class="grid g2">
+      <div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Bucket</th><th class="num">Amount</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>Safe money</td><td class="num">$4,500</td><td>Stays accessible and out of trading.</td></tr>
+            <tr><td>Trading sandbox</td><td class="num">up to $500</td><td>Most that can ever go into individual stocks. You do not have to use it.</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div>
+        ${pieChart([
+          { label:"Safe money", value:4500, color:"var(--accent)" },
+          { label:"Trading sandbox", value:500, color:"var(--warn)" }
+        ])}
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+      <div class="field"><label for="p0-safe">Where is your $4,500 held?</label>
+        <input id="p0-safe" data-path="phase0.allocation.safeHeld" value="${esc(a.safeHeld)}" placeholder="e.g. savings account at 4.2%"></div>
+      <div class="field"><label for="p0-sandbox">Where is your sandbox held?</label>
+        <input id="p0-sandbox" data-path="phase0.allocation.sandboxHeld" value="${esc(a.sandboxHeld)}" placeholder="e.g. brokerage cash"></div>
+    </div>
+    <h4 style="margin-top:8px">Reconsider the whole plan if:</h4>
+    <label class="check"><input type="checkbox" data-act="toggle-flag" data-id="debtFlag" ${a.debtFlag?"checked":""}>
+      <span class="lbl">You carry high-interest debt (such as credit cards)</span></label>
+    <label class="check"><input type="checkbox" data-act="toggle-flag" data-id="emergencyFlag" ${a.emergencyFlag?"checked":""}>
+      <span class="lbl">You lack emergency savings</span></label>
+    <label class="check"><input type="checkbox" data-act="toggle-flag" data-id="shortHorizonFlag" ${a.shortHorizonFlag?"checked":""}>
+      <span class="lbl">You expect to need this money soon</span></label>
+    ${warnActive ? `<div class="notice warn" style="margin-top:12px">
+      <strong>Pay down the debt or build the cushion first.</strong>
+      Investing money you may need soon, or while carrying high-interest debt, turns a learning exercise into a real financial risk.
+      Consider pausing the plan until these are resolved.
+    </div>` : ""}
+    <label class="check" style="margin-top:6px"><input type="checkbox" data-act="toggle-flag" data-id="reviewed" ${a.reviewed?"checked":""}>
+      <span class="lbl">I have reviewed these three conditions honestly</span></label>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>First-year restrictions</h3>
+      <div class="sub">For the first 12 months, do not:</div></div></div>
+    <div style="background:var(--danger-soft); border-radius:var(--radius); padding:12px 16px">
+      <ul style="margin:0;padding-left:20px;font-size:.87rem;line-height:1.85">
+        ${RESTRICTIONS.map(r=>`<li>${esc(r)}</li>`).join("")}
+      </ul>
+    </div>
+    <label class="check" style="margin-top:12px"><input type="checkbox" data-act="toggle-restrictions" ${c.restrictionsRead?"checked":""}>
+      <span class="lbl">I have read and understood these restrictions</span></label>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Rules contract</h3>
+      <div class="sub">Write this out by hand or type it, then sign and date it.</div></div></div>
+    <blockquote class="quote" style="margin:0 0 16px">${esc(CONTRACT_TEXT).replace(/\n/g,"<br>")}</blockquote>
+    ${c.contract.name ? `
+      <div class="notice ok">
+        <strong>Signed by ${esc(c.contract.name)} on ${esc(c.contract.date)}</strong>
+        <div class="inline no-print" style="margin-top:8px">
+          <button class="btn sm" data-act="print">Print / save as PDF</button>
+          <button class="btn sm danger" data-act="clear-contract">Clear signature</button>
+        </div>
+      </div>
+    ` : `
+      <div class="row">
+        <div class="field"><label for="sig-name">Type your full name to sign</label>
+          <input id="sig-name" placeholder="Your name"></div>
+      </div>
+      <button class="btn primary" data-act="sign-contract">Sign the contract</button>
+    `}
+  </section>
+
+  ${gateBox(gate, "Gate to Phase 1", gate
+      ? "Accounts, templates, calculator and signed rules are all ready."
+      : "Accounts, templates, calculator and signed rules must all be ready. Calendar time is not the requirement.")}
+
+  ${gate ? (S.profile.currentPhase < 1
+      ? `<button class="btn primary" data-act="advance" data-phase="1">Advance to Phase 1 →</button>`
+      : `<div class="notice ok">You are already past this gate.</div>`)
+    : `<button class="btn primary" disabled>Advance to Phase 1 →</button>`}
+  `;
+}
+
+/* ============================================================
+   9. VIEW — PHASE 1
+   ============================================================ */
+
+function viewPhase1(){
+  const stats = paperOrderStats();
+  const gate = phase1Gate();
+  const quiz = S.phase1.quizDone;
+
+  return `
+  ${pageHeader("Phase 1 · Foundation", "Months 1–3. This phase is about competence, not profit: you learn how markets and orders work using paper money only.")}
+
+  <section class="card">
+    <div class="card-head"><div><h3>What to learn</h3></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Area</th><th>Topics</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Market mechanics</strong></td><td style="white-space:normal">Exchanges and brokers; bid, ask and spread; liquidity and volume; slippage; market vs limit orders; stop-market vs stop-limit orders; trailing stops; settlement; trading costs</td></tr>
+        <tr><td><strong>Company basics</strong></td><td style="white-space:normal">Market cap; earnings per share (EPS); price-to-earnings (P/E); revenue growth and margins; dividends; free cash flow; debt</td></tr>
+        <tr><td><strong>Big-picture ideas</strong></td><td style="white-space:normal">ETFs vs individual stocks; index investing; diversification; asset allocation; compound growth; inflation, interest rates and valuation risk</td></tr>
+      </tbody>
+    </table></div>
+    <div class="notice warn" style="margin-top:14px">
+      Order types differ by broker, and a stop order does not guarantee you get your trigger price.
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Three styles to tell apart</h3>
+      <div class="sub">Skill in one style does not automatically carry over to another.</div></div></div>
+    <div class="grid g3">
+      <div class="stat"><div class="k">Long-term investing</div><div style="font-size:.85rem;margin-top:6px">Buying good businesses or funds at fair prices and holding for years.</div></div>
+      <div class="stat"><div class="k">Swing trading</div><div style="font-size:.85rem;margin-top:6px">Aiming to profit from a price move over days or weeks.</div></div>
+      <div class="stat"><div class="k">Short-term trading</div><div style="font-size:.85rem;margin-top:6px">Frequent decisions and tight execution.</div></div>
+    </div>
+    <details style="margin-top:14px">
+      <summary>Self-assessment: which style fits your temperament, time and goals?</summary>
+      <div class="field"><label>How much time can you genuinely give this each day?</label>
+        <input data-path="phase1.styleTime" value="${esc(getPath("phase1.styleTime")||"")}" placeholder="e.g. 45 minutes on weekdays, more at weekends"></div>
+      <div class="field"><label>How do you react to watching a position fall 20%?</label>
+        <textarea data-path="phase1.styleReact" placeholder="Be honest — this is the most useful answer you will write.">${esc(getPath("phase1.styleReact")||"")}</textarea></div>
+      <div class="field"><label>Which style do you think fits you, and why?</label>
+        <textarea data-path="phase1.styleChoice" placeholder="Your reasoning">${esc(getPath("phase1.styleChoice")||"")}</textarea></div>
+      <p class="small" style="margin:0">For most beginners, a low-cost, broadly diversified index ETF is a simpler long-term foundation than picking stocks.</p>
+    </details>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Daily routine log</h3>
+      <div class="sub">20–30 min reputable news · 30 min book or course · 10 min reflection.</div></div></div>
+    <div class="row">
+      <div class="field"><label for="dl-date">Date</label><input type="date" id="dl-date" value="${todayISO()}"></div>
+      <div class="field"><label for="dl-news">News sources read</label><input id="dl-news" placeholder="e.g. Reuters, FT"></div>
+      <div class="field"><label for="dl-book">Book / course + minutes</label><input id="dl-book" placeholder="e.g. Psychology of Money, 30 min"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="dl-learned">One concept learned</label><textarea id="dl-learned" style="min-height:56px"></textarea></div>
+      <div class="field"><label for="dl-question">One open question</label><textarea id="dl-question" style="min-height:56px"></textarea></div>
+    </div>
+    <button class="btn primary" data-act="add-daily">Save daily log entry</button>
+
+    ${Object.keys(S.phase1.dailyLog).length ? `
+      <div class="divider"></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Date</th><th>Sources</th><th>Concept learned</th><th>Open question</th></tr></thead>
+        <tbody>
+          ${Object.entries(S.phase1.dailyLog).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,14).map(([d,e])=>`
+            <tr><td class="mono">${esc(d)}</td><td style="white-space:normal">${esc(e.news||"")}</td>
+            <td style="white-space:normal">${esc(e.learned||"")}</td>
+            <td style="white-space:normal">${esc(e.question||"")}</td></tr>`).join("")}
+        </tbody>
+      </table></div>
+    ` : `<div class="empty">No daily log entries yet.</div>`}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Simulated order log</h3>
+      <div class="sub">Practise each order type. Record fills, slippage and costs — and every execution mistake with its fix.</div></div></div>
+    <div class="grid g3" style="margin-bottom:14px">
+      ${statBox("Orders logged", stats.total, "Need 20 for Phase 1, 40 for Phase 2")}
+      ${statBox("Mistakes logged", stats.mistakesLogged, "Each with a fix")}
+      ${statBox("Clean streak", stats.cleanStreak, "Consecutive orders with no rule violation")}
+    </div>
+    ${paperOrderForm()}
+    ${paperOrderTable()}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Milestones — end of Month 3</h3></div></div>
+    ${P1_MILESTONES.map(m => {
+      const autoOk = m.auto === "paper20" ? S.paperOrders.length >= 20 : true;
+      return `
+      <div style="margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--line)">
+        <label class="check ${msDone(m,S.phase1.milestones)?"done":""}" style="padding-left:0">
+          <input type="checkbox" data-act="toggle-p1m" data-id="${m.id}" ${msDone(m,S.phase1.milestones)?"checked":""} ${m.auto?"disabled":""}>
+          <span class="lbl">${esc(m.label)}</span>
+        </label>
+        ${m.auto === "paper20" ? `<div class="small" style="margin-left:28px">Auto-checked when you have 20 simulated orders. Currently: <strong>${S.paperOrders.length}</strong>.</div>` : ""}
+        ${m.input ? `<textarea style="margin-left:28px;width:calc(100% - 28px);margin-top:8px;min-height:70px"
+            data-path="phase1.milestoneText.${m.id}"
+            placeholder="Write your explanation here. Saved automatically. (Minimum ~20 characters to count.)">${esc(S.phase1.milestoneText[m.id]||"")}</textarea>` : ""}
+        ${m.id === "m6" ? `<label class="check ${quiz?"done":""}" style="margin-left:28px;padding-left:0">
+            <input type="checkbox" data-act="toggle-quiz" ${quiz?"checked":""}>
+            <span class="lbl">I passed a self-quiz on at least 20 key terms</span></label>` : ""}
+      </div>`;
+    }).join("")}
+  </section>
+
+  ${gateBox(gate, "Gate to Phase 2", gate
+    ? "You can demonstrate the milestones. Finishing the calendar is not enough — but you have."
+    : "You must be able to demonstrate every milestone above, including written explanations and 20+ simulated orders. Finishing the calendar is not enough.")}
+
+  ${gate ? (S.profile.currentPhase < 2
+      ? `<button class="btn primary" data-act="advance" data-phase="2">Advance to Phase 2 →</button>`
+      : `<div class="notice ok">You are already past this gate.</div>`)
+    : `<button class="btn primary" disabled>Advance to Phase 2 →</button>`}
+  `;
+}
+
+function paperOrderForm(){
+  return `
+  <details style="background:var(--panel);border-color:var(--line)">
+    <summary>+ Log a simulated order</summary>
+    <div class="row">
+      <div class="field"><label>Date</label><input type="date" id="po-date" value="${todayISO()}"></div>
+      <div class="field"><label>Ticker</label><input id="po-ticker" placeholder="e.g. VTI"></div>
+      <div class="field"><label>Order type</label>
+        <select id="po-type">
+          <option>Market</option><option>Limit</option><option>Stop-market</option>
+          <option>Stop-limit</option><option>Trailing stop</option>
+        </select></div>
+      <div class="field"><label>Expected price</label><input type="number" step="0.01" id="po-expected" placeholder="0.00"></div>
+      <div class="field"><label>Fill price</label><input type="number" step="0.01" id="po-fill" placeholder="0.00"></div>
+      <div class="field"><label>Costs</label><input type="number" step="0.01" id="po-cost" placeholder="0.00"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Mistake made (if any)</label><input id="po-mistake" placeholder="e.g. used a market order into a thin spread"></div>
+      <div class="field"><label>The fix</label><input id="po-fix" placeholder="e.g. use a limit order at the midpoint"></div>
+      <div class="field"><label>Rule violation? (leave blank if none)</label><input id="po-violation" placeholder="e.g. moved stop farther away"></div>
+    </div>
+    <button class="btn primary" data-act="add-paper-order">Save order</button>
+  </details>`;
+}
+
+function paperOrderTable(){
+  if (!S.paperOrders.length) return `<div class="empty">No simulated orders logged yet.</div>`;
+  return `<div class="tbl-wrap" style="margin-top:6px"><table>
+    <thead><tr><th>#</th><th>Date</th><th>Ticker</th><th>Type</th><th class="num">Expected</th><th class="num">Fill</th>
+    <th class="num">Slippage</th><th class="num">Costs</th><th>Mistake → fix</th><th>Violation</th><th></th></tr></thead>
+    <tbody>
+    ${S.paperOrders.slice().reverse().map((o,i)=>{
+      const slip = (num(o.fill) && num(o.expected)) ? num(o.fill) - num(o.expected) : null;
+      return `<tr>
+        <td class="mono">${S.paperOrders.length - i}</td>
+        <td class="mono">${esc(o.date||"")}</td>
+        <td><strong>${esc(o.ticker||"")}</strong></td>
+        <td>${esc(o.type||"")}</td>
+        <td class="num">${o.expected?money(num(o.expected)):"—"}</td>
+        <td class="num">${o.fill?money(num(o.fill)):"—"}</td>
+        <td class="num ${slip>0?"neg":slip<0?"pos":""}">${slip===null?"—":money(slip)}</td>
+        <td class="num">${o.cost?money(num(o.cost)):"—"}</td>
+        <td style="white-space:normal;max-width:280px">${esc(o.mistake||"")}${o.fix?` → <em>${esc(o.fix)}</em>`:""}</td>
+        <td>${o.violation?`<span class="tag danger">${esc(o.violation)}</span>`:`<span class="tag ok">none</span>`}</td>
+        <td><button class="btn sm ghost" data-act="del-paper-order" data-id="${o.id}" title="Delete">✕</button></td>
+      </tr>`;
+    }).join("")}
+    </tbody>
+  </table></div>`;
+}
+
+/* ============================================================
+   10. VIEW — PHASE 2
+   ============================================================ */
+
+function viewPhase2(){
+  const gate = phase2Gate();
+  const biasCounts = {};
+  S.biasLog.forEach(b => biasCounts[b.bias] = (biasCounts[b.bias]||0)+1);
+  const topBias = Object.entries(biasCounts).sort((a,b)=>b[1]-a[1])[0];
+
+  return `
+  ${pageHeader("Phase 2 · Analysis and Strategy", "Months 4–6. You learn to judge a business, read a chart without trusting it blindly, and spot your own biases — then write a thesis for every decision.")}
+
+  <section class="card">
+    <div class="card-head"><div><h3>A · Reading a company (US annual report, Form 10-K)</h3>
+      <div class="sub">Read these sections in order, and compare several years — not one.</div></div></div>
+    <ol style="margin:0 0 14px;padding-left:22px;font-size:.87rem;line-height:1.8">
+      <li><strong>Business overview:</strong> how does it make money?</li>
+      <li><strong>Risk factors:</strong> what could seriously hurt it?</li>
+      <li><strong>Management's discussion (MD&amp;A):</strong> what does management say about results and challenges?</li>
+      <li><strong>Income statement:</strong> is revenue growing, and are profits sustainable?</li>
+      <li><strong>Balance sheet:</strong> how much debt, and what resources?</li>
+      <li><strong>Cash flow statement:</strong> does the business actually generate cash?</li>
+      <li><strong>Notes:</strong> any obligations, accounting choices or risks worth a closer look?</li>
+    </ol>
+    <div class="inline no-print">
+      <button class="btn primary" data-act="add-company">+ New company analysis</button>
+      <a class="btn" href="https://www.sec.gov/edgar/searchedgar/companysearch" target="_blank" rel="noopener">Open SEC EDGAR ↗</a>
+    </div>
+  </section>
+
+  ${S.companies.length ? S.companies.map((c,i)=>companyCard(c,i)).join("") : `<div class="card"><div class="empty">No company analyses yet. Complete three before the gate.</div></div>`}
+
+  ${S.companies.length >= 2 ? `
+  <section class="card">
+    <div class="card-head"><div><h3>Compare two companies in the same industry</h3>
+      <div class="sub">Pick two from your analyses above.</div></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Metric</th>${S.companies.map(c=>`<th>${esc(c.ticker||c.name||"—")}</th>`).join("")}</tr></thead>
+      <tbody>
+        <tr><td>Industry</td>${S.companies.map(c=>`<td>${esc(c.industry||"—")}</td>`).join("")}</tr>
+        <tr><td>How it makes money</td>${S.companies.map(c=>`<td style="white-space:normal;max-width:220px">${esc((c.s1||"").slice(0,120))}</td>`).join("")}</tr>
+        <tr><td>Main risk</td>${S.companies.map(c=>`<td style="white-space:normal;max-width:220px">${esc((c.s2||"").slice(0,120))}</td>`).join("")}</tr>
+        <tr><td>Revenue trend</td>${S.companies.map(c=>`<td>${esc(c.revTrend||"—")}</td>`).join("")}</tr>
+        <tr><td>Debt level</td>${S.companies.map(c=>`<td>${esc(c.debtLevel||"—")}</td>`).join("")}</tr>
+        <tr><td>Generates cash?</td>${S.companies.map(c=>`<td>${esc(c.cashGen||"—")}</td>`).join("")}</tr>
+        <tr><td>Valuation paid</td>${S.companies.map(c=>`<td>${esc(c.valuation||"—")}</td>`).join("")}</tr>
+      </tbody>
+    </table></div>
+    <label class="check" style="margin-top:12px">
+      <input type="checkbox" data-act="toggle-p2m" data-id="a2" ${S.phase2.milestones.a2?"checked":""}>
+      <span class="lbl">I have compared these two companies in the same industry</span></label>
+    <textarea style="margin-left:28px;width:calc(100% - 28px);min-height:80px"
+      data-path="phase2.milestoneText.a2"
+      placeholder="What did the comparison reveal? Which looks stronger, and on what evidence?">${esc(S.phase2.milestoneText.a2||"")}</textarea>
+  </section>` : ""}
+
+  <section class="card">
+    <div class="card-head"><div><h3>B · Valuation</h3>
+      <div class="sub">A good company is not automatically a good investment at every price.</div></div></div>
+    <div class="grid g3">
+      <div class="stat"><div class="k">P/E ratio</div><div class="v" style="font-size:.95rem">Price ÷ EPS</div></div>
+      <div class="stat"><div class="k">P/S ratio</div><div class="v" style="font-size:.95rem">Price ÷ sales per share</div></div>
+      <div class="stat"><div class="k">FCF yield</div><div class="v" style="font-size:.95rem">Free cash flow ÷ market cap</div></div>
+    </div>
+    <p class="small" style="margin-top:12px">Study historical valuation ranges, P/E and price-to-sales, free-cash-flow yield, debt and interest coverage, earnings quality, competitive advantages and industry risks. Write a pessimistic, reasonable and optimistic scenario for each company — the scenario fields are in each company card above.</p>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>C · Charts (technical analysis)</h3>
+      <div class="sub">Charts help you organise entries and exits. They do not predict the future.</div></div></div>
+    <div class="grid g3">
+      ${[
+        ["Support & resistance","Price levels where buying or selling has repeatedly appeared."],
+        ["50-day / 200-day MA","Smoothed averages that show the prevailing trend."],
+        ["Trend","The direction of the larger move. Fighting it is expensive."],
+        ["Volume","Confirms or contradicts a move. Thin volume = unreliable."],
+        ["Volatility (ATR)","How much it typically moves in a day. Sizes your stop."],
+        ["Breakout / failed breakout","A move beyond a level — and one that immediately reverses."]
+      ].map(([t,d])=>`<div class="stat"><div class="k">${esc(t)}</div><div style="font-size:.82rem;margin-top:6px;color:var(--muted)">${esc(d)}</div></div>`).join("")}
+    </div>
+    <div class="divider"></div>
+    <div class="field"><label>"Where is this trade idea proven wrong?" — pick a chart you are studying and write the invalidation level</label>
+      <textarea data-path="phase2.chartPractice" placeholder="Ticker, level, and why that level means the idea is dead.">${esc(getPath("phase2.chartPractice")||"")}</textarea></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>D · Five biases to track</h3>
+      <div class="sub">Name one bias and how it affected a decision — every week.</div></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Bias</th><th>What it looks like</th><th class="num">Logged</th></tr></thead>
+      <tbody>
+        ${BIASES.map(b=>`<tr><td><strong>${esc(b.name)}</strong></td><td style="white-space:normal">${esc(b.q)}</td>
+          <td class="num">${biasCounts[b.id]||0}</td></tr>`).join("")}
+      </tbody>
+    </table></div>
+    <div class="divider"></div>
+    <div class="row">
+      <div class="field"><label>Bias</label>
+        <select id="bias-sel">${BIASES.map(b=>`<option value="${b.id}">${esc(b.name)}</option>`).join("")}</select></div>
+      <div class="field"><label>Date</label><input type="date" id="bias-date" value="${todayISO()}"></div>
+    </div>
+    <div class="field"><label>How did it affect a decision?</label>
+      <textarea id="bias-note" style="min-height:60px" placeholder="Be specific. This is the point of the exercise."></textarea></div>
+    <button class="btn primary" data-act="add-bias">Log bias entry</button>
+
+    ${topBias ? `<div class="notice warn" style="margin-top:14px">
+      <strong>Strongest recurring bias so far: ${esc(BIASES.find(b=>b.id===topBias[0])?.name || topBias[0])} (${topBias[1]} entries).</strong>
+      Knowing your default failure mode is most of the defence against it.
+    </div>` : ""}
+
+    ${S.biasLog.length ? `<div class="tbl-wrap" style="margin-top:14px"><table>
+      <thead><tr><th>Date</th><th>Bias</th><th>Impact</th><th></th></tr></thead>
+      <tbody>${S.biasLog.slice().reverse().map(b=>`<tr>
+        <td class="mono">${esc(b.date)}</td>
+        <td>${esc(BIASES.find(x=>x.id===b.bias)?.name || b.bias)}</td>
+        <td style="white-space:normal;max-width:420px">${esc(b.note)}</td>
+        <td><button class="btn sm ghost" data-act="del-bias" data-id="${b.id}">✕</button></td>
+      </tr>`).join("")}</tbody></table></div>` : ""}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Weekly assignments</h3></div></div>
+    <ul style="margin:0;padding-left:20px;font-size:.87rem;line-height:1.9">
+      <li>Write one one-page thesis — use the <a href="#thesis">Thesis Builder</a>.</li>
+      <li>Review one company's financial statements.</li>
+      <li>Paper trade only when your written criteria are met, and record why you entered and exited.</li>
+      <li>Name one bias and how it affected a decision.</li>
+    </ul>
+    <div class="grid g3" style="margin-top:14px">
+      ${statBox("Theses written", S.theses.length, "Target: one per week")}
+      ${statBox("Company analyses", S.companies.length, "Need 3 for the gate")}
+      ${statBox("Simulated orders", S.paperOrders.length, "Need 40 for the gate")}
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Milestones — end of Month 6</h3></div></div>
+    ${P2_MILESTONES.map(m => {
+      let autoOk = true, autoNote = "";
+      if (m.auto === "companies3"){ autoOk = S.companies.length >= 3; autoNote = `Currently ${S.companies.length} of 3.`; }
+      if (m.auto === "paper40"){ autoOk = S.paperOrders.length >= 40; autoNote = `Currently ${S.paperOrders.length} of 40.`; }
+      return `
+      <div style="margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--line)">
+        <label class="check ${msDone(m,S.phase2.milestones)?"done":""}" style="padding-left:0">
+          <input type="checkbox" data-act="toggle-p2m" data-id="${m.id}" ${msDone(m,S.phase2.milestones)?"checked":""} ${m.auto?"disabled":""}>
+          <span class="lbl">${esc(m.label)}</span></label>
+        ${autoNote ? `<div class="small" style="margin-left:28px">${esc(autoNote)}</div>` : ""}
+        ${m.input ? `<textarea style="margin-left:28px;width:calc(100% - 28px);margin-top:8px;min-height:70px"
+          data-path="phase2.milestoneText.${m.id}"
+          placeholder="Write your answer here. Saved automatically.">${esc(S.phase2.milestoneText[m.id]||"")}</textarea>` : ""}
+      </div>`;
+    }).join("")}
+  </section>
+
+  ${gateBox(gate, "Gate to Phase 3", gate
+    ? "You can support each decision with evidence and say exactly what would prove your thesis wrong."
+    : "You must be able to support each decision with evidence and say exactly what would prove your thesis wrong.")}
+
+  ${gate ? (S.profile.currentPhase < 3
+      ? `<button class="btn primary" data-act="advance" data-phase="3">Advance to Phase 3 →</button>`
+      : `<div class="notice ok">You are already past this gate.</div>`)
+    : `<button class="btn primary" disabled>Advance to Phase 3 →</button>`}
+  `;
+}
+
+function companyCard(c, i){
+  const p = `companies.${i}`;
+  return `
+  <section class="card">
+    <div class="card-head"><div><h3>${esc(c.ticker || c.name || "New analysis")}</h3>
+      <div class="sub">${esc(c.industry || "Industry not set")}</div></div>
+      <button class="btn sm ghost" style="margin-left:auto" data-act="del-company" data-id="${c.id}">Delete</button>
+    </div>
+    <div class="row">
+      <div class="field"><label>Ticker</label><input data-path="${p}.ticker" value="${esc(c.ticker)}" placeholder="e.g. KO"></div>
+      <div class="field"><label>Company name</label><input data-path="${p}.name" value="${esc(c.name)}" placeholder="e.g. Coca-Cola"></div>
+      <div class="field"><label>Industry</label><input data-path="${p}.industry" value="${esc(c.industry)}" placeholder="e.g. Consumer staples"></div>
+    </div>
+    <div class="field"><label>1 · Business overview — how does it make money?</label>
+      <textarea data-path="${p}.s1">${esc(c.s1||"")}</textarea></div>
+    <div class="field"><label>2 · Risk factors — what could seriously hurt it?</label>
+      <textarea data-path="${p}.s2">${esc(c.s2||"")}</textarea></div>
+    <div class="field"><label>3 · MD&amp;A — what does management say about results and challenges?</label>
+      <textarea data-path="${p}.s3">${esc(c.s3||"")}</textarea></div>
+    <div class="row">
+      <div class="field"><label>4 · Income statement</label>
+        <select data-path="${p}.revTrend">
+          ${["","Revenue growing","Revenue flat","Revenue declining"].map(o=>`<option ${c.revTrend===o?"selected":""}>${o}</option>`).join("")}
+        </select></div>
+      <div class="field"><label>5 · Balance sheet — debt level</label>
+        <select data-path="${p}.debtLevel">
+          ${["","Low / manageable","Moderate","High / concerning"].map(o=>`<option ${c.debtLevel===o?"selected":""}>${o}</option>`).join("")}
+        </select></div>
+      <div class="field"><label>6 · Cash flow — does it generate cash?</label>
+        <select data-path="${p}.cashGen">
+          ${["","Yes, consistently","Sometimes","No, burns cash"].map(o=>`<option ${c.cashGen===o?"selected":""}>${o}</option>`).join("")}
+        </select></div>
+    </div>
+    <div class="field"><label>7 · Notes — obligations, accounting choices or risks worth a closer look</label>
+      <textarea data-path="${p}.s7">${esc(c.s7||"")}</textarea></div>
+    <div class="divider"></div>
+    <h4>Valuation &amp; scenarios</h4>
+    <div class="row">
+      <div class="field"><label>P/E</label><input type="number" step="0.1" data-path="${p}.pe" value="${esc(c.pe)}" placeholder="e.g. 22.4"></div>
+      <div class="field"><label>P/S</label><input type="number" step="0.1" data-path="${p}.ps" value="${esc(c.ps)}" placeholder="e.g. 4.1"></div>
+      <div class="field"><label>Free cash flow yield %</label><input type="number" step="0.1" data-path="${p}.fcf" value="${esc(c.fcf)}" placeholder="e.g. 3.2"></div>
+      <div class="field"><label>What valuation am I paying?</label><input data-path="${p}.valuation" value="${esc(c.valuation)}" placeholder="vs. its own history and alternatives"></div>
+    </div>
+    <div class="grid g3">
+      <div class="field"><label>Pessimistic scenario</label><textarea data-path="${p}.pess" style="min-height:60px">${esc(c.pess||"")}</textarea></div>
+      <div class="field"><label>Reasonable scenario</label><textarea data-path="${p}.base" style="min-height:60px">${esc(c.base||"")}</textarea></div>
+      <div class="field"><label>Optimistic scenario</label><textarea data-path="${p}.opt" style="min-height:60px">${esc(c.opt||"")}</textarea></div>
+    </div>
+  </section>`;
+}
+
+/* ============================================================
+   11. VIEW — PHASE 3
+   ============================================================ */
+
+function viewPhase3(){
+  const gate = phase3Gate();
+  const heat = portfolioHeat();
+  const stats = paperOrderStats();
+  const plan = S.phase3.plan;
+
+  return `
+  ${pageHeader("Phase 3 · Risk and Portfolio", "Months 7–9. Risk control matters more than a perfect entry. This phase teaches you to size every position by how much you could lose — not by how much you want to make.")}
+
+  <section class="card">
+    <div class="card-head"><div><h3>A · Position sizing</h3>
+      <div class="sub">For a trade with a set entry price and stop price — the price where you admit you were wrong.</div></div></div>
+    <div class="notice accent mono" style="font-size:.82rem">
+      Risk budget = Trading capital × Risk %<br>
+      Shares = ⌊ Risk budget ÷ (Entry price − Stop price) ⌋
+    </div>
+    <p class="small">Round down to whole shares unless your broker offers fractional shares. Also allow for slippage, costs and price gaps.</p>
+    <div class="inline no-print"><a class="btn primary" href="#calculator">Open the full calculator →</a></div>
+    <div class="divider"></div>
+    <h4>Worked example: $5,000 account, 0.5% risk per trade</h4>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Step</th><th class="num">Result</th></tr></thead>
+      <tbody>
+        <tr><td>Risk budget ($5,000 × 0.5%)</td><td class="num">$25</td></tr>
+        <tr><td>Entry price</td><td class="num">$100</td></tr>
+        <tr><td>Stop price</td><td class="num">$92</td></tr>
+        <tr><td>Risk per share ($100 − $92)</td><td class="num">$8</td></tr>
+        <tr><td>Shares ($25 ÷ $8, rounded down)</td><td class="num">3</td></tr>
+        <tr><td>Position value (3 × $100)</td><td class="num">$300</td></tr>
+        <tr><td>Planned loss at the stop (3 × $8)</td><td class="num">$24</td></tr>
+      </tbody>
+    </table></div>
+    <div class="notice warn" style="margin-top:14px">
+      The position is worth $300 but the planned loss is $24. These are different numbers.
+      <strong>A stop is not a guarantee:</strong> if the stock opens below your stop, you could lose more than $24.
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>B · Risk rules (conservative training limits)</h3></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Rule</th><th>Limit</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Risk per trade</strong></td><td style="white-space:normal">No more than 0.5% of trading capital at first. Consider 1% only after a thorough review shows a sound process.</td></tr>
+        <tr><td><strong>Portfolio heat</strong></td><td style="white-space:normal">2% ceiling. Heat is not the maximum possible loss, since gaps and correlated positions can exceed it.</td></tr>
+        <tr><td><strong>Single position</strong></td><td style="white-space:normal">Set a maximum size before you trade, based on your strategy and the stock's liquidity.</td></tr>
+        <tr><td><strong>Sector overlap</strong></td><td style="white-space:normal">Check what your ETFs hold, so you do not double up.</td></tr>
+        <tr><td><strong>Liquidity</strong></td><td style="white-space:normal">Avoid securities with wide spreads or thin volume.</td></tr>
+        <tr><td><strong>Stops</strong></td><td style="white-space:normal">Set a sensible invalidation level before entry, and never move it farther away to dodge a loss.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="divider"></div>
+    <h4>Portfolio heat calculator</h4>
+    <div class="row">
+      <div class="field"><label>Trading capital ($)</label>
+        <input type="number" id="heat-capital" value="${esc(S.phase3.heat.capital)}" data-path="phase3.heat.capital"></div>
+    </div>
+    <div id="heat-result"></div>
+    <div class="small" style="margin-top:8px">Heat = total planned loss across open positions if every stop were hit. Calculated from your <a href="#journal">open journal positions</a>.</div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Long-term holdings are different</h3></div></div>
+    <p style="font-size:.88rem">Do not slap short-term stops on long-term holdings. Give them an allocation target, rebalancing rules and criteria for reviewing the investment.</p>
+    <div class="row">
+      <div class="field"><label>Allocation target</label><input data-path="phase3.ltAllocation" value="${esc(getPath("phase3.ltAllocation")||"")}" placeholder="e.g. 70% broad index ETF, 20% bonds, 10% cash"></div>
+      <div class="field"><label>Rebalancing rule</label><input data-path="phase3.ltRebalance" value="${esc(getPath("phase3.ltRebalance")||"")}" placeholder="e.g. rebalance when any sleeve drifts 5% from target"></div>
+    </div>
+    <div class="field"><label>Review criteria</label><textarea data-path="phase3.ltReview" placeholder="What would make you sell a long-term holding?">${esc(getPath("phase3.ltReview")||"")}</textarea></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>C · Diversification</h3></div></div>
+    <p style="font-size:.88rem">Spread exposure across stocks, bonds and cash; sectors; company sizes; home and international markets; and growth and value styles. <strong>Owning many stocks that react to the same forces is not real diversification.</strong></p>
+    <p style="font-size:.88rem">For most beginners, a low-cost, broadly diversified index ETF is a simpler long-term foundation than picking stocks. Before buying one, check its holdings, fees, where it is domiciled, currency exposure and tax treatment.</p>
+    <div class="divider"></div>
+    <h4>Index ETF evaluation checklist</h4>
+    <div class="row">
+      <div class="field"><label>Fund name / ticker</label><input data-path="phase3.etf.name" value="${esc(getPath("phase3.etf.name")||"")}" placeholder="e.g. VTI"></div>
+      <div class="field"><label>Expense ratio %</label><input type="number" step="0.01" data-path="phase3.etf.fee" value="${esc(getPath("phase3.etf.fee")||"")}" placeholder="e.g. 0.07"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Top holdings / concentration</label><input data-path="phase3.etf.holdings" value="${esc(getPath("phase3.etf.holdings")||"")}" placeholder="e.g. top 10 = 24%"></div>
+      <div class="field"><label>Domicile</label><input data-path="phase3.etf.domicile" value="${esc(getPath("phase3.etf.domicile")||"")}" placeholder="e.g. US"></div>
+      <div class="field"><label>Currency exposure</label><input data-path="phase3.etf.currency" value="${esc(getPath("phase3.etf.currency")||"")}" placeholder="e.g. USD"></div>
+    </div>
+    <div class="field"><label>Tax treatment where you live</label><input data-path="phase3.etf.tax" value="${esc(getPath("phase3.etf.tax")||"")}" placeholder="Notes on withholding, reporting, wrappers"></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>D · Trading plan contract</h3>
+      <div class="sub">Write this before any trade. It must be signed before Phase 4.</div></div></div>
+    <div class="field"><label>Entry — written thesis or tested setup</label><textarea data-path="phase3.plan.entryThesis">${esc(plan.entryThesis||"")}</textarea></div>
+    <div class="field"><label>Entry — defined trigger and reason</label><textarea data-path="phase3.plan.entryTrigger" style="min-height:60px">${esc(plan.entryTrigger||"")}</textarea></div>
+    <div class="field"><label>Entry — position size and loss budget</label><textarea data-path="phase3.plan.entrySize" style="min-height:60px">${esc(plan.entrySize||"")}</textarea></div>
+    <div class="field"><label>Exit — what proves the thesis wrong</label><textarea data-path="phase3.plan.exitWrong" style="min-height:60px">${esc(plan.exitWrong||"")}</textarea></div>
+    <div class="field"><label>Exit — profit-taking or rebalancing rule</label><textarea data-path="phase3.plan.exitProfit" style="min-height:60px">${esc(plan.exitProfit||"")}</textarea></div>
+    <div class="field"><label>Exit — plan for surprise news</label><textarea data-path="phase3.plan.exitNews" style="min-height:60px">${esc(plan.exitNews||"")}</textarea></div>
+
+    <div class="divider"></div>
+    <h4>Drawdown controls</h4>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th class="num">Drawdown</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td class="num">5%</td><td>Review your risk, execution and rule-following.</td></tr>
+        <tr><td class="num">10%</td><td>Pause new discretionary trades and do a full review.</td></tr>
+        <tr><td class="num">20%</td><td>Stop live trading, reassess, and return to simulation before any restart.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small" style="margin-top:10px">These are safeguards, not guarantees. Do not automatically sell long-term holdings at a threshold without reviewing your plan and the tax effects.</p>
+
+    <div class="divider"></div>
+    ${S.phase3.planSigned.name ? `
+      <div class="notice ok">
+        <strong>Trading plan signed by ${esc(S.phase3.planSigned.name)} on ${esc(S.phase3.planSigned.date)}</strong>
+        <div class="inline no-print" style="margin-top:8px">
+          <button class="btn sm" data-act="print">Print / save as PDF</button>
+          <button class="btn sm danger" data-act="clear-plan-sig">Clear signature</button>
+        </div>
+      </div>
+    ` : `
+      <div class="row"><div class="field"><label>Type your full name to sign this trading plan</label>
+        <input id="plan-sig" placeholder="Your name"></div></div>
+      <button class="btn primary" data-act="sign-plan">Sign trading plan</button>
+    `}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Milestones before Phase 4</h3></div></div>
+    ${P3_MILESTONES.map(m => {
+      let autoNote = "";
+      if (m.auto === "plan") autoNote = S.phase3.planSigned.name ? "Signed." : "Not signed yet.";
+      if (m.auto === "clean20") autoNote = `Clean streak: ${stats.cleanStreak} of 20 consecutive simulated trades.`;
+      return `
+      <div style="margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--line)">
+        <label class="check ${msDone(m,S.phase3.milestones)?"done":""}" style="padding-left:0">
+          <input type="checkbox" data-act="toggle-p3m" data-id="${m.id}" ${msDone(m,S.phase3.milestones)?"checked":""} ${m.auto?"disabled":""}>
+          <span class="lbl">${esc(m.label)}</span></label>
+        ${autoNote ? `<div class="small" style="margin-left:28px">${esc(autoNote)}</div>` : ""}
+        ${m.input ? `<textarea style="margin-left:28px;width:calc(100% - 28px);margin-top:8px;min-height:80px"
+          data-path="phase3.milestoneText.${m.id}"
+          placeholder="Write your explanation here.">${esc(S.phase3.milestoneText[m.id]||"")}</textarea>` : ""}
+      </div>`;
+    }).join("")}
+  </section>
+
+  ${gateBox(gate, "Gate to Phase 4", gate
+    ? "Plan signed, risk controls demonstrated. Live trading is optional — simulation can continue."
+    : "All milestones complete, the trading plan signed, and a clean 20-trade simulation streak. Live trading is optional; simulation can continue.")}
+
+  ${gate ? (S.profile.currentPhase < 4
+      ? `<button class="btn primary" data-act="advance" data-phase="4">Advance to Phase 4 →</button>`
+      : `<div class="notice ok">You are already past this gate.</div>`)
+    : `<button class="btn primary" disabled>Advance to Phase 4 →</button>`}
+  `;
+}
+
+/* ============================================================
+   12. VIEW — PHASE 4
+   ============================================================ */
+
+function viewPhase4(){
+  const m = computeMetrics("live");
+  const liveCount = S.journal.filter(t => t.mode === "live").length;
+  const choice = S.phase4.choice;
+
+  return `
+  ${pageHeader("Phase 4 · Small Live Test", "Months 10–12. You test whether you can follow your own rules with real money, using at most $500 — and you stay in simulation if your results or discipline are not ready.")}
+
+  <div class="notice danger">
+    <strong>Hard limit: no more than $500 for individual stocks.</strong>
+    You do not have to deploy all of it. Apply every Phase 3 risk control and record every trade.
+    Do not add capital just because a few trades won. Judge results after commissions, spreads, slippage and other costs.
+  </div>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Small-account note — decide in writing, now</h3></div></div>
+    <p style="font-size:.88rem">
+      0.5% of $500 is only <strong>$2.50</strong> of risk per trade, which often cannot be sized properly.
+      Choose one of two options <em>in advance</em>, in writing:
+    </p>
+    <label class="check ${choice==="a"?"done":""}">
+      <input type="radio" name="small-choice" value="a" data-act="set-choice" ${choice==="a"?"checked":""}>
+      <span><span class="lbl">(a) Use fractional shares and a risk of up to 1% of the sandbox ($5)</span>
+      <span class="hint">Only if your broker offers fractional shares.</span></span>
+    </label>
+    <label class="check ${choice==="b"?"done":""}">
+      <input type="radio" name="small-choice" value="b" data-act="set-choice" ${choice==="b"?"checked":""}>
+      <span><span class="lbl">(b) Keep paper trading</span>
+      <span class="hint">A completely legitimate outcome. Simulation has no cost for mistakes.</span></span>
+    </label>
+    <div class="notice warn" style="margin-top:12px"><strong>Never raise risk later to make the numbers work.</strong></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Live-trading readiness checklist</h3>
+      <div class="sub">Fifty trades is a checkpoint, not proof. Some strategies need far more, and some should never go live.</div></div></div>
+    ${P4_READINESS.map(r => `
+      <label class="check ${S.phase4.readiness[r.id]?"done":""}">
+        <input type="checkbox" data-act="toggle-p4r" data-id="${r.id}" ${S.phase4.readiness[r.id]?"checked":""}>
+        <span class="lbl">${esc(r.label)}</span>
+      </label>`).join("")}
+    <div class="divider"></div>
+    <div class="grid g3">
+      ${statBox("Live trades logged", liveCount, "Including open positions")}
+      ${statBox("Live expectancy", m.count ? money(m.expectancy) : "—", m.count + " closed live trades")}
+      ${statBox("Live net result", m.count ? money(m.totalNet) : "—", "After recorded costs")}
+    </div>
+    <div class="inline no-print" style="margin-top:14px">
+      <a class="btn primary" href="#journal">Record a live trade</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Month 12 honesty check</h3>
+      <div class="sub">Answer these in writing. There are no wrong answers — only dishonest ones.</div></div></div>
+    ${[
+      ["h1","Do I understand every investment I use?"],
+      ["h2","Can I explain why I entered each position?"],
+      ["h3","Are my results still reasonable after costs?"],
+      ["h4","Do I follow my rules when I am losing?"],
+      ["h5","Is my performance repeatable, or a few lucky outcomes?"],
+      ["h6","Can I handle the financial and emotional cost of more losses?"],
+      ["h7","Would long-term diversified investing serve me better than active trading?"]
+    ].map(([id,q])=>`
+      <div class="field"><label>${esc(q)}</label>
+        <textarea data-path="phase4.honesty.${id}" placeholder="Write your honest answer.">${esc(getPath("phase4.honesty."+id)||"")}</textarea></div>
+    `).join("")}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Year-end decision</h3></div></div>
+    <div class="grid g2">
+      ${[
+        ["continue","Continue small","Keep trading the same small size while the process holds up."],
+        ["paper","Return to paper trading","The discipline or results are not there yet. This is not failure."],
+        ["longterm","Focus on long-term investing","Put the effort into a diversified, low-cost portfolio instead."],
+        ["stop","Stop trading altogether","An informed decision to stop is a good outcome."]
+      ].map(([v,t,d])=>`
+        <label class="check ${S.phase4.decision===v?"done":""}" style="border:1px solid var(--line)">
+          <input type="radio" name="yearend" value="${v}" data-act="set-decision" ${S.phase4.decision===v?"checked":""}>
+          <span><span class="lbl">${esc(t)}</span><span class="hint">${esc(d)}</span></span>
+        </label>`).join("")}
+    </div>
+    <div class="notice ok" style="margin-top:14px">
+      <strong>Any of these is a good outcome if it is an informed one.</strong>
+    </div>
+  </section>
+  `;
+}
+
+/* ============================================================
+   13. VIEW — JOURNAL
+   ============================================================ */
+
+let journalFilter = { mode:"", status:"", ticker:"", result:"" };
+
+function viewJournal(){
+  const f = journalFilter;
+  let rows = S.journal.slice().reverse();
+  if (f.mode) rows = rows.filter(t => t.mode === f.mode);
+  if (f.status) rows = rows.filter(t => t.status === f.status);
+  if (f.ticker) rows = rows.filter(t => (t.ticker||"").toLowerCase().includes(f.ticker.toLowerCase()));
+  if (f.result === "win") rows = rows.filter(t => { const n = tradeNet(t); return n !== null && n > 0; });
+  if (f.result === "loss") rows = rows.filter(t => { const n = tradeNet(t); return n !== null && n < 0; });
+  if (f.result === "violation") rows = rows.filter(t => (t.violations||"").trim().length > 0);
+
+  return `
+  ${pageHeader("Trade Journal", "Record every trade. The journal is the single most valuable artefact this plan produces.")}
+
+  <section class="card">
+    <div class="card-head"><div><h3>New entry</h3>
+      <div class="sub">Fill in the plan group before you enter. Fill in the result group after you exit.</div></div></div>
+    ${tradeForm()}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Entries (${S.journal.length})</h3></div>
+      <div class="inline no-print" style="margin-left:auto">
+        <button class="btn sm" data-act="export-csv">Export CSV</button>
+        <button class="btn sm" data-act="print">Print / PDF</button>
+      </div>
+    </div>
+    <div class="row no-print" style="margin-bottom:12px">
+      <div class="field"><label>Mode</label>
+        <select data-act="filter" data-key="mode">
+          <option value="">All</option>
+          <option value="paper" ${f.mode==="paper"?"selected":""}>Paper</option>
+          <option value="live" ${f.mode==="live"?"selected":""}>Live</option>
+        </select></div>
+      <div class="field"><label>Status</label>
+        <select data-act="filter" data-key="status">
+          <option value="">All</option>
+          <option value="open" ${f.status==="open"?"selected":""}>Open</option>
+          <option value="closed" ${f.status==="closed"?"selected":""}>Closed</option>
+        </select></div>
+      <div class="field"><label>Result</label>
+        <select data-act="filter" data-key="result">
+          <option value="">All</option>
+          <option value="win" ${f.result==="win"?"selected":""}>Winners</option>
+          <option value="loss" ${f.result==="loss"?"selected":""}>Losers</option>
+          <option value="violation" ${f.result==="violation"?"selected":""}>With rule violation</option>
+        </select></div>
+      <div class="field"><label>Ticker contains</label>
+        <input data-act="filter" data-key="ticker" value="${esc(f.ticker)}" placeholder="e.g. VTI"></div>
+    </div>
+
+    ${rows.length ? `
+    <div class="tbl-wrap"><table>
+      <thead><tr>
+        <th>#</th><th>Date</th><th>Ticker</th><th>Setup</th><th>Mode</th><th>Status</th>
+        <th class="num">Entry</th><th class="num">Stop</th><th class="num">Size</th>
+        <th class="num">Planned risk</th><th class="num">Exit</th><th class="num">Net P/L</th><th class="num">R</th>
+        <th>Violations</th><th></th>
+      </tr></thead>
+      <tbody>
+      ${rows.map(t=>{
+        const risk = tradeRisk(t), net = tradeNet(t), r = tradeR(t);
+        return `<tr>
+          <td class="mono">${esc(t.num)}</td>
+          <td class="mono">${esc(t.date||"")}</td>
+          <td><strong>${esc(t.ticker||"")}</strong></td>
+          <td>${esc(t.strategy||"")}</td>
+          <td>${t.mode==="live"?'<span class="tag warn">live</span>':'<span class="tag">paper</span>'}</td>
+          <td>${t.status==="open"?'<span class="tag">open</span>':'<span class="tag ok">closed</span>'}</td>
+          <td class="num">${t.entry?money(num(t.entry)):"—"}</td>
+          <td class="num">${t.stop?money(num(t.stop)):"—"}</td>
+          <td class="num">${t.size||"—"}</td>
+          <td class="num">${risk?money(risk):"—"}</td>
+          <td class="num">${t.exitPrice?money(num(t.exitPrice)):"—"}</td>
+          <td class="num ${net>0?"pos":net<0?"neg":""}">${net===null?"—":money(net)}</td>
+          <td class="num ${r>0?"pos":r<0?"neg":""}">${r===null?"—":(r>0?"+":"")+r.toFixed(2)+"R"}</td>
+          <td style="white-space:normal;max-width:200px">${t.violations?`<span class="tag danger">${esc(t.violations)}</span>`:"—"}</td>
+          <td><button class="btn sm ghost" data-act="del-trade" data-id="${t.id}" title="Delete">✕</button></td>
+        </tr>`;
+      }).join("")}
+      </tbody>
+    </table></div>` : `<div class="empty">No trades match the current filter.</div>`}
+  </section>
+  `;
+}
+
+function tradeForm(){
+  const nextNum = S.journal.length + 1;
+  return `
+  <details style="background:var(--panel);border-color:var(--line)">
+    <summary>+ Add a trade</summary>
+    <form id="trade-form">
+      <h4 style="margin-top:12px">Identity</h4>
+      <div class="row">
+        <div class="field"><label>Trade number</label><input name="num" value="${nextNum}" readonly></div>
+        <div class="field"><label>Date</label><input type="date" name="date" value="${todayISO()}"></div>
+        <div class="field"><label>Ticker</label><input name="ticker" placeholder="e.g. VTI" required></div>
+        <div class="field"><label>Security type</label>
+          <select name="secType"><option>Stock</option><option>ETF</option><option>Other</option></select></div>
+        <div class="field"><label>Strategy or setup</label><input name="strategy" placeholder="e.g. breakout retest"></div>
+        <div class="field"><label>Mode</label>
+          <select name="mode"><option value="paper">Paper</option><option value="live">Live</option></select></div>
+        <div class="field"><label>Status</label>
+          <select name="status"><option value="open">Open</option><option value="closed">Closed</option></select></div>
+      </div>
+
+      <h4>Plan</h4>
+      <div class="row">
+        <div class="field"><label>Entry price</label><input type="number" step="0.01" name="entry"></div>
+        <div class="field"><label>Initial stop</label><input type="number" step="0.01" name="stop"></div>
+        <div class="field"><label>Position size (shares)</label><input type="number" step="0.0001" name="size"></div>
+        <div class="field"><label>Planned dollar risk (blank = auto)</label><input type="number" step="0.01" name="plannedRisk"></div>
+      </div>
+      <div class="field"><label>Entry rationale</label><textarea name="rationale" style="min-height:56px"></textarea></div>
+      <div class="field"><label>Thesis or setup evidence</label><textarea name="evidence" style="min-height:56px"></textarea></div>
+      <div class="row">
+        <div class="field"><label>Target</label><input name="target" placeholder="price or criteria"></div>
+        <div class="field"><label>Exit plan</label><input name="exitPlan" placeholder="what gets you out"></div>
+      </div>
+
+      <h4>Result</h4>
+      <div class="row">
+        <div class="field"><label>Actual exit price</label><input type="number" step="0.01" name="exitPrice"></div>
+        <div class="field"><label>Costs (commission + spread + slippage)</label><input type="number" step="0.01" name="costs" placeholder="0.00"></div>
+      </div>
+      <p class="small">Gross and net P/L and the realized R-multiple are calculated automatically from entry, exit, size and costs.</p>
+
+      <h4>Context</h4>
+      <div class="row">
+        <div class="field"><label>Market conditions</label>
+          <select name="marketConditions">
+            <option value="">—</option><option>Uptrend</option><option>Downtrend</option>
+            <option>Range-bound</option><option>High volatility</option><option>Low volatility</option>
+          </select></div>
+        <div class="field"><label>Emotional state before</label><input name="emotionBefore" placeholder="e.g. calm, impatient"></div>
+        <div class="field"><label>Emotional state after</label><input name="emotionAfter" placeholder="e.g. relieved, frustrated"></div>
+      </div>
+      <div class="field"><label>Rule violations</label><input name="violations" placeholder="Leave blank if none."></div>
+      <div class="field"><label>Lessons learned</label><textarea name="lessons" style="min-height:56px"></textarea></div>
+
+      <button class="btn primary" type="submit">Save trade</button>
+    </form>
+  </details>`;
+}
+
+/* ============================================================
+   14. VIEW — METRICS
+   ============================================================ */
+
+function viewMetrics(){
+  const m = computeMetrics();
+  const mPaper = computeMetrics("paper");
+  const mLive = computeMetrics("live");
+  const heat = portfolioHeat();
+
+  if (!m.count){
+    return `
+    ${pageHeader("Metrics", "Calculated automatically from your journal.")}
+    <div class="card"><div class="empty">
+      No closed trades yet. Metrics appear once you close your first trade with an exit price recorded.<br><br>
+      <a class="btn" href="#journal">Go to the journal</a>
+    </div></div>`;
+  }
+
+  const expectExample = (0.45*40) - (0.55*25);
+
+  const setupRows = Object.entries(m.bySetup).sort((a,b)=>b[1].total - a[1].total);
+  const maxAbs = Math.max(...setupRows.map(([,v])=>Math.abs(v.total)), 1);
+
+  return `
+  ${pageHeader("Metrics", "Calculated automatically from your journal. Judge performance over many decisions, not any single outcome.")}
+
+  <div class="grid g4" style="margin-bottom:16px">
+    ${statBox("Win rate", pct(m.winRate), `${m.wins.length} of ${m.count} closed`)}
+    ${statBox("Average win", money(m.avgWin), `${m.wins.length} winners`)}
+    ${statBox("Average loss", money(m.avgLoss), `${m.losses.length} losers`)}
+    ${statBox("Expectancy", money(m.expectancy), "Per trade, net of costs", m.expectancy>0?"pos":m.expectancy<0?"neg":"")}
+  </div>
+
+  <div class="grid g4" style="margin-bottom:16px">
+    ${statBox("Avg R-multiple", m.avgR===null?"—":(m.avgR>0?"+":"")+m.avgR.toFixed(2)+"R", "Result ÷ planned risk")}
+    ${statBox("Max drawdown", money(m.maxDD), `${pct(m.maxDDPct)} from peak`)}
+    ${statBox("Largest single loss", money(m.largestLoss), "", "neg")}
+    ${statBox("Profit factor", m.profitFactor===Infinity?"∞":m.profitFactor.toFixed(2), "Gross wins ÷ gross losses")}
+  </div>
+
+  <div class="grid g4" style="margin-bottom:16px">
+    ${statBox("Total trading costs", money(m.costs), "Commissions, spread, slippage")}
+    ${statBox("Rule-adherence rate", pct(m.adherence), "Trades with no violation")}
+    ${statBox("Net result", money(m.totalNet), `${m.count} closed trades`, m.totalNet>0?"pos":m.totalNet<0?"neg":"")}
+    ${statBox("Portfolio heat", money(heat.total), `${pct(heat.pctOf)} of ${money(heat.capital,0)} — 2% ceiling`, heat.pctOf>0.02?"neg":"")}
+  </div>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Equity curve</h3>
+      <div class="sub">Cumulative net result across closed trades, in the order they closed.</div></div></div>
+    ${lineChart(m.curve)}
+    ${m.maxDD > 0 ? `<div class="notice warn" style="margin-top:14px">
+      Maximum drawdown: <strong>${money(m.maxDD)}</strong> (${pct(m.maxDDPct)} from peak).
+      Review thresholds: 5% review · 10% pause new discretionary trades · 20% stop live trading and reassess.
+    </div>` : ""}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Performance by setup</h3></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Setup</th><th class="num">Trades</th><th class="num">Wins</th><th class="num">Win rate</th><th class="num">Net</th><th>Distribution</th></tr></thead>
+      <tbody>
+        ${setupRows.map(([k,v])=>`<tr>
+          <td>${esc(k)}</td>
+          <td class="num">${v.n}</td>
+          <td class="num">${v.wins}</td>
+          <td class="num">${pct(v.wins/v.n)}</td>
+          <td class="num ${v.total>0?"pos":v.total<0?"neg":""}">${money(v.total)}</td>
+          <td style="width:180px">
+            <div style="background:var(--line);height:8px;border-radius:4px;position:relative">
+              <div style="position:absolute;left:50%;top:0;height:8px;width:${(Math.abs(v.total)/maxAbs*50).toFixed(1)}%;
+                background:${v.total>=0?"var(--ok)":"var(--danger)"};
+                ${v.total<0?"transform:translateX(-100%)":""};border-radius:4px"></div>
+              <div style="position:absolute;left:50%;top:-3px;width:1px;height:14px;background:var(--muted)"></div>
+            </div>
+          </td>
+        </tr>`).join("")}
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Results by market condition</h3></div></div>
+    ${Object.keys(m.byCondition).length ? `<div class="tbl-wrap"><table>
+      <thead><tr><th>Condition</th><th class="num">Trades</th><th class="num">Net</th></tr></thead>
+      <tbody>${Object.entries(m.byCondition).map(([k,v])=>`<tr>
+        <td>${esc(k)}</td><td class="num">${v.n}</td>
+        <td class="num ${v.total>0?"pos":v.total<0?"neg":""}">${money(v.total)}</td></tr>`).join("")}
+      </tbody></table></div>` : `<div class="empty">No market conditions recorded yet.</div>`}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Top recurring mistakes</h3>
+      <div class="sub">Pulled from the "lessons learned" field of your journal.</div></div></div>
+    ${m.topMistakes.length ? `<ol style="margin:0;padding-left:22px;font-size:.88rem;line-height:1.9">
+      ${m.topMistakes.map(([k,n])=>`<li>${esc(k)} <span class="small">(${n}×)</span></li>`).join("")}
+    </ol>` : `<div class="empty">No lessons recorded yet.</div>`}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Split by mode</h3></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Mode</th><th class="num">Closed</th><th class="num">Win rate</th><th class="num">Expectancy</th><th class="num">Net</th></tr></thead>
+      <tbody>
+        <tr><td>Paper</td><td class="num">${mPaper.count}</td><td class="num">${mPaper.count?pct(mPaper.winRate):"—"}</td>
+          <td class="num">${mPaper.count?money(mPaper.expectancy):"—"}</td>
+          <td class="num ${mPaper.totalNet>0?"pos":mPaper.totalNet<0?"neg":""}">${mPaper.count?money(mPaper.totalNet):"—"}</td></tr>
+        <tr><td>Live</td><td class="num">${mLive.count}</td><td class="num">${mLive.count?pct(mLive.winRate):"—"}</td>
+          <td class="num">${mLive.count?money(mLive.expectancy):"—"}</td>
+          <td class="num ${mLive.totalNet>0?"pos":mLive.totalNet<0?"neg":""}">${mLive.count?money(mLive.totalNet):"—"}</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Expectancy — worked example</h3></div></div>
+    <div class="tbl-wrap"><table>
+      <tbody>
+        <tr><td>45% of trades win an average of $40</td><td class="num">0.45 × $40 = $18.00</td></tr>
+        <tr><td>55% lose an average of $25</td><td class="num">0.55 × $25 = $13.75</td></tr>
+        <tr><td><strong>Expectancy per trade</strong></td><td class="num"><strong>${money(expectExample)}</strong></td></tr>
+      </tbody>
+    </table></div>
+    <div class="notice warn" style="margin-top:12px">
+      This is an illustration. Positive past expectancy does not guarantee future results.
+    </div>
+  </section>
+  `;
+}
+
+function lineChart(curve){
+  if (!curve || curve.length < 2) return `<div class="empty">Not enough data for a chart.</div>`;
+  const W = 700, H = 200, pad = 34;
+  const xs = curve.map(p => p.i);
+  const ys = curve.map(p => p.v);
+  const minY = Math.min(0, ...ys), maxY = Math.max(0, ...ys);
+  const rangeY = (maxY - minY) || 1;
+  const rangeX = (xs[xs.length-1] - xs[0]) || 1;
+
+  const px = v => pad + ((v - xs[0]) / rangeX) * (W - pad*2);
+  const py = v => H - pad - ((v - minY) / rangeY) * (H - pad*2);
+
+  const points = curve.map(p => `${px(p.i).toFixed(1)},${py(p.v).toFixed(1)}`).join(" ");
+  const zeroY = py(0);
+  const last = curve[curve.length-1].v;
+  const stroke = last >= 0 ? "var(--ok)" : "var(--danger)";
+
+  return `
+  <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Equity curve">
+    <line x1="${pad}" y1="${zeroY}" x2="${W-pad}" y2="${zeroY}" style="stroke:var(--line)" stroke-dasharray="3 3"/>
+    <text x="${pad}" y="${zeroY-5}" font-size="10" style="fill:var(--muted)" font-family="monospace">$0</text>
+    <polyline points="${points}" fill="none" style="stroke:${stroke}" stroke-width="2" stroke-linejoin="round"/>
+    <text x="${pad}" y="${py(maxY)-6}" font-size="10" style="fill:var(--muted)" font-family="monospace">${money(maxY,0)}</text>
+    <text x="${pad}" y="${py(minY)+14}" font-size="10" style="fill:var(--muted)" font-family="monospace">${money(minY,0)}</text>
+    <text x="${W-pad}" y="${H-8}" font-size="10" style="fill:var(--muted)" text-anchor="end">${curve.length-1} closed trades</text>
+  </svg>`;
+}
+
+function pieChart(slices){
+  const total = slices.reduce((s,x)=>s+x.value,0);
+  if (!total) return "";
+  let angle = -Math.PI/2, paths = "";
+  const cx = 80, cy = 80, r = 68;
+  slices.forEach(s => {
+    const frac = s.value/total;
+    const a2 = angle + frac * Math.PI * 2;
+    const x1 = cx + r*Math.cos(angle), y1 = cy + r*Math.sin(angle);
+    const x2 = cx + r*Math.cos(a2),   y2 = cy + r*Math.sin(a2);
+    const large = frac > 0.5 ? 1 : 0;
+    if (frac >= 0.9999) {
+      paths += `<circle cx="${cx}" cy="${cy}" r="${r}" style="fill:${s.color}"/>`;
+    } else if (frac > 0) {
+      paths += `<path d="M ${cx} ${cy} L ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(2)} ${y2.toFixed(2)} Z" style="fill:${s.color}"/>`;
+    }
+    angle = a2;
+  });
+  return `
+  <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <svg width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="Allocation pie chart">${paths}</svg>
+    <div>
+      ${slices.map(s=>`<div style="font-size:.85rem;margin-bottom:7px">
+        <span class="swatch" style="background:${s.color}"></span>
+        <strong>${esc(s.label)}</strong>
+        <span class="mono" style="margin-left:6px">${money(s.value,0)}</span>
+        <span class="small"> · ${pct(s.value/total,0)}</span>
+      </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   15. VIEW — POSITION CALCULATOR
+   ============================================================ */
+
+function viewCalculator(){
+  return `
+  ${pageHeader("Position Calculator", "Size every position by how much you could lose — not by how much you want to make.")}
+
+  <div class="notice warn">
+    A stop is not a guarantee. If the stock opens below your stop, you could lose more than the planned amount.
+    Allow for slippage, costs and price gaps.
+  </div>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Calculator</h3></div></div>
+    <div class="row">
+      <div class="field"><label>Trading capital ($)</label>
+        <input type="number" id="ps-capital" value="500" step="1"></div>
+      <div class="field"><label>Risk per trade (%)</label>
+        <input type="number" id="ps-risk" value="0.5" step="0.1"></div>
+      <div class="field"><label>Entry price ($)</label>
+        <input type="number" id="ps-entry" value="100" step="0.01"></div>
+      <div class="field"><label>Stop price ($)</label>
+        <input type="number" id="ps-stop" value="92" step="0.01"></div>
+    </div>
+    <div id="ps-result"></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Portfolio heat</h3>
+      <div class="sub">Total planned loss across open positions if every stop were hit. Ceiling: 2%.</div></div></div>
+    <div class="row">
+      <div class="field"><label>Trading capital ($)</label>
+        <input type="number" id="heat-capital2" data-path="phase3.heat.capital" value="${esc(S.phase3.heat.capital)}"></div>
+    </div>
+    <div id="heat-result2"></div>
+    <div class="small" style="margin-top:8px">Open positions come from your <a href="#journal">journal</a>.</div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Quick reference — risk per trade</h3></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Capital</th><th class="num">0.5% risk</th><th class="num">1% risk (only after review)</th></tr></thead>
+      <tbody>
+        ${[500,1000,2500,5000,10000].map(c=>`<tr>
+          <td class="mono">${money(c,0)}</td>
+          <td class="num">${money(c*0.005)}</td>
+          <td class="num">${money(c*0.01)}</td></tr>`).join("")}
+      </tbody>
+    </table></div>
+    <p class="small" style="margin-top:12px">
+      0.5% of a $500 sandbox is only $2.50 — often too small to size properly.
+      That is why Phase 4 asks you to choose, in writing, between fractional shares at up to 1% ($5) or staying in simulation.
+    </p>
+  </section>
+  `;
+}
+
+function calcPositionSize(){
+  const capital = num(document.getElementById("ps-capital")?.value);
+  const riskPct  = num(document.getElementById("ps-risk")?.value);
+  const entry    = num(document.getElementById("ps-entry")?.value);
+  const stop     = num(document.getElementById("ps-stop")?.value);
+
+  const out = document.getElementById("ps-result");
+  if (!out) return;
+
+  const riskBudget = capital * riskPct / 100;
+  const riskPerShare = Math.abs(entry - stop);
+
+  if (!capital || !entry || !stop || riskPerShare === 0){
+    out.innerHTML = `<div class="notice warn" style="margin-top:14px">Enter capital, entry and stop prices (they must differ) to see the result.</div>`;
+    return;
+  }
+
+  const shares = Math.floor(riskBudget / riskPerShare);
+  const posValue = shares * entry;
+  const plannedLoss = shares * riskPerShare;
+  const posPctOfCapital = capital ? posValue / capital : 0;
+  const tooBig = posPctOfCapital > 1;
+
+  out.innerHTML = `
+    <div class="grid g3" style="margin-top:16px">
+      ${statBox("Risk budget", money(riskBudget), `${riskPct}% of ${money(capital,0)}`)}
+      ${statBox("Risk per share", money(riskPerShare), `|${money(entry)} − ${money(stop)}|`)}
+      ${statBox("Shares to buy", shares, "Rounded down")}
+      ${statBox("Position value", money(posValue), `${pct(posPctOfCapital)} of capital`)}
+      ${statBox("Planned loss at stop", money(plannedLoss), "Not the same as position value", "neg")}
+      ${statBox("Portfolio heat ceiling", money(capital*0.02), "2% of capital, all positions")}
+    </div>
+    ${shares === 0 ? `<div class="notice warn" style="margin-top:14px">
+      <strong>Zero shares fit inside this risk budget.</strong>
+      The risk per share is larger than your entire risk budget.
+      Options: widen your stop only if the thesis genuinely supports it, find a tighter setup, use fractional shares, or skip the trade.
+      <strong>Never raise your risk percentage to make the numbers work.</strong>
+    </div>` : ""}
+    ${tooBig ? `<div class="notice warn" style="margin-top:14px">
+      This position would be <strong>${pct(posPctOfCapital)}</strong> of your capital.
+      Position value and planned loss are different numbers — but a position that large is still a concentration risk.
+    </div>` : ""}
+    ${shares > 0 && posValue > capital ? `<div class="notice danger" style="margin-top:14px">
+      The position value exceeds your capital. You cannot fund this trade. Reduce size or skip it.
+    </div>` : ""}
+  `;
+}
+
+function renderHeat(elId){
+  const el = document.getElementById(elId);
+  if (!el) return;
+  const heat = portfolioHeat();
+  const over = heat.pctOf > 0.02;
+  el.innerHTML = `
+    <div class="grid g3" style="margin-top:10px">
+      ${statBox("Open positions", heat.open.length, "From the journal")}
+      ${statBox("Total planned risk", money(heat.total), "If every stop were hit")}
+      ${statBox("Heat", pct(heat.pctOf), "Ceiling 2%", over ? "neg" : "")}
+    </div>
+    ${over ? `<div class="notice danger" style="margin-top:12px">
+      <strong>Portfolio heat is above the 2% ceiling.</strong>
+      Do not add new positions until heat is back under the limit. Heat is not the maximum possible loss,
+      since gaps and correlated positions can exceed it.
+    </div>` : heat.open.length ? `<div class="notice ok" style="margin-top:12px">Heat is within the 2% ceiling.</div>` : ""}
+  `;
+}
+
+/* ============================================================
+   16. VIEW — THESIS BUILDER
+   ============================================================ */
+
+function viewThesis(){
+  return `
+  ${pageHeader("Thesis Builder", "A thesis is a decision document, not a justification for buying something you already want.")}
+
+  <section class="card">
+    <div class="card-head"><div><h3>New thesis</h3></div></div>
+    <form id="thesis-form">
+      <h4>Identification</h4>
+      <div class="row">
+        <div class="field"><label>Ticker</label><input name="ticker" placeholder="e.g. KO" required></div>
+        <div class="field"><label>Company or fund</label><input name="company"></div>
+        <div class="field"><label>Industry</label><input name="industry"></div>
+        <div class="field"><label>Horizon</label><input name="horizon" placeholder="e.g. 3–5 years"></div>
+        <div class="field"><label>Type</label>
+          <select name="type"><option>Long-term</option><option>Swing trade</option><option>Other</option></select></div>
+      </div>
+
+      <h4>Business</h4>
+      <div class="field"><label>How does it make money?</label><textarea name="howMoney" style="min-height:56px"></textarea></div>
+      <div class="field"><label>What is its competitive advantage?</label><textarea name="advantage" style="min-height:56px"></textarea></div>
+      <div class="row">
+        <div class="field"><label>Revenue and profit trends</label><input name="trends"></div>
+        <div class="field"><label>Balance sheet strength</label><input name="balance"></div>
+      </div>
+      <div class="field"><label>Does it generate sustainable cash flow?</label><textarea name="cashflow" style="min-height:56px"></textarea></div>
+      <div class="field"><label>What valuation am I paying, and versus what alternatives?</label><textarea name="valuation" style="min-height:56px"></textarea></div>
+
+      <h4>Rationale</h4>
+      <div class="field"><label>Why consider this?</label><textarea name="why" style="min-height:56px"></textarea></div>
+      <div class="field"><label>What evidence supports it?</label><textarea name="evidence" style="min-height:56px"></textarea></div>
+      <div class="field"><label>What could change the market's view?</label><textarea name="changeView" style="min-height:56px"></textarea></div>
+      <div class="field"><label>Main risks</label><textarea name="risks" style="min-height:56px"></textarea></div>
+      <div class="field"><label>What would prove me wrong?</label><textarea name="wrong" style="min-height:56px"></textarea></div>
+      <div class="field"><label>My thesis in three sentences</label><textarea name="threeSentences" style="min-height:70px" placeholder="If you cannot do this, you do not have a thesis yet."></textarea></div>
+
+      <h4>Execution plan (if trading)</h4>
+      <div class="row">
+        <div class="field"><label>Entry trigger and price</label><input name="entryTrigger"></div>
+        <div class="field"><label>Stop (invalidation) level</label><input name="stopLevel"></div>
+        <div class="field"><label>Target or exit criteria</label><input name="target"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Risk budget and position size</label><input name="riskBudget"></div>
+        <div class="field"><label>Expected holding period</label><input name="holding"></div>
+        <div class="field"><label>Estimated costs</label><input name="costs"></div>
+      </div>
+
+      <h4>Decision</h4>
+      <div class="row">
+        <div class="field"><label>Decision</label>
+          <select name="decision"><option>Watch</option><option>Buy</option><option>Reject</option></select></div>
+        <div class="field"><label>Date reviewed</label><input type="date" name="dateReviewed" value="${todayISO()}"></div>
+        <div class="field"><label>What triggers another review</label><input name="reviewTrigger"></div>
+      </div>
+
+      <button class="btn primary" type="submit">Save thesis</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Saved theses (${S.theses.length})</h3></div>
+      <div class="inline no-print" style="margin-left:auto">
+        <button class="btn sm" data-act="print">Print / PDF</button>
+      </div>
+    </div>
+    ${S.theses.length ? S.theses.slice().reverse().map(t=>`
+      <details>
+        <summary>
+          <strong>${esc(t.ticker||"—")}</strong> · ${esc(t.company||"")}
+          <span class="tag ${t.decision==="Buy"?"ok":t.decision==="Reject"?"danger":""}">${esc(t.decision||"Watch")}</span>
+          <span class="small">${esc(t.dateReviewed||"")}</span>
+        </summary>
+        <div class="kv" style="margin-bottom:10px">
+          <dt>Type</dt><dd>${esc(t.type||"—")}</dd>
+          <dt>Horizon</dt><dd>${esc(t.horizon||"—")}</dd>
+          <dt>Industry</dt><dd>${esc(t.industry||"—")}</dd>
+        </div>
+        ${t.threeSentences ? `<p style="font-size:.9rem"><strong>In three sentences:</strong> ${esc(t.threeSentences)}</p>` : ""}
+        ${t.wrong ? `<p style="font-size:.87rem"><strong>Proven wrong if:</strong> ${esc(t.wrong)}</p>` : ""}
+        ${t.entryTrigger ? `<p style="font-size:.87rem"><strong>Entry:</strong> ${esc(t.entryTrigger)} · <strong>Stop:</strong> ${esc(t.stopLevel||"—")} · <strong>Target:</strong> ${esc(t.target||"—")}</p>` : ""}
+        <details style="background:transparent;border:none;padding:0;margin-top:8px">
+          <summary style="font-size:.8rem;color:var(--muted)">Show full thesis</summary>
+          <div class="kv" style="grid-template-columns:140px 1fr;font-size:.83rem;margin-top:8px">
+            ${[["How it makes money","howMoney"],["Competitive advantage","advantage"],["Trends","trends"],["Balance sheet","balance"],
+               ["Cash flow","cashflow"],["Valuation","valuation"],["Why consider","why"],["Evidence","evidence"],
+               ["What could change the view","changeView"],["Main risks","risks"],["Proven wrong if","wrong"],
+               ["Risk budget / size","riskBudget"],["Holding period","holding"],["Estimated costs","costs"],["Review trigger","reviewTrigger"]]
+              .filter(([,k])=>t[k]).map(([l,k])=>`<dt>${esc(l)}</dt><dd style="font-family:var(--sans)">${esc(t[k])}</dd>`).join("")}
+          </div>
+        </details>
+        <div class="inline" style="margin-top:10px">
+          <a class="btn sm" href="#journal">Link to a trade</a>
+          <button class="btn sm danger" data-act="del-thesis" data-id="${t.id}">Delete</button>
+        </div>
+      </details>
+    `).join("") : `<div class="empty">No theses yet. Write one per week during Phase 2.</div>`}
+  </section>
+  `;
+}
+
+/* ============================================================
+   17. VIEW — WATCHLIST
+   ============================================================ */
+
+function viewWatchlist(){
+  const cats = ["Watching","Analyzing","Ready to trade","Holding"];
+  return `
+  ${pageHeader("Watchlist", "Start with 5–10 companies and broad ETFs. A watchlist is a filter, not a shopping list.")}
+
+  <section class="card">
+    <div class="card-head"><div><h3>Add a ticker</h3></div></div>
+    <div class="row">
+      <div class="field"><label>Ticker</label><input id="wl-ticker" placeholder="e.g. VTI"></div>
+      <div class="field"><label>Name / note</label><input id="wl-name" placeholder="e.g. Total US market ETF"></div>
+      <div class="field"><label>Category</label>
+        <select id="wl-cat">${cats.map(c=>`<option>${c}</option>`).join("")}</select></div>
+      <div class="field"><label>Price alert level</label><input type="number" step="0.01" id="wl-alert" placeholder="optional"></div>
+    </div>
+    <div class="field"><label>Why am I watching this?</label><input id="wl-note" placeholder="One line. If you cannot write it, you are not watching — you are hoping."></div>
+    <button class="btn primary" data-act="add-watch">Add to watchlist</button>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Watchlist (${S.watchlist.length})</h3>
+      <div class="sub">Target: 5–10 names at setup.</div></div>
+      <div class="inline no-print" style="margin-left:auto">
+        <button class="btn sm" data-act="print">Print / PDF</button>
+      </div>
+    </div>
+    ${S.watchlist.length ? cats.map(cat => {
+      const items = S.watchlist.filter(w => w.category === cat);
+      if (!items.length) return "";
+      return `<h4 style="margin-top:16px">${esc(cat)} (${items.length})</h4>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Ticker</th><th>Name</th><th>Why</th><th class="num">Alert</th><th>Thesis?</th><th></th></tr></thead>
+          <tbody>${items.map(w=>{
+            const hasThesis = S.theses.some(t => (t.ticker||"").toUpperCase() === (w.ticker||"").toUpperCase());
+            return `<tr>
+              <td><strong>${esc(w.ticker)}</strong></td>
+              <td>${esc(w.name||"")}</td>
+              <td style="white-space:normal;max-width:340px">${esc(w.note||"")}</td>
+              <td class="num">${w.alert?money(num(w.alert)):"—"}</td>
+              <td>${hasThesis?'<span class="tag ok">yes</span>':'<span class="tag">no</span>'}</td>
+              <td>
+                <select data-act="watch-cat" data-id="${w.id}" style="width:auto;padding:3px 6px;font-size:.75rem">
+                  ${cats.map(c=>`<option ${w.category===c?"selected":""}>${c}</option>`).join("")}
+                </select>
+                <button class="btn sm ghost" data-act="del-watch" data-id="${w.id}">✕</button>
+              </td>
+            </tr>`;
+          }).join("")}</tbody>
+        </table></div>`;
+    }).join("") : `<div class="empty">No tickers on the watchlist yet.</div>`}
+  </section>
+  `;
+}
+
+/* ============================================================
+   18. VIEW — RED FLAGS
+   ============================================================ */
+
+function viewRedFlags(){
+  const active = RED_FLAGS.filter(f => S.redFlags[f]);
+  return `
+  ${pageHeader("Red Flags", "If any red flag appears, stop trading, write down what happened, review the evidence, and return to simulation if needed.")}
+
+  ${active.length ? `
+  <div class="notice danger">
+    <strong>${active.length} red flag${active.length>1?"s":""} active.</strong>
+    Follow the action steps below before your next trade.
+  </div>
+  <section class="card">
+    <div class="card-head"><div><h3>Action steps — do these now</h3></div></div>
+    <ol style="margin:0;padding-left:22px;font-size:.9rem;line-height:2">
+      <li>Stop trading.</li>
+      <li>Write down what happened.</li>
+      <li>Review the evidence.</li>
+      <li>Return to simulation if needed.</li>
+      <li><strong>Never fix a trading problem by making positions bigger.</strong></li>
+    </ol>
+  </section>` : `<div class="notice ok">No red flags active. Keep the journal current — it is your early-warning system.</div>`}
+
+  <section class="card">
+    <div class="card-head"><div><h3>Checklist</h3>
+      <div class="sub">Tick honestly. This tool is only useful if it is uncomfortable sometimes.</div></div></div>
+    ${RED_FLAGS.map(f => `
+      <label class="check ${S.redFlags[f]?"done":""}" style="${S.redFlags[f]?"background:var(--danger-soft)":""}">
+        <input type="checkbox" data-act="toggle-flag-rf" data-id="${esc(f)}" ${S.redFlags[f]?"checked":""}>
+        <span class="lbl">${esc(f)}</span>
+      </label>`).join("")}
+    ${active.length ? `<div class="inline no-print" style="margin-top:14px">
+      <button class="btn" data-act="clear-flags">Clear all flags (only if genuinely resolved)</button>
+    </div>` : ""}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Drawdown thresholds</h3></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th class="num">Drawdown</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td class="num">5%</td><td>Review your risk, execution and rule-following.</td></tr>
+        <tr><td class="num">10%</td><td>Pause new discretionary trades and do a full review.</td></tr>
+        <tr><td class="num">20%</td><td>Stop live trading, reassess, and return to simulation before any restart.</td></tr>
+      </tbody>
+    </table></div>
+    ${(()=>{
+      const m = computeMetrics();
+      return m.maxDD > 0 ? `<div class="notice warn" style="margin-top:12px">
+        Your maximum recorded drawdown is <strong>${money(m.maxDD)}</strong> (${pct(m.maxDDPct)} from peak).
+        ${m.maxDDPct >= 0.20 ? "This is past the 20% threshold: stop live trading and reassess." :
+          m.maxDDPct >= 0.10 ? "This is past the 10% threshold: pause new discretionary trades." :
+          m.maxDDPct >= 0.05 ? "This is past the 5% threshold: review your risk and execution." :
+          "Within limits."}
+      </div>` : "";
+    })()}
+  </section>
+  `;
+}
+
+/* ============================================================
+   19. VIEW — RESOURCES & GLOSSARY
+   ============================================================ */
+
+function viewResources(){
+  return `
+  ${pageHeader("Resources", "Treat trading books as education, not proof that a strategy will work for you. Listen to podcasts critically, and separate analysis from marketing and opinion.")}
+
+  ${Object.entries(RESOURCES).map(([type, items]) => `
+    <section class="card">
+      <div class="card-head"><div><h3>${esc(type)}</h3></div></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Pick</th><th>Best for</th></tr></thead>
+        <tbody>${items.map(([n,d])=>`<tr><td><strong>${esc(n)}</strong></td><td style="white-space:normal">${esc(d)}</td></tr>`).join("")}</tbody>
+      </table></div>
+    </section>`).join("")}
+
+  <section class="card">
+    <div class="card-head"><div><h3>Weekly routine</h3>
+      <div class="sub">The full routine takes about 45–60 minutes a day. If that is too much, keep the Saturday and Sunday sessions and trim the daily news time — consistency beats volume.</div></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>When</th><th>Time</th><th>What to do</th></tr></thead>
+      <tbody>
+        <tr><td>Daily</td><td>45–60 min</td><td style="white-space:normal">20–30 min reputable news; 10–15 min check open positions and risk limits; 5–10 min update the journal. Do not check prices constantly.</td></tr>
+        <tr><td>Saturday</td><td>2 hours</td><td style="white-space:normal">Review the market and economy; read one section of an annual report; update the watchlist; review completed trades; name one recurring mistake.</td></tr>
+        <tr><td>Sunday</td><td>1 hour</td><td style="white-space:normal">Write or update one thesis; set price alerts; review planned entries and exits; reread your rules contract; plan the week.</td></tr>
+        <tr><td>Monthly</td><td>2 hours</td><td style="white-space:normal">Review all trades; calculate metrics; reconcile costs; check allocation and concentration; pick one behavioural issue to fix.</td></tr>
+        <tr><td>Quarterly</td><td>3 hours</td><td style="white-space:normal">Full performance review; rebalance only if your policy says so; review tax and reporting obligations where you live; check whether your goals changed; change strategy only with documented evidence.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  `;
+}
+
+let glossaryQuery = "";
+
+function viewGlossary(){
+  const q = glossaryQuery.toLowerCase();
+  const all = GLOSSARY.concat(S.customGlossary.map(c => [c.term, c.def]));
+  const filtered = q ? all.filter(([t,d]) => t.toLowerCase().includes(q) || d.toLowerCase().includes(q)) : all;
+
+  return `
+  ${pageHeader("Glossary", `${all.length} terms. Search by term or meaning.`)}
+
+  <section class="card">
+    <div class="field">
+      <label for="gloss-q">Search</label>
+      <input id="gloss-q" value="${esc(glossaryQuery)}" placeholder="e.g. slippage, expectancy, R-multiple" data-act="gloss-search">
+    </div>
+    ${filtered.length ? `
+    <div class="tbl-wrap" style="margin-top:8px"><table>
+      <thead><tr><th style="width:220px">Term</th><th>Plain meaning</th></tr></thead>
+      <tbody>${filtered.map(([t,d])=>`<tr>
+        <td><strong>${esc(t)}</strong></td>
+        <td style="white-space:normal">${esc(d)}</td></tr>`).join("")}</tbody>
+    </table></div>` : `<div class="empty">No terms match "${esc(glossaryQuery)}".</div>`}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Add your own term</h3>
+      <div class="sub">Writing a definition in your own words is how it sticks.</div></div></div>
+    <div class="row">
+      <div class="field"><label>Term</label><input id="cg-term" placeholder="e.g. Bid-ask bounce"></div>
+      <div class="field"><label>Your definition</label><input id="cg-def" placeholder="In your own words"></div>
+    </div>
+    <button class="btn primary" data-act="add-gloss">Add term</button>
+    ${S.customGlossary.length ? `<div class="divider"></div>
+      <h4>Your terms</h4>
+      ${S.customGlossary.map((c,i)=>`<div class="inline" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)">
+        <span><strong>${esc(c.term)}</strong> — <span class="small">${esc(c.def)}</span></span>
+        <button class="btn sm ghost" data-act="del-gloss" data-id="${i}">✕</button></div>`).join("")}` : ""}
+  </section>
+  `;
+}
+
+/* ============================================================
+   20. VIEW — SETTINGS
+   ============================================================ */
+
+function viewSettings(){
+  const p = S.profile;
+  return `
+  ${pageHeader("Settings", "Everything is stored locally in this browser. Nothing is uploaded anywhere.")}
+
+  <section class="card">
+    <div class="card-head"><div><h3>Profile</h3></div></div>
+    <div class="row">
+      <div class="field"><label>Name</label><input data-path="profile.name" value="${esc(p.name)}" placeholder="Optional"></div>
+      <div class="field"><label>Plan start date</label><input type="date" data-path="profile.startDate" value="${esc(p.startDate)}"></div>
+      <div class="field"><label>Current phase (manual override)</label>
+        <select data-act="set-phase">
+          ${PHASES.map(ph=>`<option value="${ph.n}" ${p.currentPhase===ph.n?"selected":""}>Phase ${ph.n} · ${esc(ph.name)}</option>`).join("")}
+        </select></div>
+    </div>
+    <div class="field"><label>Goal</label><textarea data-path="profile.goal" style="min-height:56px" placeholder="What are you actually trying to achieve?">${esc(p.goal)}</textarea></div>
+    <div class="row">
+      <div class="field"><label>Time horizon</label><input data-path="profile.horizon" value="${esc(p.horizon)}" placeholder="e.g. 10+ years"></div>
+      <div class="field"><label>Most you could lose without real harm ($)</label><input type="number" data-path="profile.maxLoss" value="${esc(p.maxLoss)}" placeholder="e.g. 500"></div>
+    </div>
+    <p class="small">If your answer to the last field is smaller than what you have in the sandbox, reduce the sandbox.</p>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Phase status</h3></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Phase</th><th>Window</th><th class="num">Progress</th><th>Gate</th><th></th></tr></thead>
+      <tbody>
+        ${PHASES.map(ph=>{
+          const frac = phaseProgress(ph.n);
+          const passed = gatePassed(ph.n);
+          return `<tr>
+            <td><strong>${ph.n} · ${esc(ph.name)}</strong></td>
+            <td>${esc(ph.when)}</td>
+            <td class="num">${(frac*100).toFixed(0)}%</td>
+            <td>${passed?'<span class="tag ok">passed</span>':'<span class="tag">open</span>'}</td>
+            <td>${passed && ph.n < 4 && p.currentPhase < ph.n+1
+              ? `<button class="btn sm" data-act="advance" data-phase="${ph.n+1}">Advance</button>` : ""}</td>
+          </tr>`;
+        }).join("")}
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Data</h3>
+      <div class="sub">Your data lives in this browser's local storage. Export it before clearing your browser.</div></div></div>
+    <div class="inline">
+      <button class="btn" data-act="export-json">Export all data (JSON)</button>
+      <button class="btn" data-act="export-csv">Export trades (CSV)</button>
+      <label class="btn" style="cursor:pointer">
+        Import data (JSON)
+        <input type="file" accept=".json" data-act="import-json" style="display:none">
+      </label>
+    </div>
+    <div class="divider"></div>
+    <h4>Danger zone</h4>
+    <p class="small">Resetting erases your journal, theses, analyses and progress. This cannot be undone.</p>
+    <button class="btn danger" data-act="reset-all">Reset everything</button>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>About this tool</h3></div></div>
+    <p style="font-size:.87rem">
+      This site is a companion to <em>The 12-Month Beginner Investor Plan</em>. It is an educational plan,
+      not a promise of returns and not financial advice. Nothing here connects to a broker — you enter
+      your own trades. Success is measured by the quality of your decisions, the consistency of your risk
+      controls, your understanding of what you own, and your honesty about the evidence.
+    </p>
+  </section>
+  `;
+}
+
+/* ============================================================
+   21. ROUTER
+   ============================================================ */
+
+const VIEWS = {
+  dashboard: viewDashboard,
+  phase0: viewPhase0,
+  phase1: viewPhase1,
+  phase2: viewPhase2,
+  phase3: viewPhase3,
+  phase4: viewPhase4,
+  journal: viewJournal,
+  metrics: viewMetrics,
+  calculator: viewCalculator,
+  thesis: viewThesis,
+  watchlist: viewWatchlist,
+  redflags: viewRedFlags,
+  resources: viewResources,
+  glossary: viewGlossary,
+  settings: viewSettings
+};
+
+let lastRoute = null;
+function render(){
+  const keepY = (lastRoute === route) ? window.scrollY : 0;
+  lastRoute = route;
+  const main = document.getElementById("main");
+  main.innerHTML = (VIEWS[route] || viewDashboard)();
+  renderNav();
+  document.getElementById("sidebar").classList.remove("open");
+  // live calculators
+  calcPositionSize();
+  renderHeat("heat-result");
+  renderHeat("heat-result2");
+  window.scrollTo(0, keepY);
+}
+
+window.addEventListener("hashchange", () => {
+  const r = (location.hash || "#dashboard").slice(1);
+  route = VALID.includes(r) ? r : "dashboard";
+  render();
+});
+
+/* ============================================================
+   22. EVENT HANDLERS
+   ============================================================ */
+
+document.addEventListener("input", e => {
+  const t = e.target;
+
+  // glossary search — re-render only that view
+  if (t.dataset.act === "gloss-search"){
+    glossaryQuery = t.value;
+    const main = document.getElementById("main");
+    main.innerHTML = viewGlossary();
+    const q = document.getElementById("gloss-q");
+    if (q){ q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
+    return;
+  }
+
+  // filters
+  if (t.dataset.act === "filter"){
+    journalFilter[t.dataset.key] = t.value;
+    const main = document.getElementById("main");
+    main.innerHTML = viewJournal();
+    if (t.dataset.key === "ticker"){
+      const again = main.querySelector('input[data-key="ticker"]');
+      if (again){ again.focus(); again.setSelectionRange(again.value.length, again.value.length); }
+    }
+    return;
+  }
+
+  // generic path saving
+  if (t.dataset.path){
+    setPath(t.dataset.path, t.value);
+    if (t.dataset.path === "phase3.heat.capital"){
+      calcPositionSize();
+      renderHeat("heat-result");
+      renderHeat("heat-result2");
+    }
+  }
+});
+
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.dataset.act === "watch-cat"){
+    const w = S.watchlist.find(x => x.id === t.dataset.id);
+    if (w){ w.category = t.value; save(); render(); }
+    return;
+  }
+  if (t.dataset.act === "set-phase"){
+    S.profile.currentPhase = parseInt(t.value, 10);
+    save(); render();
+    return;
+  }
+});
+
+document.addEventListener("click", e => {
+  const btn = e.target.closest("[data-act]");
+  if (!btn) return;
+  const act = btn.dataset.act;
+  if (btn.tagName === "SELECT") return;
+  if (btn.tagName === "INPUT" && btn.type !== "checkbox" && btn.type !== "radio") return;
+
+  switch(act){
+
+    case "toggle-theme": {
+      const cur = document.documentElement.getAttribute("data-theme");
+      const next = cur === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      S.profile.theme = next; save();
+      break;
+    }
+
+    case "toggle-nav":
+      document.getElementById("sidebar").classList.toggle("open");
+      break;
+
+    case "print":
+      window.print();
+      break;
+
+    /* ---- phase 0 ---- */
+    case "toggle-p0": {
+      const id = btn.dataset.id;
+      S.phase0.checklist[id] = !S.phase0.checklist[id];
+      save(); render();
+      break;
+    }
+    case "toggle-flag": {
+      const id = btn.dataset.id;
+      S.phase0.allocation[id] = !S.phase0.allocation[id];
+      save(); render();
+      break;
+    }
+    case "toggle-restrictions":
+      S.phase0.restrictionsRead = !S.phase0.restrictionsRead;
+      save(); render();
+      break;
+    case "sign-contract": {
+      const inp = document.getElementById("sig-name");
+      const name = (inp?.value || "").trim();
+      if (!name){ alert("Please type your full name to sign."); return; }
+      S.phase0.contract = { name, date: todayISO() };
+      save(); render();
+      break;
+    }
+    case "clear-contract":
+      if (confirm("Clear your signature on the rules contract?")){
+        S.phase0.contract = { name:"", date:"" };
+        save(); render();
+      }
+      break;
+
+    /* ---- phase 1 ---- */
+    case "toggle-p1m": {
+      const id = btn.dataset.id;
+      S.phase1.milestones[id] = !S.phase1.milestones[id];
+      save(); render();
+      break;
+    }
+    case "toggle-quiz":
+      S.phase1.quizDone = !S.phase1.quizDone;
+      save(); render();
+      break;
+    case "add-daily": {
+      const d = document.getElementById("dl-date").value || todayISO();
+      S.phase1.dailyLog[d] = {
+        news: document.getElementById("dl-news").value,
+        book: document.getElementById("dl-book").value,
+        learned: document.getElementById("dl-learned").value,
+        question: document.getElementById("dl-question").value
+      };
+      S.routine[d] = true;
+      save(); render();
+      break;
+    }
+    case "add-paper-order": {
+      const ticker = document.getElementById("po-ticker").value.trim();
+      if (!ticker){ alert("Ticker is required."); return; }
+      S.paperOrders.push({
+        id: uid(),
+        date: document.getElementById("po-date").value || todayISO(),
+        ticker,
+        type: document.getElementById("po-type").value,
+        expected: document.getElementById("po-expected").value,
+        fill: document.getElementById("po-fill").value,
+        cost: document.getElementById("po-cost").value,
+        mistake: document.getElementById("po-mistake").value,
+        fix: document.getElementById("po-fix").value,
+        violation: document.getElementById("po-violation").value
+      });
+      save(); render();
+      break;
+    }
+    case "del-paper-order": {
+      if (!confirm("Delete this simulated order?")) return;
+      S.paperOrders = S.paperOrders.filter(o => o.id !== btn.dataset.id);
+      save(); render();
+      break;
+    }
+
+    /* ---- phase 2 ---- */
+    case "add-company":
+      S.companies.push({
+        id: uid(), ticker:"", name:"", industry:"",
+        s1:"", s2:"", s3:"", s7:"", revTrend:"", debtLevel:"", cashGen:"",
+        pe:"", ps:"", fcf:"", valuation:"", pess:"", base:"", opt:""
+      });
+      save(); render();
+      break;
+    case "del-company": {
+      if (!confirm("Delete this company analysis?")) return;
+      S.companies = S.companies.filter(c => c.id !== btn.dataset.id);
+      save(); render();
+      break;
+    }
+    case "toggle-p2m": {
+      const id = btn.dataset.id;
+      S.phase2.milestones[id] = !S.phase2.milestones[id];
+      save(); render();
+      break;
+    }
+    case "add-bias": {
+      const note = document.getElementById("bias-note").value.trim();
+      if (!note){ alert("Write how the bias affected a decision."); return; }
+      S.biasLog.push({
+        id: uid(),
+        bias: document.getElementById("bias-sel").value,
+        date: document.getElementById("bias-date").value || todayISO(),
+        note
+      });
+      save(); render();
+      break;
+    }
+    case "del-bias":
+      S.biasLog = S.biasLog.filter(b => b.id !== btn.dataset.id);
+      save(); render();
+      break;
+
+    /* ---- phase 3 ---- */
+    case "toggle-p3m": {
+      const id = btn.dataset.id;
+      S.phase3.milestones[id] = !S.phase3.milestones[id];
+      save(); render();
+      break;
+    }
+    case "sign-plan": {
+      const inp = document.getElementById("plan-sig");
+      const name = (inp?.value || "").trim();
+      if (!name){ alert("Please type your full name to sign your trading plan."); return; }
+      S.phase3.planSigned = { name, date: todayISO() };
+      save(); render();
+      break;
+    }
+    case "clear-plan-sig":
+      if (confirm("Clear your signature on the trading plan?")){
+        S.phase3.planSigned = { name:"", date:"" };
+        save(); render();
+      }
+      break;
+
+    /* ---- phase 4 ---- */
+    case "toggle-p4r": {
+      const id = btn.dataset.id;
+      S.phase4.readiness[id] = !S.phase4.readiness[id];
+      save(); render();
+      break;
+    }
+    case "set-choice":
+      S.phase4.choice = btn.value;
+      save(); render();
+      break;
+    case "set-decision":
+      S.phase4.decision = btn.value;
+      save(); render();
+      break;
+
+    /* ---- routine ---- */
+    case "toggle-routine": {
+      const d = todayISO();
+      S.routine[d] = !S.routine[d];
+      save(); render();
+      break;
+    }
+
+    /* ---- journal ---- */
+    case "del-trade": {
+      if (!confirm("Delete this trade permanently?")) return;
+      S.journal = S.journal.filter(t => t.id !== btn.dataset.id);
+      save(); render();
+      break;
+    }
+    case "export-csv":
+      exportTradesCSV();
+      break;
+
+    /* ---- thesis ---- */
+    case "del-thesis":
+      S.theses = S.theses.filter(t => t.id !== btn.dataset.id);
+      save(); render();
+      break;
+
+    /* ---- watchlist ---- */
+    case "add-watch": {
+      const ticker = document.getElementById("wl-ticker").value.trim().toUpperCase();
+      if (!ticker){ alert("Ticker is required."); return; }
+      S.watchlist.push({
+        id: uid(), ticker,
+        name: document.getElementById("wl-name").value,
+        category: document.getElementById("wl-cat").value,
+        alert: document.getElementById("wl-alert").value,
+        note: document.getElementById("wl-note").value
+      });
+      save(); render();
+      break;
+    }
+    case "del-watch":
+      S.watchlist = S.watchlist.filter(w => w.id !== btn.dataset.id);
+      save(); render();
+      break;
+
+    /* ---- red flags ---- */
+    case "toggle-flag-rf": {
+      const id = btn.dataset.id;
+      S.redFlags[id] = !S.redFlags[id];
+      save(); render();
+      break;
+    }
+    case "clear-flags":
+      if (!confirm("Clear all red flags? Only do this if they are genuinely resolved.")) return;
+      S.redFlags = {};
+      save(); render();
+      break;
+
+    /* ---- glossary ---- */
+    case "add-gloss": {
+      const term = document.getElementById("cg-term").value.trim();
+      const def = document.getElementById("cg-def").value.trim();
+      if (!term || !def){ alert("Both a term and a definition are needed."); return; }
+      S.customGlossary.push({ term, def });
+      save(); render();
+      break;
+    }
+    case "del-gloss": {
+      S.customGlossary.splice(parseInt(btn.dataset.id,10), 1);
+      save(); render();
+      break;
+    }
+
+    /* ---- advance ---- */
+    case "advance": {
+      const target = parseInt(btn.dataset.phase, 10);
+      if (!gatePassed(target - 1)){
+        alert("That gate is not passed yet. Complete the milestones first — calendar time is not the requirement.");
+        return;
+      }
+      if (!confirm(`Advance to Phase ${target}? You can change this manually in Settings at any time.`)) return;
+      S.profile.currentPhase = target;
+      save();
+      location.hash = "#phase" + target;
+      render();
+      break;
+    }
+
+    /* ---- data ---- */
+    case "export-json":
+      download("12-month-plan-data.json", JSON.stringify(S, null, 2), "application/json");
+      break;
+    case "reset-all": {
+      if (!confirm("This erases everything: journal, theses, analyses and progress. Continue?")) return;
+      if (!confirm("Last chance. Are you sure?")) return;
+      localStorage.removeItem(STORE_KEY);
+      S = defaultState();
+      save();
+      location.hash = "#dashboard";
+      render();
+      break;
+    }
+  }
+});
+
+/* forms */
+document.addEventListener("submit", e => {
+  e.preventDefault();
+  const f = e.target;
+
+  if (f.id === "trade-form"){
+    const data = Object.fromEntries(new FormData(f).entries());
+    data.id = uid();
+    data.num = String(S.journal.length + 1);
+    S.journal.push(data);
+    save(); render();
+    return;
+  }
+
+  if (f.id === "thesis-form"){
+    const data = Object.fromEntries(new FormData(f).entries());
+    data.id = uid();
+    S.theses.push(data);
+    save(); render();
+    return;
+  }
+});
+
+/* import */
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.dataset && t.dataset.act === "import-json"){
+    const file = t.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const imported = JSON.parse(reader.result);
+        if (!imported || typeof imported !== "object") throw new Error("bad file");
+        if (!confirm("Importing replaces all current data. Continue?")) return;
+        S = Object.assign(defaultState(), imported);
+        save(); render();
+      } catch(err){
+        alert("That file could not be read as valid plan data.");
+      }
+    };
+    reader.readAsText(file);
+  }
+});
+
+/* ============================================================
+   23. EXPORT
+   ============================================================ */
+
+function exportTradesCSV(){
+  const headers = [
+    "num","date","ticker","secType","strategy","mode","status",
+    "entry","stop","size","plannedRisk","entryRationale","evidence","target","exitPlan",
+    "exitPrice","costs","grossPL","netPL","RMultiple",
+    "marketConditions","emotionBefore","emotionAfter","violations","lessons"
+  ];
+  const rows = S.journal.map(t => {
+    const risk = tradeRisk(t);
+    const net = tradeNet(t);
+    const r = tradeR(t);
+    const gross = (num(t.exitPrice) && num(t.entry) && num(t.size))
+      ? (num(t.exitPrice) - num(t.entry)) * num(t.size) : "";
+    return [
+      t.num, t.date, t.ticker, t.secType, t.strategy, t.mode, t.status,
+      t.entry, t.stop, t.size, risk ? risk.toFixed(2) : "",
+      t.rationale, t.evidence, t.target, t.exitPlan,
+      t.exitPrice, t.costs,
+      gross === "" ? "" : gross.toFixed(2),
+      net === null ? "" : net.toFixed(2),
+      r === null ? "" : r.toFixed(4),
+      t.marketConditions, t.emotionBefore, t.emotionAfter, t.violations, t.lessons
+    ];
+  });
+
+  const csv = [headers, ...rows]
+    .map(r => r.map(c => `"${String(c ?? "").replace(/"/g, '""').replace(/\r?\n/g, " ")}"`).join(","))
+    .join("\n");
+
+  download(`trade-journal-${todayISO()}.csv`, csv, "text/csv;charset=utf-8");
+}
+
+/* ============================================================
+   24. INIT
+   ============================================================ */
+
+(function init(){
+  document.documentElement.setAttribute("data-theme", S.profile.theme || "light");
+  render();
+})();
+</script>
+</body>
+</html>
