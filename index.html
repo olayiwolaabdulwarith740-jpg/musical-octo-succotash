@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>The 12-Month Beginner Investor Plan</title>
+<title>Sylvia · 12-Month Investor Plan by Akoo</title>
+<meta name="author" content="Akoo">
+<meta name="description" content="Sylvia is Akoo's 12-month plan for learning to invest with discipline.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230B5F66'/%3E%3Cpath d='M22 9.5C22 6 10 6 10 12c0 5.8 12 3 12 8.6 0 3.2-5 4.4-9 2.6' fill='none' stroke='white' stroke-width='2.8' stroke-linecap='round'/%3E%3Ccircle cx='12.6' cy='23.3' r='2.5' fill='%23E39B1B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -170,6 +173,10 @@ html[data-theme="dark"] .stop.done .dot{color:#07161a}
 .trail.play .stop::before{animation:fillbar 1.1s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i)*.22s + .15s)}
 @keyframes fillbar{from{--p:0%}}
 
+.logo{width:34px;height:34px;flex:0 0 34px;display:block}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand-text small{font-family:var(--sans);font-weight:500;font-size:.7rem;color:var(--muted);margin-top:2px}
+.print-only{display:none}
 .tabbar{display:none}
 
 @media(max-width:900px){
@@ -193,6 +200,8 @@ html[data-theme="dark"] .stop.done .dot{color:#07161a}
   *{animation:none!important;transition:none!important}
 }
 @media print{
+  .print-only{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid #0B5F66;font-family:var(--display);font-weight:700;font-size:1.2rem}
+  .print-only small{font-weight:500;font-size:.8rem;color:#555;margin-left:6px}
   .topbar,.sidebar,.tabbar,.no-print{display:none!important}
   main{padding:0;max-width:none}
   .card{break-inside:avoid}
@@ -206,8 +215,8 @@ html[data-theme="dark"] .stop.done .dot{color:#07161a}
 <header class="topbar">
   <button class="menu-btn" data-act="toggle-nav" aria-label="Toggle navigation">☰</button>
   <div class="brand">
-    <span class="brand-mark">12</span>
-    <span class="brand-text">The 12-Month Beginner Investor Plan</span>
+    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="currentColor" style="color:var(--accent)"/><path d="M22 9.5C22 6 10 6 10 12c0 5.8 12 3 12 8.6 0 3.2-5 4.4-9 2.6" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="12.6" cy="23.3" r="2.5" fill="#E39B1B"/></svg>
+    <span class="brand-text">Sylvia<small>by Akoo</small></span>
   </div>
   <div class="top-actions">
     <span class="pill" id="phase-pill">Phase 0 · Setup</span>
@@ -215,6 +224,7 @@ html[data-theme="dark"] .stop.done .dot{color:#07161a}
   </div>
 </header>
 
+<div class="print-only"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="currentColor" style="color:var(--accent)"/><path d="M22 9.5C22 6 10 6 10 12c0 5.8 12 3 12 8.6 0 3.2-5 4.4-9 2.6" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="12.6" cy="23.3" r="2.5" fill="#E39B1B"/></svg><span>Sylvia<small>by Akoo</small></span></div>
 <div class="layout">
   <nav class="sidebar" id="sidebar" aria-label="Main navigation"></nav>
   <main id="main" tabindex="-1"></main>
@@ -233,6 +243,7 @@ html[data-theme="dark"] .stop.done .dot{color:#07161a}
     This is an educational plan, not a promise of returns. Nothing here is financial advice.
     Data is stored only in this browser.
   </p>
+  <p class="small" style="margin:8px 0 0">Sylvia is created and owned by Akoo. &copy; 2026 Akoo. All rights reserved.</p>
 </footer>
 
 <script>
@@ -447,7 +458,8 @@ function defaultState(){
     journal: [],
     redFlags: {},
     routine: {},
-    customGlossary: []
+    customGlossary: [],
+    reviews: {}
   };
 }
 
@@ -456,6 +468,7 @@ try {
   const raw = localStorage.getItem(STORE_KEY);
   S = raw ? Object.assign(defaultState(), JSON.parse(raw)) : defaultState();
 } catch(e){ S = defaultState(); }
+if (!S.reviews) S.reviews = {};
 
 function save(){
   try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); }
@@ -734,12 +747,14 @@ const NAV = [
     { id:"metrics",    label:"Metrics" },
     { id:"thesis",     label:"Thesis Builder" },
     { id:"calculator", label:"Position Calculator" },
-    { id:"watchlist",  label:"Watchlist" }
+    { id:"watchlist",  label:"Watchlist" },
+    { id:"review",     label:"Weekly Review" }
   ]},
   { group:"Reference", items:[
     { id:"redflags",  label:"Red Flags" },
     { id:"resources", label:"Resources" },
     { id:"glossary",  label:"Glossary" },
+    { id:"report",    label:"Plan Report (PDF)" },
     { id:"settings",  label:"Settings" }
   ]}
 ];
@@ -2521,11 +2536,169 @@ function viewSettings(){
   <section class="card">
     <div class="card-head"><div><h3>About this tool</h3></div></div>
     <p style="font-size:.87rem">
-      This site is a companion to <em>The 12-Month Beginner Investor Plan</em>. It is an educational plan,
+      This site is <em>Sylvia</em>, created by Akoo. It is an educational plan,
       not a promise of returns and not financial advice. Nothing here connects to a broker — you enter
       your own trades. Success is measured by the quality of your decisions, the consistency of your risk
       controls, your understanding of what you own, and your honesty about the evidence.
     </p>
+  </section>
+  `;
+}
+
+/* ============================================================
+   VIEWS — WEEKLY REVIEW & PLAN REPORT
+   ============================================================ */
+
+function addDays(iso, n){
+  const d = new Date(iso + "T12:00:00");
+  d.setDate(d.getDate() + n);
+  return todayISO(d);
+}
+let reviewEnd = todayISO();
+
+function viewReview(){
+  const end = reviewEnd, start = addDays(end, -6);
+  const inR = d => !!d && d >= start && d <= end;
+  let routineDays = 0;
+  for (let i = 0; i < 7; i++) if (S.routine[addDays(start, i)]) routineDays++;
+
+  const orders  = S.paperOrders.filter(o => inR(o.date));
+  const trades  = S.journal.filter(t => inR(t.date));
+  const closed  = trades.filter(t => t.status === "closed" && tradeNet(t) !== null);
+  const net     = closed.reduce((a, t) => a + tradeNet(t), 0);
+  const wins    = closed.filter(t => tradeNet(t) > 0).length;
+  const tViol   = trades.filter(t => (t.violations || "").trim());
+  const oViol   = orders.filter(o => (o.violation || "").trim());
+  const learned = Object.entries(S.phase1.dailyLog).filter(([d]) => inR(d)).sort((a,b) => a[0].localeCompare(b[0]));
+  const biases  = S.biasLog.filter(b => inR(b.date));
+  const theses  = S.theses.filter(t => inR(t.dateReviewed));
+  const rv = S.reviews[end] || {};
+  const violTotal = tViol.length + oViol.length;
+
+  const prompts = [
+    ["well",    "What went well this week?"],
+    ["mistake", "Name one recurring mistake."],
+    ["bias",    "Which bias showed up, and how did it affect a decision?"],
+    ["next",    "What is your plan for next week?"]
+  ];
+
+  return `
+  ${pageHeader("Weekly Review", "Seven days, one page. Your journal fills in the numbers; you fill in the honest part.")}
+
+  <section class="card no-print">
+    <div class="row">
+      <div class="field"><label for="rv-end">Week ending</label>
+        <input type="date" id="rv-end" value="${esc(end)}" data-act="rv-end"></div>
+      <div class="field"><label>Covers</label><div style="padding:9px 0" class="mono">${esc(start)} to ${esc(end)}</div></div>
+    </div>
+  </section>
+
+  <div class="grid g4" style="margin-bottom:16px">
+    ${statBox("Routine days", routineDays + " of 7", "Marked complete")}
+    ${statBox("Simulated orders", orders.length, "Logged this week")}
+    ${statBox("Trades closed", closed.length, closed.length ? wins + " winners" : "None closed")}
+    ${statBox("Net result", closed.length ? money(net) : "—", "After recorded costs", net > 0 ? "pos" : net < 0 ? "neg" : "")}
+  </div>
+
+  ${violTotal ? `<div class="notice danger"><strong>${violTotal} rule violation${violTotal>1?"s":""} this week.</strong>
+    Read them below, then write what you will change.</div>` :
+    `<div class="notice ok"><strong>No rule violations logged this week.</strong> Check that the journal is complete, so this is true and not just empty.</div>`}
+
+  <section class="card">
+    <div class="card-head"><div><h3>Trades this week</h3></div></div>
+    ${trades.length ? `<div class="tbl-wrap"><table>
+      <thead><tr><th>Date</th><th>Ticker</th><th>Mode</th><th>Status</th><th class="num">Net P/L</th><th>Violations</th></tr></thead>
+      <tbody>${trades.map(t => { const n = tradeNet(t); return `<tr>
+        <td class="mono">${esc(t.date)}</td><td><strong>${esc(t.ticker)}</strong></td><td>${esc(t.mode)}</td><td>${esc(t.status)}</td>
+        <td class="num ${n>0?"pos":n<0?"neg":""}">${n===null?"—":money(n)}</td>
+        <td style="white-space:normal">${esc(t.violations || "—")}</td></tr>`; }).join("")}</tbody></table></div>`
+      : `<div class="empty">No trades dated in this week. <a href="#journal">Add one in the journal</a>.</div>`}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>What you learned and noticed</h3></div></div>
+    ${learned.length ? `<h4>Concepts from your daily log</h4><ul style="margin:0 0 14px;padding-left:20px;font-size:.88rem">
+      ${learned.map(([d, e]) => `<li><span class="mono small">${esc(d)}</span> ${esc(e.learned || "")}</li>`).join("")}</ul>` : ""}
+    ${biases.length ? `<h4>Biases logged</h4><ul style="margin:0 0 14px;padding-left:20px;font-size:.88rem">
+      ${biases.map(b => `<li><strong>${esc(BIASES.find(x => x.id === b.bias)?.name || b.bias)}:</strong> ${esc(b.note)}</li>`).join("")}</ul>` : ""}
+    ${theses.length ? `<h4>Theses written</h4><ul style="margin:0;padding-left:20px;font-size:.88rem">
+      ${theses.map(t => `<li><strong>${esc(t.ticker)}</strong>: ${esc(t.decision || "Watch")}</li>`).join("")}</ul>` : ""}
+    ${!learned.length && !biases.length && !theses.length ? `<div class="empty">Nothing logged yet. Daily log entries, bias entries and theses dated this week appear here.</div>` : ""}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Your reflection</h3><div class="sub">Saved automatically for the week ending ${esc(end)}.</div></div></div>
+    ${prompts.map(([k, q]) => `<div class="field"><label>${esc(q)}</label>
+      <textarea data-path="reviews.${esc(end)}.${k}" placeholder="Write it in plain words.">${esc(rv[k] || "")}</textarea></div>`).join("")}
+    <div class="inline no-print"><button class="btn primary" data-act="print">Save as PDF or print</button></div>
+  </section>
+  `;
+}
+
+function viewReport(){
+  const p = S.profile;
+  const all = computeMetrics();
+  const closed = all.closed.slice().reverse();
+  const today = todayISO();
+  return `
+  ${pageHeader("Plan Report", "A one-document summary of your year so far. Use the button to save it as a PDF.")}
+  <div class="inline no-print" style="margin-bottom:16px">
+    <button class="btn primary" data-act="print">Save as PDF or print</button>
+  </div>
+
+  <section class="card">
+    <div class="card-head"><div><h3>${p.name ? esc(p.name) + "'s" : "My"} investing plan</h3>
+      <div class="sub">Report date ${esc(today)} · started ${esc(p.startDate || "—")} · currently Phase ${p.currentPhase}: ${esc(PHASES[p.currentPhase].name)}</div></div></div>
+    <dl class="kv">
+      <dt>Goal</dt><dd style="font-family:var(--sans)">${esc(p.goal || "Not set")}</dd>
+      <dt>Time horizon</dt><dd style="font-family:var(--sans)">${esc(p.horizon || "Not set")}</dd>
+      <dt>Most I could lose</dt><dd style="font-family:var(--sans)">${p.maxLoss ? money(num(p.maxLoss), 0) : "Not set"}</dd>
+      <dt>Rules contract</dt><dd style="font-family:var(--sans)">${S.phase0.contract.name ? "Signed " + esc(S.phase0.contract.date) : "Not signed"}</dd>
+      <dt>Trading plan</dt><dd style="font-family:var(--sans)">${S.phase3.planSigned.name ? "Signed " + esc(S.phase3.planSigned.date) : "Not signed"}</dd>
+    </dl>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Phase progress</h3></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Phase</th><th>Window</th><th class="num">Progress</th><th>Gate</th></tr></thead>
+      <tbody>${PHASES.map(ph => `<tr><td><strong>${ph.n} · ${esc(ph.name)}</strong></td><td>${esc(ph.when)}</td>
+        <td class="num">${(phaseProgress(ph.n) * 100).toFixed(0)}%</td>
+        <td>${gatePassed(ph.n) && ph.n < 4 ? '<span class="tag ok">passed</span>' : '<span class="tag">open</span>'}</td></tr>`).join("")}</tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Results</h3><div class="sub">${all.count} closed trades, paper and live combined.</div></div></div>
+    ${all.count ? `<div class="grid g4">
+      ${statBox("Win rate", pct(all.winRate))}
+      ${statBox("Expectancy", money(all.expectancy), "Per trade", all.expectancy > 0 ? "pos" : all.expectancy < 0 ? "neg" : "")}
+      ${statBox("Net result", money(all.totalNet), "", all.totalNet > 0 ? "pos" : all.totalNet < 0 ? "neg" : "")}
+      ${statBox("Rule adherence", pct(all.adherence))}
+    </div>
+    <div class="divider"></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Date</th><th>Ticker</th><th>Setup</th><th>Mode</th><th class="num">Net P/L</th><th class="num">R</th></tr></thead>
+      <tbody>${closed.slice(0, 40).map(t => { const n = tradeNet(t), r = tradeR(t); return `<tr>
+        <td class="mono">${esc(t.date)}</td><td><strong>${esc(t.ticker)}</strong></td><td>${esc(t.strategy || "")}</td><td>${esc(t.mode)}</td>
+        <td class="num ${n>0?"pos":"neg"}">${money(n)}</td><td class="num">${r===null?"—":(r>0?"+":"")+r.toFixed(2)+"R"}</td></tr>`; }).join("")}</tbody></table></div>
+    ${closed.length > 40 ? `<p class="small" style="margin-top:8px">Showing the latest 40 of ${closed.length}. Export the CSV from Settings for the full list.</p>` : ""}`
+    : `<div class="empty">No closed trades yet.</div>`}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Company analyses and theses</h3></div></div>
+    ${S.companies.length || S.theses.length ? `<ul style="margin:0;padding-left:20px;font-size:.88rem;line-height:1.8">
+      ${S.companies.map(c => `<li><strong>${esc(c.ticker || c.name || "Company")}</strong> (${esc(c.industry || "industry not set")}): ${esc(c.revTrend || "revenue not rated")}, debt ${esc((c.debtLevel || "not rated").toLowerCase())}</li>`).join("")}
+      ${S.theses.map(t => `<li><strong>${esc(t.ticker)}</strong> thesis, decision: ${esc(t.decision || "Watch")}${t.threeSentences ? ". " + esc(t.threeSentences) : ""}</li>`).join("")}
+    </ul>` : `<div class="empty">None yet.</div>`}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h3>Watchlist</h3></div></div>
+    ${S.watchlist.length ? `<div class="tbl-wrap"><table>
+      <thead><tr><th>Ticker</th><th>Status</th><th>Why I am watching it</th></tr></thead>
+      <tbody>${S.watchlist.map(w => `<tr><td><strong>${esc(w.ticker)}</strong></td><td>${esc(w.category)}</td><td style="white-space:normal">${esc(w.note || "")}</td></tr>`).join("")}</tbody></table></div>`
+      : `<div class="empty">No tickers yet.</div>`}
   </section>
   `;
 }
@@ -2549,6 +2722,8 @@ const VIEWS = {
   redflags: viewRedFlags,
   resources: viewResources,
   glossary: viewGlossary,
+  review: viewReview,
+  report: viewReport,
   settings: viewSettings
 };
 
@@ -2618,6 +2793,10 @@ document.addEventListener("change", e => {
   if (t.dataset.act === "watch-cat"){
     const w = S.watchlist.find(x => x.id === t.dataset.id);
     if (w){ w.category = t.value; save(); render(); }
+    return;
+  }
+  if (t.dataset.act === "rv-end"){
+    if (t.value){ reviewEnd = t.value; render(); }
     return;
   }
   if (t.dataset.act === "set-phase"){
@@ -2897,7 +3076,7 @@ document.addEventListener("click", e => {
 
     /* ---- data ---- */
     case "export-json":
-      download("12-month-plan-data.json", JSON.stringify(S, null, 2), "application/json");
+      download("sylvia-data.json", JSON.stringify(S, null, 2), "application/json");
       break;
     case "reset-all": {
       if (!confirm("This erases everything: journal, theses, analyses and progress. Continue?")) return;
@@ -2990,7 +3169,7 @@ function exportTradesCSV(){
     .map(r => r.map(c => `"${String(c ?? "").replace(/"/g, '""').replace(/\r?\n/g, " ")}"`).join(","))
     .join("\n");
 
-  download(`trade-journal-${todayISO()}.csv`, csv, "text/csv;charset=utf-8");
+  download(`sylvia-trade-journal-${todayISO()}.csv`, csv, "text/csv;charset=utf-8");
 }
 
 /* ============================================================
