@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://olayiwolaabdulwarith740-jpg.github.io/musical-octo-succotash/sitemap.xml
