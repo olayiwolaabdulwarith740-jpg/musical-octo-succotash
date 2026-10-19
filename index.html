@@ -22,8 +22,6 @@
 <link rel="apple-touch-icon" href="https://olayiwolaabdulwarith740-jpg.github.io/musical-octo-succotash/icon-180.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Sylvia","alternateName":"Sylvia 12-Month Investor Plan","applicationCategory":"EducationalApplication","operatingSystem":"Any","isAccessibleForFree":true,"url":"https://olayiwolaabdulwarith740-jpg.github.io/musical-octo-succotash/","description":"A 12-month plan for beginner investors with paper trading, a trade journal, position-size calculator, thesis builder and weekly reviews. Educational, not financial advice.","author":{"@type":"Person","name":"Akoo"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230B5F66'/%3E%3Cpath d='M22 9.5C22 6 10 6 10 12c0 5.8 12 3 12 8.6 0 3.2-5 4.4-9 2.6' fill='none' stroke='white' stroke-width='2.8' stroke-linecap='round'/%3E%3Ccircle cx='12.6' cy='23.3' r='2.5' fill='%23E39B1B'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 @property --p{syntax:"<percentage>";inherits:false;initial-value:0%}
 :root{
@@ -33,8 +31,8 @@
   --warn:#7D520A; --warn-soft:#FDF3DF; --danger:#A3302B; --danger-soft:#FBE9E7;
   --ok:#1F6B45; --ok-soft:#E3F1E8;
   --r-lg:22px; --r:14px; --r-sm:9px;
-  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
-  --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --display:"Avenir Next","Segoe UI","Helvetica Neue",system-ui,sans-serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 html[data-theme="dark"]{
@@ -199,6 +197,29 @@ html[data-theme="dark"] .stop.done .dot{color:#07161a}
 .hero-mark b{font-family:var(--display);font-size:.95rem;line-height:1}
 .hero-mark small{font-size:.72rem;color:var(--muted);margin-top:-4px}
 .cover{display:none}
+fieldset.qset{border:0;padding:0;margin:0 0 16px;min-width:0}
+fieldset.qset legend{font-weight:650;padding:0;margin-bottom:6px}
+ul.plain,ol.plain{margin:0 0 10px;padding-left:20px;font-size:.9rem;line-height:1.7;max-width:75ch}
+.lesson-group{margin:30px 0 12px;font-size:1.25rem}
+.lesson h3{margin:0 0 6px}
+.lesson .enforce{font-size:.88rem;color:var(--muted)}
+.gl h3{margin:0 0 4px}
+.gl h4{margin:16px 0 8px}
+.gl-score{margin:6px 0 10px}
+.eps-grid{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.band{position:relative;height:36px;margin:16px 0 6px}
+.band .track{position:absolute;left:0;right:0;top:15px;height:6px;border-radius:3px;background:var(--line)}
+.band .rng{position:absolute;top:10px;height:16px;border-radius:4px;background:color-mix(in srgb,var(--ok) 30%,transparent);border:2px solid var(--ok)}
+.band .floor{position:absolute;top:6px;width:2px;height:24px;background:var(--muted)}
+.band .mk{position:absolute;top:2px;width:4px;height:32px;margin-left:-2px;border-radius:2px;background:var(--ink)}
+.ring{width:54px;height:54px;flex:0 0 54px}
+.ring-wrap{display:flex;align-items:center;gap:10px}
+.range-ends{display:flex;justify-content:space-between;gap:12px;font-size:.78rem;color:var(--muted);margin-top:2px}
+input[type=range]{padding:0;accent-color:var(--accent);min-height:28px;border:0;background:transparent}
+.sec-row{display:grid;grid-template-columns:minmax(90px,170px) 1fr auto;gap:12px;align-items:center;margin-bottom:8px;font-size:.88rem}
+.bar.split{margin:8px 0 6px}
+.nav-item.dim{color:var(--muted)}
+.nav-item .opt{margin-left:auto;font-size:.7rem;color:var(--muted)}
 .heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,14px);grid-auto-columns:14px;gap:3px;overflow-x:auto;padding-bottom:4px}
 .heat i{border-radius:3px;background:var(--line)}
 .heat i.l1{background:color-mix(in srgb,var(--accent) 35%,var(--line))}
@@ -345,7 +366,10 @@ const RESTRICTIONS = [
   "Buy on a social-media tip you cannot explain.",
   "Revenge trade, or raise position sizes to win back losses.",
   "Average down (buy more of a loser) unless your written thesis says why.",
-  "Risk money you need for essential expenses."
+  "Risk money you need for essential expenses.",
+  "Buy new issues or IPOs, or any company that listed within the last year.",
+  "Enter a position because of an unsolicited recommendation or hot tip.",
+  "Average up on a rising price without a written thesis update."
 ];
 
 const CONTRACT_TEXT = `I will not enter a position I cannot explain.
@@ -407,7 +431,13 @@ const RED_FLAGS = [
   "You are trading to win back losses.",
   "You cannot explain your thesis in three clear sentences.",
   "You are using money you need for essentials.",
-  "You raised risk because of a winning streak."
+  "You raised risk because of a winning streak.",
+  "You are paying up for quality with no margin of safety.",
+  "You are buying because of optimism, not value.",
+  "You hold a position with no margin of safety.",
+  "You keep trying to forecast the market.",
+  "Speculation is above your sandbox cap.",
+  "You have mixed money from your investment pot and your speculation sandbox."
 ];
 
 const RESOURCES = {
@@ -480,7 +510,22 @@ const GLOSSARY = [
   ["Overconfidence","Taking bigger risks after a few wins."],
   ["Confirmation bias","Only seeking evidence that agrees with you."],
   ["Herd behavior","Copying others without your own analysis."],
-  ["Recency bias","Assuming recent performance will continue forever."]
+  ["Recency bias","Assuming recent performance will continue forever."],
+  ["Margin of safety","The gap between the price you pay and what the thing is reasonably worth. It protects you from your own errors and from bad luck."],
+  ["Intrinsic value","What a business is reasonably worth, judged from its earnings, assets and prospects. It is an estimate with a range, not a single number."],
+  ["Graham Number","The square root of 22.5 times earnings per share times book value per share. A ceiling for what a defensive investor should pay, not a target."],
+  ["Mr. Market","Graham's picture of the market as a moody partner who quotes a price every day. You may use his offer or ignore it."],
+  ["Defensive investor","An investor who wants safety and little effort, and holds a diversified portfolio of strong companies bought at moderate prices."],
+  ["Enterprising investor","An investor willing to spend real time and skill looking for bargains and special situations."],
+  ["Speculation","Any purchase that does not rest on thorough analysis, safety of principal and an adequate return."],
+  ["Current ratio","Current assets divided by current liabilities. A measure of whether short-term bills are covered."],
+  ["Net current assets","Current assets minus current liabilities. Also called working capital."],
+  ["Interest coverage","Operating profit divided by interest expense. How many times profit covers the interest bill."],
+  ["Net-net","A company priced below its current assets minus all of its liabilities. Cheap on paper and often cheap for a reason."],
+  ["Normalized earnings","Earnings averaged over several years so one unusually good or bad year does not distort the picture."],
+  ["Book value","Assets minus liabilities, as the accounts record them. Divide by shares to get book value per share."],
+  ["Rebalancing","Trading back to your target split between stocks and bonds when it drifts, by a rule you wrote in advance."],
+  ["Dollar-cost averaging","Investing the same amount at regular intervals. It removes timing decisions. It does not remove the risk of loss."]
 ];
 
 /* ============================================================
@@ -512,16 +557,51 @@ function defaultState(){
     redFlags: {},
     routine: {},
     customGlossary: [],
-    reviews: {}
+    reviews: {},
+    graham: {
+      lens: true, sandboxCap: "", sizeThreshold: "500",
+      required: { minReturn: "", maxLoss: "" },
+      investorType: { answers: {}, result: "", done: false, hoursPerWeek: "", commitment: "" },
+      classifier: { answers: {} },
+      mos: { price: "", eps: "", bvps: "", nta: "", req: "" },
+      mrMarket: { log: {}, draft: { market: 50, mood: 50, influenced: "" }, timingCount: 0, timingLog: [] },
+      allocation: { stockPct: "50", trigger: "band", bandPts: "5", calMonths: "12", lastRebalance: "", cur: { stocks: "", defensive: "", add: "" } },
+      dca: { monthly: "", years: "", start: "", day: "1" },
+      lessons: {},
+      pots: { investment: "", speculation: "" },
+      passHistory: {}
+    }
   };
+}
+
+function deepFill(t, d){
+  for (const k of Object.keys(d)){
+    if (t[k] === undefined || t[k] === null) t[k] = JSON.parse(JSON.stringify(d[k]));
+    else if (d[k] && typeof d[k] === "object" && !Array.isArray(d[k]) && typeof t[k] === "object" && !Array.isArray(t[k])) deepFill(t[k], d[k]);
+  }
+  return t;
+}
+function migrate(st){
+  if (!st || typeof st !== "object" || Array.isArray(st)) st = {};
+  deepFill(st, defaultState());
+  const dflt = (o, keys, v) => keys.forEach(k => { if (o[k] === undefined) o[k] = v; });
+  (Array.isArray(st.journal) ? st.journal : []).forEach(t => dflt(t, ["classification", "marginOfSafetyAtEntry", "priceInfluencedDecision", "satisfiesLimits", "sector", "ideaSource"], ""));
+  (Array.isArray(st.theses) ? st.theses : []).forEach(t => { dflt(t, ["classification", "skeptCheck", "skeptHostile", "growthAssumed"], ""); dflt(t, ["growthStory"], "no"); });
+  (Array.isArray(st.companies) ? st.companies : []).forEach(c => {
+    if (!c.g || typeof c.g !== "object") c.g = {};
+    if (!c.g.eps || typeof c.g.eps !== "object") c.g.eps = {};
+    if (!c.g.eq || typeof c.g.eq !== "object") c.g.eq = {};
+  });
+  st.version = 2;
+  return st;
 }
 
 let S;
 try {
   const raw = localStorage.getItem(STORE_KEY);
-  S = raw ? Object.assign(defaultState(), JSON.parse(raw)) : defaultState();
-} catch(e){ S = defaultState(); }
-if (!S.reviews) S.reviews = {};
+  S = migrate(raw ? JSON.parse(raw) : {});
+} catch(e){ S = migrate({}); }
+try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch(e){}
 
 function save(){
   try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); }
@@ -792,6 +872,7 @@ const NAV = [
     { id:"phase0", label:"0 · Setup" },
     { id:"phase1", label:"1 · Foundation" },
     { id:"phase2", label:"2 · Analysis" },
+    { id:"investor-type", label:"Investor type" },
     { id:"phase3", label:"3 · Risk" },
     { id:"phase4", label:"4 · Small live test" }
   ]},
@@ -802,6 +883,14 @@ const NAV = [
     { id:"calculator", label:"Position Calculator" },
     { id:"watchlist",  label:"Watchlist" },
     { id:"review",     label:"Weekly Review" }
+  ]},
+  { group:"Graham", items:[
+    { id:"graham-investor",    label:"Investment or speculation" },
+    { id:"graham-mos",         label:"Margin of safety" },
+    { id:"defensive-screener", label:"Defensive screener" },
+    { id:"mr-market",          label:"Mr. Market" },
+    { id:"allocation",         label:"Allocation policy" },
+    { id:"graham-lessons",     label:"Graham lessons" }
   ]},
   { group:"Reference", items:[
     { id:"redflags",  label:"Red Flags" },
@@ -829,7 +918,9 @@ function renderNav(){
         const n = parseInt(it.id.slice(5),10);
         if (gatePassed(n) && n < 4) cls += " done";
       }
-      html += `<a class="${cls}" href="#${it.id}"><span class="nav-dot"></span><span>${esc(it.label)}</span></a>`;
+      const dim = effectiveType() === "defensive" && ["journal", "calculator", "phase4"].includes(it.id);
+      if (dim) cls += " dim";
+      html += `<a class="${cls}" href="#${it.id}"><span class="nav-dot"></span><span>${esc(it.label)}</span>${dim ? '<span class="opt">optional</span>' : ""}</a>`;
     });
     html += "</div>";
   });
@@ -866,7 +957,7 @@ function progressBar(frac, ok){
   return `<div class="bar ${ok?"ok":""}"><i style="width:${clamp(frac*100,0,100).toFixed(1)}%"></i></div>`;
 }
 function statBox(k, v, note, cls){
-  return `<div class="stat"><div class="k">${esc(k)}</div><div class="v ${cls||""}" ${typeof v === "number" ? `data-count="${v}"` : ""}>${v}</div>${note?`<div class="n">${note}</div>`:""}</div>`;
+  return `<div class="stat"><div class="k">${esc(k)}</div><div class="v ${cls||""}">${v}</div>${note?`<div class="n">${note}</div>`:""}</div>`;
 }
 function gateBox(passed, label, msg){
   return `<div class="notice ${passed?"ok":"warn"}">
@@ -889,8 +980,8 @@ function activityMap(){
   const counts = {};
   const bump = d => { if (d) counts[d] = (counts[d] || 0) + 1; };
   Object.keys(S.routine).forEach(d => { if (S.routine[d]) bump(d); });
-  S.paperOrders.forEach(o => bump(o.date));
-  S.journal.forEach(t => bump(t.date));
+  S.theses.forEach(t => bump(t.dateReviewed));
+  Object.keys(S.reviews).forEach(bump);
   Object.keys(S.phase1.dailyLog).forEach(bump);
   S.biasLog.forEach(b => bump(b.date));
   const lead = (new Date(start + "T12:00:00").getDay() + 6) % 7;
@@ -903,7 +994,7 @@ function activityMap(){
   }
   const summary = active
     ? `You logged something on ${active} of the last 84 days.`
-    : "Nothing logged in the last 84 days yet. Tick your daily routine or add a journal entry to light up the first square.";
+    : "Nothing logged in the last 84 days yet. Tick your daily routine or write a note to light up the first square.";
   return `<div class="heat" role="img" aria-label="${esc(summary)}">${cells}</div>
     <div class="heat-legend" aria-hidden="true">Less <i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i> More</div>
     <p class="small" style="margin-top:10px">${esc(summary)}</p>`;
@@ -915,25 +1006,6 @@ function winLossBar(m){
   return `<div class="wl" role="img" aria-label="${m.wins.length} winning trades and ${m.losses.length} losing trades">
       <i class="w" style="width:${(m.wins.length/total*100).toFixed(1)}%"></i><i class="l" style="width:${(m.losses.length/total*100).toFixed(1)}%"></i></div>
     <div class="wl-labels"><span class="pos">▲ ${m.wins.length} ${m.wins.length===1?"win":"wins"}</span><span class="neg">▼ ${m.losses.length} ${m.losses.length===1?"loss":"losses"}</span></div>`;
-}
-
-let countersPlayed = false;
-function animateCounters(){
-  const els = Array.from(document.querySelectorAll("[data-count]"));
-  if (countersPlayed || !els.length) return;
-  countersPlayed = true;
-  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  els.forEach(el => {
-    const to = parseInt(el.dataset.count, 10);
-    if (!to) return;
-    const t0 = performance.now(), dur = 700;
-    const tick = now => {
-      const k = Math.min(1, (now - t0) / dur);
-      el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
-      if (k < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  });
 }
 
 let labelSeq = 0;
@@ -951,6 +1023,8 @@ function associateLabels(root){
 let heroPlayed = false;
 function nextStep(){
   const p = S.profile.currentPhase;
+  if (p >= 2 && !S.graham.investorType.done) return { text:"Take the investor-type assessment (three questions)", href:"#investor-type" };
+  if (p >= 3 && (!has(S.graham.required.minReturn) || !has(S.graham.required.maxLoss))) return { text:"Write your minimum acceptable return and maximum permanent loss in Settings", href:"#settings" };
   if (p === 0){
     const i = P0_ITEMS.find(x => !S.phase0.checklist[x.id]);
     if (i) return { text:i.label, href:"#phase0" };
@@ -973,7 +1047,7 @@ function viewDashboard(){
   const streak = routineStreak();
   const m = computeMetrics();
   const stats = paperOrderStats();
-  const openFlags = RED_FLAGS.filter(f => S.redFlags[f]);
+  const openFlags = RED_FLAGS.filter(f => S.redFlags[f]).concat(autoRedFlags().map(x => x.text));
 
   const daysToGate = (() => {
     if (!S.profile.startDate) return null;
@@ -1000,8 +1074,7 @@ function viewDashboard(){
   const startD = new Date(S.profile.startDate);
   let monthNo = 1;
   if (!isNaN(startD)) { const n = new Date(); monthNo = clamp((n.getFullYear()-startD.getFullYear())*12 + (n.getMonth()-startD.getMonth()) + 1, 1, 12); }
-  const playClass = heroPlayed ? "" : "play";
-  heroPlayed = true;
+  const playClass = "";
 
   const today = todayISO();
   const routineDone = !!S.routine[today];
@@ -1034,6 +1107,8 @@ function viewDashboard(){
 
 
 
+  ${effectiveType() === "defensive" ? dashboardGraham() : ""}
+
   ${m.count ? `<div class="grid g4" style="margin-bottom:16px">
     ${statBox("Net result", plText(m.totalNet), `${m.count} closed trades, after costs`, m.totalNet>0?"pos":m.totalNet<0?"neg":"")}
     ${statBox("Win rate", pct(m.winRate), `${m.wins.length} wins, ${m.losses.length} losses`)}
@@ -1060,10 +1135,12 @@ function viewDashboard(){
         : `<div class="empty">No closed trades yet. The line starts after your first exit.</div>`}
     </section>
     <section class="card">
-      <div class="card-head"><div><h2>Activity, last 12 weeks</h2><div class="sub">Routine days, orders, trades and notes</div></div></div>
+      <div class="card-head"><div><h2>Study and review days, last 12 weeks</h2><div class="sub">Routine days, notes, theses and weekly reviews. Trades are not counted: a quiet week can be a good week.</div></div></div>
       ${activityMap()}
     </section>
   </div>
+
+  ${effectiveType() === "defensive" ? "" : dashboardGraham()}
 
   <section class="card">
     <div class="card-head"><div><h2>Today's routine</h2>
@@ -1165,6 +1242,8 @@ function viewPhase0(){
     <label class="check" style="margin-top:6px"><input type="checkbox" data-act="toggle-flag" data-id="reviewed" ${a.reviewed?"checked":""}>
       <span class="lbl">I have reviewed these three conditions honestly</span></label>
   </section>
+
+  ${twoPotsCard()}
 
   <section class="card">
     <div class="card-head"><div><h2>First-year restrictions</h2>
@@ -1407,6 +1486,7 @@ function viewPhase2(){
     </ol>
     <div class="inline no-print">
       <button class="btn primary" data-act="add-company">+ New company analysis</button>
+      ${lensToggle()}
       <a class="btn" href="https://www.sec.gov/edgar/searchedgar/companysearch" target="_blank" rel="noopener">Open SEC EDGAR ↗</a>
     </div>
   </section>
@@ -1427,6 +1507,11 @@ function viewPhase2(){
         <tr><td>Debt level</td>${S.companies.map(c=>`<td>${esc(c.debtLevel||"—")}</td>`).join("")}</tr>
         <tr><td>Generates cash?</td>${S.companies.map(c=>`<td>${esc(c.cashGen||"—")}</td>`).join("")}</tr>
         <tr><td>Valuation paid</td>${S.companies.map(c=>`<td>${esc(c.valuation||"—")}</td>`).join("")}</tr>
+        ${defCriteria({ g:{} }).list.map((x, k) => `<tr><td>${esc(x.label)}</td>${S.companies.map(c => `<td>${statusTag(defCriteria(c).list[k].status)}</td>`).join("")}</tr>`).join("")}
+        <tr><td><strong>Defensive score</strong></td>${S.companies.map(c=>`<td><strong>${defCriteria(c).passN} of 8</strong></td>`).join("")}</tr>
+        <tr><td>Balance sheet strength</td>${S.companies.map(c=>`<td>${esc(balanceStrength(c).label)}</td>`).join("")}</tr>
+        <tr><td>Graham Number (a ceiling)</td>${S.companies.map(c=>{ const m = compMos(c); return `<td>${m.gn === null ? "—" : money(m.gn)}</td>`; }).join("")}</tr>
+        <tr><td>Margin of safety vs low end</td>${S.companies.map(c=>{ const m = compMos(c); return `<td>${m.mosLow === null ? "—" : (m.mosLow >= 0 ? "▲ " : "▼ ") + pct(Math.abs(m.mosLow), 0)}</td>`; }).join("")}</tr>
       </tbody>
     </table></div>
     <label class="check" style="margin-top:12px">
@@ -1594,6 +1679,7 @@ function companyCard(c, i){
       <div class="field"><label>Reasonable scenario</label><textarea data-path="${p}.base" style="min-height:60px">${esc(c.base||"")}</textarea></div>
       <div class="field"><label>Optimistic scenario</label><textarea data-path="${p}.opt" style="min-height:60px">${esc(c.opt||"")}</textarea></div>
     </div>
+    ${S.graham.lens ? grahamCompanySection(c, i) : '<p class="small" style="margin-top:12px">Graham lens is off. Turn it on to see the defensive tests, valuation check and warnings for this company.</p>'}
   </section>`;
 }
 
@@ -1606,9 +1692,15 @@ function viewPhase3(){
   const heat = portfolioHeat();
   const stats = paperOrderStats();
   const plan = S.phase3.plan;
+  const eff = effectiveType();
+  const allocBlock = allocTool();
+  const stopNote = `<section class="card"><div class="card-head"><div><h2>Stops are for trading, not for long-term holdings</h2></div></div>
+    <div class="notice accent">This plan teaches stops for short-term trading. Graham's advice for the long-term investor is different — sell because the thesis is broken or the valuation is no longer supported, not because a price was touched. See the <a href="#allocation">allocation policy</a> so the two worlds stay apart.</div></section>`;
 
   return `
   ${pageHeader("Phase 3 · Risk and Portfolio", "Months 7–9. Risk control matters more than a perfect entry. This phase teaches you to size every position by how much you could lose — not by how much you want to make.")}
+
+  ${eff === "defensive" ? '<div class="notice accent">Your investor type is Defensive. Start with the allocation policy. Position sizing below is for the optional trading sandbox.</div>' + allocBlock : ""}
 
   <section class="card">
     <div class="card-head"><div><h2>A · Position sizing</h2>
@@ -1659,9 +1751,12 @@ function viewPhase3(){
       <div class="field"><label>Trading capital ($)</label>
         <input type="number" id="heat-capital" value="${esc(S.phase3.heat.capital)}" data-path="phase3.heat.capital"></div>
     </div>
-    <div id="heat-result"></div>
+    <div id="heat-result"></div>${pmosBlock()}
     <div class="small" style="margin-top:8px">Heat = total planned loss across open positions if every stop were hit. Calculated from your <a href="#journal">open journal positions</a>.</div>
   </section>
+
+  ${stopNote}
+  ${eff === "defensive" ? "" : allocBlock}
 
   <section class="card">
     <div class="card-head"><div><h2>Long-term holdings are different</h2></div></div>
@@ -1778,6 +1873,12 @@ function viewPhase4(){
   </div>
 
   <section class="card">
+    <div class="card-head"><div><h2>What Graham would call this</h2></div></div>
+    <p>Graham would call what follows speculation. That is precisely why it is capped at $500, separated from your savings, and optional. If the honest answer to the Month 12 check is that you would rather invest defensively, that is the better outcome — not the lesser one.</p>
+    <p class="small">See <a href="#graham-investor">Investment or speculation</a> and the <a href="#graham-lessons">Graham lessons</a>.</p>
+  </section>
+
+  <section class="card">
     <div class="card-head"><div><h2>Small-account note — decide in writing, now</h2></div></div>
     <p style="font-size:.88rem">
       0.5% of $500 is only <strong>$2.50</strong> of risk per trade, which often cannot be sized properly.
@@ -1815,7 +1916,7 @@ function viewPhase4(){
     </div>
   </section>
 
-  <section class="card">
+  <section class="card" id="honesty">
     <div class="card-head"><div><h2>Month 12 honesty check</h2>
       <div class="sub">Answer these in writing. There are no wrong answers — only dishonest ones.</div></div></div>
     ${[
@@ -1825,7 +1926,8 @@ function viewPhase4(){
       ["h4","Do I follow my rules when I am losing?"],
       ["h5","Is my performance repeatable, or a few lucky outcomes?"],
       ["h6","Can I handle the financial and emotional cost of more losses?"],
-      ["h7","Would long-term diversified investing serve me better than active trading?"]
+      ["h7","Would long-term diversified investing serve me better than active trading?"],
+      ["h8","In your own words: what is the difference between investing and speculating, and which was this year?"]
     ].map(([id,q])=>`
       <div class="field"><label>${esc(q)}</label>
         <textarea data-path="phase4.honesty.${id}" placeholder="Write your honest answer.">${esc(getPath("phase4.honesty."+id)||"")}</textarea></div>
@@ -1915,7 +2017,7 @@ function viewJournal(){
         <th>#</th><th>Date</th><th>Ticker</th><th>Setup</th><th>Mode</th><th>Status</th>
         <th class="num">Entry</th><th class="num">Stop</th><th class="num">Size</th>
         <th class="num">Planned risk</th><th class="num">Exit</th><th class="num">Net P/L</th><th class="num">R</th>
-        <th>Violations</th><th></th>
+        <th>Class</th><th class="num">MoS</th><th>Violations and flags</th><th></th>
       </tr></thead>
       <tbody>
       ${rows.map(t=>{
@@ -1934,7 +2036,9 @@ function viewJournal(){
           <td class="num">${t.exitPrice?money(num(t.exitPrice)):"—"}</td>
           <td class="num ${net>0?"pos":net<0?"neg":""}">${plText(net)}</td>
           <td class="num ${r>0?"pos":r<0?"neg":""}">${r===null?"—":(r>0?"+":"")+r.toFixed(2)+"R"}</td>
-          <td style="white-space:normal;max-width:200px">${t.violations?`<span class="tag danger">${esc(t.violations)}</span>`:"—"}</td>
+          <td>${classOf(t) === "investment" ? '<span class="tag ok">investment</span>' : classOf(t) === "speculation" ? '<span class="tag warn">speculation</span>' : '<span class="tag">unclear</span>'}</td>
+          <td class="num">${has(t.marginOfSafetyAtEntry) ? fx(num(t.marginOfSafetyAtEntry), 1) + "%" : "—"}</td>
+          <td style="white-space:normal;max-width:240px">${t.violations?`<span class="tag danger">${esc(t.violations)}</span>`:""}${tradeFlags(t).map(x => `<span class="tag warn">${esc(x)}</span>`).join("")}${!t.violations && !tradeFlags(t).length ? "—" : ""}</td>
           <td><button class="btn sm ghost" data-act="del-trade" data-id="${t.id}" title="Delete">✕</button></td>
         </tr>`;
       }).join("")}
@@ -1946,6 +2050,7 @@ function viewJournal(){
 
 function tradeForm(){
   const nextNum = S.journal.length + 1;
+  const ex = specExposure();
   return `
   <details style="background:var(--panel);border-color:var(--line)">
     <summary>+ Add a trade</summary>
@@ -1977,6 +2082,20 @@ function tradeForm(){
         <div class="field"><label>Target</label><input name="target" placeholder="price or criteria"></div>
         <div class="field"><label>Exit plan</label><input name="exitPlan" placeholder="what gets you out"></div>
       </div>
+
+      <h4>Graham check</h4>
+      <div class="notice accent" style="font-size:.85rem">Individual stocks stay capped at ${money(ex.cap, 0)} in the first year, whatever you call the position. Live speculation so far: ${money(ex.liveSpec, 0)}. Paper trades are practice and never count against the cap.</div>
+      <div class="row">
+        <div class="field"><label>Investment or speculation?</label>
+          <select name="classification" required><option value="">Choose…</option><option value="investment">Investment</option><option value="speculation">Speculation</option><option value="unclear">Unclear (counts as speculation)</option></select></div>
+        <div class="field"><label>Margin of safety at entry (%)</label><input type="number" step="any" name="marginOfSafetyAtEntry" placeholder="blank = from company analysis"></div>
+        <div class="field"><label>Was this driven by price movement or by the thesis?</label>
+          <select name="priceInfluencedDecision"><option value="">—</option><option value="thesis">The thesis</option><option value="price">Price movement</option><option value="both">Both, honestly</option></select></div>
+        <div class="field"><label>Where did the idea come from?</label>
+          <select name="ideaSource"><option value="">—</option><option value="own">My own research</option><option value="tip">An unsolicited tip or recommendation</option><option value="ipo">A new issue or IPO</option></select></div>
+        <div class="field"><label>Sector</label><input name="sector" placeholder="e.g. Consumer staples"></div>
+      </div>
+      <div class="field"><label>How does this trade meet my minimum return and maximum permanent-loss limits? (required for live trades)</label><textarea name="satisfiesLimits" style="min-height:56px"></textarea></div>
 
       <h4>Result</h4>
       <div class="row">
@@ -2019,7 +2138,8 @@ function viewMetrics(){
     <div class="card"><div class="empty">
       No closed trades yet. Metrics appear once you close your first trade with an exit price recorded.<br><br>
       <a class="btn" href="#journal">Go to the journal</a>
-    </div></div>`;
+    </div></div>
+    ${grahamMetricsHTML()}`;
   }
 
   const expectExample = (0.45*40) - (0.55*25);
@@ -2131,6 +2251,7 @@ function viewMetrics(){
       This is an illustration. Positive past expectancy does not guarantee future results.
     </div>
   </section>
+  ${grahamMetricsHTML()}
   `;
 }
 
@@ -2326,6 +2447,8 @@ function renderHeat(elId){
 function viewThesis(){
   return `
   ${pageHeader("Thesis Builder", "A thesis is a decision document, not a justification for buying something you already want.")}
+  <div class="inline no-print" style="margin-bottom:12px">${lensToggle()}</div>
+  ${S.graham.lens ? thesisLensPanel() : ""}
 
   <section class="card">
     <div class="card-head"><div><h2>New thesis</h2></div></div>
@@ -2370,6 +2493,8 @@ function viewThesis(){
         <div class="field"><label>Estimated costs</label><input name="costs"></div>
       </div>
 
+      ${thesisGrahamFields()}
+
       <h4>Decision</h4>
       <div class="row">
         <div class="field"><label>Decision</label>
@@ -2402,6 +2527,8 @@ function viewThesis(){
         </div>
         ${t.threeSentences ? `<p style="font-size:.9rem"><strong>In three sentences:</strong> ${esc(t.threeSentences)}</p>` : ""}
         ${t.wrong ? `<p style="font-size:.87rem"><strong>Proven wrong if:</strong> ${esc(t.wrong)}</p>` : ""}
+        ${t.classification ? `<p style="font-size:.87rem"><span class="tag ${t.classification === "investment" ? "ok" : "warn"}">${esc(t.classification)}</span> ${t.growthStory === "yes" ? '<span class="tag warn">relies on a growth story</span>' : ""}</p>` : ""}
+        ${S.graham.lens ? `${t.skeptCheck ? `<p style="font-size:.87rem"><strong>Checked against me:</strong> ${esc(t.skeptCheck)}</p>` : ""}${t.skeptHostile ? `<p style="font-size:.87rem"><strong>A hostile analyst would say:</strong> ${esc(t.skeptHostile)}</p>` : ""}${thesisGrowthWarning(t) ? `<div class="notice danger">${thesisGrowthWarning(t)}</div>` : ""}` : ""}
         ${t.entryTrigger ? `<p style="font-size:.87rem"><strong>Entry:</strong> ${esc(t.entryTrigger)} · <strong>Stop:</strong> ${esc(t.stopLevel||"—")} · <strong>Target:</strong> ${esc(t.target||"—")}</p>` : ""}
         <details style="background:transparent;border:none;padding:0;margin-top:8px">
           <summary style="font-size:.8rem;color:var(--muted)">Show full thesis</summary>
@@ -2504,6 +2631,11 @@ function viewRedFlags(){
       <li><strong>Never fix a trading problem by making positions bigger.</strong></li>
     </ol>
   </section>` : `<div class="notice ok">No red flags active. Keep the journal current — it is your early-warning system.</div>`}
+
+  <section class="card">
+    <div class="card-head"><div><h2>Detected from your data</h2><div class="sub">Not ticked by you. Found by the app.</div></div></div>
+    ${(() => { const a = autoRedFlags(); return a.length ? a.map(x => `<div class="notice danger"><strong>${esc(x.text)}</strong><br>What to do: ${esc(x.action)}</div>`).join("") : '<div class="notice ok">Nothing detected from your journal, companies or check-ins.</div>'; })()}
+  </section>
 
   <section class="card">
     <div class="card-head"><div><h2>Checklist</h2>
@@ -2644,6 +2776,8 @@ function viewSettings(){
     <p class="small">If your answer to the last field is smaller than what you have in the sandbox, reduce the sandbox.</p>
   </section>
 
+  ${settingsGrahamCard()}
+
   <section class="card">
     <div class="card-head"><div><h2>Phase status</h2></div></div>
     <div class="tbl-wrap"><table>
@@ -2775,10 +2909,14 @@ function viewReview(){
     ${!learned.length && !biases.length && !theses.length ? `<div class="empty">Nothing logged yet. Daily log entries, bias entries and theses dated this week appear here.</div>` : ""}
   </section>
 
-  <section class="card">
+  <section class="card" data-live="bl">
     <div class="card-head"><div><h2>Your reflection</h2><div class="sub">Saved automatically for the week ending ${esc(end)}.</div></div></div>
     ${prompts.map(([k, q]) => `<div class="field"><label>${esc(q)}</label>
       <textarea data-path="reviews.${esc(end)}.${k}" placeholder="Write it in plain words.">${esc(rv[k] || "")}</textarea></div>`).join("")}
+    <h4>Businesslike check</h4>
+    <fieldset class="qset"><legend>Did I act on evidence rather than on feeling this week?</legend>${gRadios("reviews." + end + ".evidence", [["yes", "Yes"], ["no", "No"]])}</fieldset>
+    <fieldset class="qset"><legend>Did I do what I said I would do?</legend>${gRadios("reviews." + end + ".didWhatSaid", [["yes", "Yes"], ["no", "No"]])}</fieldset>
+    <p class="small bl-out">${blText()}</p>
     <div class="inline no-print"><button class="btn primary" data-act="print">Save as PDF or print</button></div>
   </section>
   `;
@@ -2810,6 +2948,9 @@ function viewReport(){
       <dt>Most I could lose</dt><dd style="font-family:var(--sans)">${p.maxLoss ? money(num(p.maxLoss), 0) : "Not set"}</dd>
       <dt>Rules contract</dt><dd style="font-family:var(--sans)">${S.phase0.contract.name ? "Signed " + esc(S.phase0.contract.date) : "Not signed"}</dd>
       <dt>Trading plan</dt><dd style="font-family:var(--sans)">${S.phase3.planSigned.name ? "Signed " + esc(S.phase3.planSigned.date) : "Not signed"}</dd>
+      <dt>Investor type</dt><dd style="font-family:var(--sans)">${effectiveType() === "defensive" ? "Defensive" : "Enterprising"}${S.graham.investorType.done ? "" : " (default)"}</dd>
+      <dt>Minimum acceptable return</dt><dd style="font-family:var(--sans)">${has(S.graham.required.minReturn) ? esc(S.graham.required.minReturn) + "% a year" : "Not set"}</dd>
+      <dt>Maximum permanent loss</dt><dd style="font-family:var(--sans)">${has(S.graham.required.maxLoss) ? esc(S.graham.required.maxLoss) + "% of capital" : "Not set"}</dd>
     </dl>
   </section>
 
@@ -2862,6 +3003,1171 @@ function viewReport(){
    21. ROUTER
    ============================================================ */
 
+/* ============================================================
+   GRAHAM LAYER, part 1: helpers, classifier, margin of safety, screeners
+   Graham's ideas are paraphrased. Nothing here predicts returns.
+   ============================================================ */
+
+const LIVE = {};
+
+function has(v){ return v !== "" && v != null && !isNaN(parseFloat(v)); }
+function avgOf(a){ return a.reduce((x, y) => x + y, 0) / a.length; }
+function fx(v, dp){ return (v === null || v === undefined || isNaN(v)) ? "—" : v.toFixed(dp === undefined ? 2 : dp); }
+function sandboxCap(){
+  const v = parseFloat(S.graham.sandboxCap);
+  return (isNaN(v) || v <= 0) ? 500 : Math.min(v, 500);
+}
+function effectiveType(){ return S.graham.investorType.result || "defensive"; }
+function tickerOf(c){ return c.ticker || c.name || "Unnamed company"; }
+function classOf(t){ return (t.classification === "investment" || t.classification === "speculation") ? t.classification : "unclear"; }
+function posValue(t){ return num(t.entry) * num(t.size); }
+function isSpecLike(t){ return classOf(t) !== "investment"; }
+
+function gRadios(path, opts){
+  const cur = getPath(path);
+  return opts.map(([v, l]) => `<label class="check"><input type="radio" name="${esc(path)}" value="${esc(v)}" data-path="${esc(path)}" ${String(cur) === String(v) ? "checked" : ""}><span class="lbl">${esc(l)}</span></label>`).join("");
+}
+function gField(path, label, o){
+  o = o || {};
+  const id = "f_" + path.replace(/[^a-z0-9]/gi, "_");
+  const v = getPath(path);
+  return `<div class="field"><label for="${id}">${esc(label)}</label>
+    <input id="${id}" type="${o.type || "number"}" ${o.step ? `step="${o.step}"` : (o.type ? "" : 'step="any"')} ${o.min !== undefined ? `min="${o.min}"` : ""} ${o.max !== undefined ? `max="${o.max}"` : ""}
+      data-path="${esc(path)}" value="${esc(v === undefined ? "" : v)}" placeholder="${esc(o.ph || "")}"></div>`;
+}
+
+/* ---------- exposure ---------- */
+
+function specExposure(){
+  const open = S.journal.filter(t => t.status === "open");
+  const live = open.filter(t => t.mode === "live");
+  const liveSpec = live.filter(isSpecLike).reduce((s, t) => s + posValue(t), 0);
+  const liveInv = live.filter(t => classOf(t) === "investment").reduce((s, t) => s + posValue(t), 0);
+  const counts = { investment:0, speculation:0, unclear:0 };
+  open.forEach(t => counts[classOf(t)]++);
+  const cap = sandboxCap();
+  return { liveSpec, liveInv, counts, cap, pctOfCap: cap ? liveSpec / cap : 0, openN: open.length };
+}
+
+/* ---------- 1. Investment vs speculation ---------- */
+
+const CLASSIFIER_Q = [
+  { id:"c1", core:true, q:"Is there a written thesis for this position?",
+    o:[["yes","Yes, written in the Thesis Builder","inv"],["no","No, it is in my head, or it came from a tip","spec"]],
+    why:"There is no written thesis. Without one you cannot tell later whether you were right for the right reasons." },
+  { id:"c2", core:true, q:"Did I check the facts and look for evidence that could prove me wrong?",
+    o:[["yes","Yes, I went looking for what could contradict me","inv"],["no","No, I mostly looked for support","spec"]],
+    why:"The analysis was one-sided. Looking only for support is how confident mistakes get made." },
+  { id:"c3", core:true, q:"Is the downside defined in advance, as a margin of safety or a maximum loss I wrote down?",
+    o:[["yes","Yes, it is written down","inv"],["no","No, I am hoping it works","spec"]],
+    why:"The downside is undefined. Safety of principal needs a loss limit or a price cushion you can point to." },
+  { id:"c4", core:true, q:"Is the price well below a value I can justify from earnings and assets?",
+    o:[["yes","Yes, I have a margin of safety","inv"],["no","No, the price is at or above that value","spec"]],
+    why:"There is no margin of safety. Paying full value or more leaves no room for being wrong." },
+  { id:"c5", core:true, q:"What am I counting on for the return?",
+    o:[["business","What the business earns and pays out","inv"],["price","The price going up, or other buyers paying more","spec"]],
+    why:"The return depends on the price rising, not on what the business earns. That is a bet on other people's moods." },
+  { id:"c6", core:false, q:"Could I need this money within the time horizon of this position?",
+    o:[["no","No, I will not need it","inv"],["yes","Yes, I might need it","spec"]],
+    why:"You may need this money soon. Money with a deadline cannot carry market risk." },
+  { id:"c7", core:false, q:"Where does the position sit?",
+    o:[["sandbox","Inside the sandbox (speculation money, capped)","pot"],["allocation","Inside the long-term investment pot","pot"],["neither","Neither. It is outside both pots","bad"]],
+    why:"" }
+];
+
+function classifierVerdict(){
+  const a = S.graham.classifier.answers;
+  if (CLASSIFIER_Q.some(q => !a[q.id])) return null;
+  const tag = q => (q.o.find(o => o[0] === a[q.id]) || [])[2];
+  const core = CLASSIFIER_Q.filter(q => q.core);
+  const coreSpec = core.filter(q => tag(q) === "spec");
+  const q6 = CLASSIFIER_Q.find(q => q.id === "c6");
+  const moneySpec = tag(q6) === "spec";
+  const reasons = coreSpec.map(q => q.why);
+  if (moneySpec) reasons.push(q6.why);
+  let verdict;
+  if (coreSpec.length === 0 && !moneySpec) verdict = "investment";
+  else if (coreSpec.length === 1 && !moneySpec) verdict = "unclear";
+  else verdict = "speculation";
+  return { verdict, reasons, pot: a.c7 };
+}
+
+function classifierResult(){
+  const a = S.graham.classifier.answers;
+  const done = CLASSIFIER_Q.filter(q => a[q.id]).length;
+  const r = classifierVerdict();
+  if (!r){
+    return `<div class="notice">Answer all ${CLASSIFIER_Q.length} questions (${done} done). Skipping a question is how speculation gets called investment.</div>`;
+  }
+  const cap = money(sandboxCap(), 0);
+  const label = { investment:"Investment", speculation:"Speculation", unclear:"Unclear: treat it as speculation" }[r.verdict];
+  const cls = { investment:"ok", speculation:"danger", unclear:"warn" }[r.verdict];
+  const todo = [];
+  if (r.verdict === "investment"){
+    todo.push("Record it as <strong>investment</strong> in the journal and the thesis.");
+    todo.push("Write the margin of safety in the journal entry.");
+    if (r.pot === "sandbox") todo.push("It is in the sandbox but passes the investment tests. Decide which pot it belongs to, and move it if it is long-term.");
+  } else {
+    todo.push(`Record it as <strong>${r.verdict === "unclear" ? "unclear" : "speculation"}</strong>. The app counts both against your ${cap} sandbox cap once it is live money.`);
+    if (r.pot === "allocation") todo.push("<strong>Stop.</strong> Speculation inside the long-term pot is mingling your pots. Take it out, or drop the idea.");
+    else if (r.pot === "neither") todo.push("<strong>Stop.</strong> It sits in neither pot. Do not do it until it has a home with a cap.");
+    else todo.push(`If you go ahead, it has to be sandbox money you can afford to lose, within ${cap}. Otherwise stay in simulation.`);
+    if (r.verdict === "unclear") todo.push("Fix the one weak answer above. If you can, re-run this page. If you cannot, it stays speculation.");
+  }
+  return `<div class="notice ${cls}"><strong>Verdict: ${label}</strong></div>
+    ${r.reasons.length ? `<h4>Why</h4><ul class="plain">${r.reasons.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p style="margin:0 0 10px">All the investment tests were met. That is a statement about this position, not a forecast of its price.</p>`}
+    <h4>What to do</h4><ul class="plain">${todo.map(x => `<li>${x}</li>`).join("")}</ul>`;
+}
+LIVE.classifier = host => { host.querySelector(".live-out").innerHTML = classifierResult(); };
+
+function viewGrahamInvestor(){
+  const ex = specExposure();
+  return `
+  ${pageHeader("Investment or speculation?", "Graham's line is simple. An investment rests on thorough analysis, promises safety of the money you put in, and offers an adequate return. Anything else is speculation.")}
+  <div class="notice accent">Speculation is not banned here. Calling it investment is. Answer for one position at a time, then record the verdict in the journal or thesis.</div>
+  <section class="card" data-live="classifier">
+    <div class="card-head"><div><h2>Seven questions</h2><div class="sub">Pick the honest answer, not the comfortable one.</div></div></div>
+    ${CLASSIFIER_Q.map((q, i) => `<fieldset class="qset"><legend>${i + 1}. ${esc(q.q)}</legend>${gRadios("graham.classifier.answers." + q.id, q.o.map(o => [o[0], o[1]]))}</fieldset>`).join("")}
+    <div class="inline no-print"><button class="btn sm" data-act="clear-classifier">Clear answers</button></div>
+    <div class="divider"></div>
+    <div class="live-out">${classifierResult()}</div>
+  </section>
+  <section class="card">
+    <div class="card-head"><div><h2>Your exposure right now</h2></div></div>
+    <div class="grid g3">
+      ${statBox("Investment positions", ex.counts.investment, "Open, classified investment")}
+      ${statBox("Speculation or unclear", ex.counts.speculation + ex.counts.unclear, "Open. Unclear counts as speculation")}
+      ${statBox("Live speculation", money(ex.liveSpec, 0), `of your ${money(ex.cap, 0)} sandbox cap`, ex.pctOfCap > 1 ? "neg" : "")}
+    </div>
+    <p class="small" style="margin-top:12px">Paper trades are practice, so they never count against the cap. Live speculation does. <a href="#journal">Open the journal</a>.</p>
+  </section>`;
+}
+
+/* ---------- 4. Margin of safety ---------- */
+
+function mosCalc(o){
+  const price = num(o.price), eps = num(o.eps), bvps = num(o.bvps);
+  const nta = has(o.nta) ? num(o.nta) : (bvps > 0 ? bvps : null);
+  const req = num(o.req) > 0 ? num(o.req) / 100 : null;
+  const out = { price, eps, bvps, nta, req, floor:null, power:null, gn:null, low:null, high:null, mosLow:null, state:"incomplete" };
+  if (!(price > 0)) return out;
+  if (nta !== null && nta > 0) out.floor = nta;
+  if (req && has(o.eps) && eps > 0) out.power = eps / req;
+  if (has(o.eps) && eps > 0 && bvps > 0) out.gn = Math.sqrt(22.5 * eps * bvps);
+  const anchors = [out.power, out.gn].filter(v => v !== null);
+  if (!anchors.length){
+    out.state = (has(o.eps) && eps <= 0) ? "noearnings" : "incomplete";
+    return out;
+  }
+  out.low = Math.min(...anchors);
+  out.high = Math.max(...anchors);
+  out.single = anchors.length === 1;
+  out.mosLow = (out.low - price) / out.low;
+  if (price > out.high) out.state = "none";
+  else if (price > out.low) out.state = "inside";
+  else if (out.mosLow >= 0.33) out.state = "wide";
+  else if (out.mosLow >= 0.15) out.state = "moderate";
+  else out.state = "thin";
+  return out;
+}
+
+function mosVerdict(r){
+  const target = r.low ? money(r.low * 0.67) : "";
+  switch (r.state){
+    case "none": return { cls:"danger", title:"No margin of safety",
+      text:`The price is above everything the numbers support. Do not buy at ${money(r.price)}. Put it on the watchlist and decide the price you would pay. A 33% cushion under the low end of the range is about ${target}.` };
+    case "inside": return { cls:"danger", title:"No margin of safety",
+      text:`The price sits inside the value range, so at best you pay fair value. A cushion needs a price at or below ${money(r.low)}. Wait, or walk away. About ${target} would give a 33% margin.` };
+    case "thin": return { cls:"warn", title:`Thin margin of safety (${pct(r.mosLow, 0)} below the low end)`,
+      text:`You are under the low end of the range, but not by much. One wrong estimate erases it. Size the position small, or wait for about ${target}.` };
+    case "moderate": return { cls:"accent", title:`Moderate margin of safety (${pct(r.mosLow, 0)} below the low end)`,
+      text:"There is a cushion. Check the inputs are normalized earnings, not a peak year, before you rely on it." };
+    case "wide": return { cls:"ok", title:`Wide margin of safety (${pct(r.mosLow, 0)} below the low end)`,
+      text:"A wide gap usually means the market sees a problem your numbers miss. Look for it before you buy. This is a reason to investigate, not a signal to buy." };
+    case "noearnings": return { cls:"danger", title:"No earnings-based value",
+      text:"Earnings are zero or negative, so the earnings anchors cannot be computed. Graham's value tests need profits. Without them you are speculating. Stay out, or stay in simulation." };
+    default: return { cls:"", title:"Waiting for inputs", text:"Enter a price, normalized earnings per share and book value per share. Add a required return for the earnings-power anchor." };
+  }
+}
+
+function mosBandHTML(r){
+  if (r.low === null) return "";
+  const vals = [r.price, r.low, r.high, r.floor || 0];
+  const max = Math.max(...vals) * 1.15;
+  const pos = v => (v / max * 100);
+  const w = Math.max(pos(r.high) - pos(r.low), 0.8);
+  const desc = `Value range ${money(r.low)} to ${money(r.high)}. Price ${money(r.price)}${r.floor ? `. Asset floor ${money(r.floor)}` : ""}.`;
+  return `<div class="band" role="img" aria-label="${esc(desc)}"><span class="track"></span>
+      <span class="rng" style="left:${pos(r.low).toFixed(1)}%;width:${w.toFixed(1)}%"></span>
+      ${r.floor ? `<span class="floor" style="left:${pos(r.floor).toFixed(1)}%"></span>` : ""}
+      <span class="mk" style="left:${pos(r.price).toFixed(1)}%"></span></div>
+    <div class="legend"><span><i class="swatch" style="background:var(--ok)"></i>Value range ${money(r.low)} to ${money(r.high)}</span>
+      ${r.floor ? `<span><i class="swatch" style="background:var(--muted)"></i>Asset floor ${money(r.floor)}</span>` : ""}
+      <span><i class="swatch" style="background:var(--ink)"></i>Price ${money(r.price)}</span></div>`;
+}
+
+function mosInputs(){
+  const m = S.graham.mos;
+  return { price:m.price, eps:m.eps, bvps:m.bvps, nta:m.nta, req: has(m.req) ? m.req : defaultReq() };
+}
+function defaultReq(){ return has(S.graham.required.minReturn) ? S.graham.required.minReturn : 8; }
+
+function mosResultHTML(){
+  const r = mosCalc(mosInputs());
+  const v = mosVerdict(r);
+  const anchor = (name, val, note) => `<tr><td><strong>${name}</strong><div class="small">${note}</div></td>
+    <td class="num">${val === null ? "—" : money(val)}</td>
+    <td class="num">${val === null || !r.price ? "—" : (val >= r.price ? "▲ " : "▼ ") + pct(Math.abs(val - r.price) / val, 0) + (val >= r.price ? " above price" : " below price")}</td></tr>`;
+  return `<div class="notice ${v.cls}"><strong>${esc(v.title)}</strong><br>${esc(v.text)}</div>
+    ${r.single ? `<p class="small">Only one earnings anchor could be computed, so the range is a single point. Fill in the missing input for a real range.</p>` : ""}
+    ${mosBandHTML(r)}
+    <div class="tbl-wrap" style="margin-top:12px"><table>
+      <thead><tr><th>Anchor</th><th class="num">Per share</th><th class="num">Versus price</th></tr></thead>
+      <tbody>
+        ${anchor("Asset floor", r.floor, "Net tangible assets per share. What the balance sheet holds.")}
+        ${anchor("Earnings power", r.power, `Normalized earnings ÷ required return (${r.req ? pct(r.req, 1) : "not set"}). Value if earnings never grow.`)}
+        ${anchor("Graham Number, a ceiling", r.gn, "√(22.5 × earnings × book value). The most a defensive investor would pay. It is a limit, not a target.")}
+      </tbody></table></div>
+    <p class="small" style="margin-top:10px">Value range: ${r.low === null ? "—" : money(r.low) + " to " + money(r.high)}. Margin of safety against the low end: <strong>${r.mosLow === null ? "—" : (r.mosLow >= 0 ? "▲ " : "▼ ") + pct(r.mosLow, 1)}</strong>.</p>`;
+}
+LIVE.mos = host => { host.querySelector(".live-out").innerHTML = mosResultHTML(); };
+
+function viewGrahamMos(){
+  const m = S.graham.mos;
+  return `
+  ${pageHeader("Margin of safety", "The gap between what you pay and what the business is reasonably worth. It protects you from your own errors.")}
+  <div class="notice warn">This calculator shows how far a price sits from three anchors. It does not predict returns, and the answer is only as good as the inputs. Use normalized earnings, not the best year.</div>
+  <section class="card" data-live="mos">
+    <div class="card-head"><div><h2>Inputs</h2><div class="sub">Per-share figures. Use the same currency for all of them.</div></div></div>
+    ${S.companies.length ? `<div class="field no-print"><label for="mos-load">Load from a saved company</label>
+      <select id="mos-load" data-act="mos-load"><option value="">Choose a company…</option>${S.companies.map((c, i) => `<option value="${i}">${esc(tickerOf(c))}</option>`).join("")}</select></div>` : ""}
+    <div class="row">
+      ${gField("graham.mos.price", "Current price", { ph:"e.g. 48.20" })}
+      ${gField("graham.mos.eps", "Normalized earnings per share", { ph:"3-year average" })}
+      ${gField("graham.mos.bvps", "Book value per share", { ph:"e.g. 31.50" })}
+      ${gField("graham.mos.nta", "Net tangible assets per share (optional)", { ph:"blank uses book value" })}
+      ${gField("graham.mos.req", "Required return, % a year", { ph:"blank uses " + defaultReq() })}
+    </div>
+    <div class="divider"></div>
+    <div class="live-out">${mosResultHTML()}</div>
+  </section>
+  <section class="card">
+    <div class="card-head"><div><h2>How to read it</h2></div></div>
+    <ul class="plain">
+      <li><strong>The margin comes from the price you pay.</strong> A wonderful business at the wrong price is not a margin of safety.</li>
+      <li><strong>The range uses two earnings-based anchors.</strong> The low end is the smaller of earnings power and the Graham Number. The verdict is measured against that low end.</li>
+      <li><strong>The asset floor is a marker, not the value.</strong> It shows what the balance sheet holds. A price below it is unusual. Find out why.</li>
+      <li><strong>The 15% and 33% cut-offs are this app's teaching thresholds</strong>, not rules from the book.</li>
+    </ul>
+  </section>`;
+}
+
+/* ---------- 11, 13, 18-22. Screeners ---------- */
+
+function epsList(c){
+  const e = (c.g && c.g.eps) || {};
+  return Array.from({ length:10 }, (_, i) => has(e[i]) ? parseFloat(e[i]) : null);
+}
+function eps3(c){ const l = epsList(c).slice(7); return l.every(v => v !== null) ? avgOf(l) : null; }
+function growthCalc(c){
+  const g = c.g || {}, e = epsList(c);
+  const start = has(g.growthStart) ? num(g.growthStart) : (e.slice(0, 3).every(v => v !== null) ? avgOf(e.slice(0, 3)) : null);
+  const end = has(g.growthEnd) ? num(g.growthEnd) : (e.slice(7).every(v => v !== null) ? avgOf(e.slice(7)) : null);
+  const change = (start !== null && end !== null && start > 0) ? end / start - 1 : null;
+  return { start, end, change };
+}
+function recordCAGR(c){
+  const gc = growthCalc(c);
+  if (gc.start === null || gc.end === null || gc.start <= 0 || gc.end <= 0) return null;
+  return Math.pow(gc.end / gc.start, 1 / 7) - 1;
+}
+function intCover(c){
+  const g = c.g || {};
+  if (!has(g.ebit) || !has(g.interest)) return null;
+  const i = num(g.interest);
+  if (i <= 0) return num(g.ebit) > 0 ? Infinity : null;
+  return num(g.ebit) / i;
+}
+function sizeThreshold(){ return has(S.graham.sizeThreshold) ? num(S.graham.sizeThreshold) : 500; }
+
+function defCriteria(c){
+  const g = c.g || {};
+  const CA = has(g.ca) ? num(g.ca) : null, CL = has(g.cl) ? num(g.cl) : null, LTD = has(g.ltd) ? num(g.ltd) : null;
+  const price = has(g.price) ? num(g.price) : null, bv = has(g.bvps) ? num(g.bvps) : null;
+  const e = epsList(c), known = e.filter(v => v !== null), e3 = eps3(c);
+  const thr = sizeThreshold();
+  const list = [];
+  const add = (id, label, status, detail, why) => list.push({ id, label, status, detail, why });
+
+  if (has(g.size)) {
+    const ok = num(g.size) >= thr;
+    add("size", `Adequate size (at least $${thr}M)`, ok ? "pass" : "fail", `$${num(g.size)}M`,
+      "The company is small. Small firms have less cushion in a bad year. Look at larger companies, or accept that this one is outside the defensive screen.");
+  } else add("size", `Adequate size (at least $${thr}M)`, "none", "Enter revenue or market value in millions.", "");
+
+  if (CA !== null && CL !== null && CL > 0) {
+    const cr = CA / CL;
+    add("cr", "Current ratio of 2 or more", cr >= 2 ? "pass" : "fail", fx(cr),
+      "Short-term assets cover short-term bills less than twice. There is little room if sales dip. Pass on it, or wait for the balance sheet to improve.");
+  } else add("cr", "Current ratio of 2 or more", "none", "Enter current assets and current liabilities.", "");
+
+  if (CA !== null && CL !== null && LTD !== null) {
+    const nca = CA - CL;
+    add("debt", "Long-term debt no more than net current assets", LTD <= nca ? "pass" : "fail", `Debt ${money(LTD, 0)}M vs net current assets ${money(nca, 0)}M`,
+      "Long-term debt is larger than the company's spare short-term resources. Debt has to be repaid in bad years too. Do not buy on earnings alone.");
+  } else add("debt", "Long-term debt no more than net current assets", "none", "Enter long-term debt, current assets and current liabilities.", "");
+
+  const lossYrs = e.map((v, i) => (v !== null && v <= 0) ? i : null).filter(v => v !== null);
+  if (lossYrs.length) add("earn", "Profit in each of the last 10 years", "fail", `Loss in ${lossYrs.map(i => i === 9 ? "the latest year" : (9 - i) + " years ago").join(", ")}`,
+    "At least one year lost money. Find out why before trusting the average. A single deep recession year can be explained. A pattern cannot.");
+  else if (known.length === 10) add("earn", "Profit in each of the last 10 years", "pass", "No loss years", "");
+  else add("earn", "Profit in each of the last 10 years", "none", `${known.length} of 10 years entered`, "");
+
+  if (has(g.divYears)) add("div", "Dividends paid without a break for 20 years", num(g.divYears) >= 20 ? "pass" : "fail", `${num(g.divYears)} years`,
+    "The dividend record is shorter than 20 years, or it was interrupted. That is not fatal, but it means less proof the earnings are real in bad times.");
+  else add("div", "Dividends paid without a break for 20 years", "none", "Enter the years of uninterrupted dividends.", "");
+
+  const gc = growthCalc(c);
+  if (gc.start !== null && gc.end !== null) {
+    if (gc.start <= 0) add("grow", "Earnings up at least 33% over 10 years", "fail", `Start average ${fx(gc.start)} is not positive`, "The starting average is zero or negative, so a percentage change is meaningless. Treat the record as unproven.");
+    else add("grow", "Earnings up at least 33% over 10 years", gc.change >= 0.33 ? "pass" : "fail", `${gc.change >= 0 ? "▲" : "▼"} ${pct(Math.abs(gc.change), 0)} (${fx(gc.start)} to ${fx(gc.end)})`,
+      "Earnings grew less than a third across the decade, measured on three-year averages. Slow growth is fine if the price is low enough. Check the price tests below.");
+  } else add("grow", "Earnings up at least 33% over 10 years", "none", "Enter the ten yearly figures, or the two three-year averages.", "");
+
+  let pe3 = null;
+  if (price !== null && e3 !== null) {
+    if (e3 <= 0) add("pe", "Price at most 15 times average 3-year earnings", "fail", "Average earnings are not positive", "There are no positive average earnings to price against. Without earnings you are speculating.");
+    else { pe3 = price / e3; add("pe", "Price at most 15 times average 3-year earnings", pe3 <= 15 ? "pass" : "fail", `${fx(pe3, 1)} times`,
+      "The price is more than 15 times three-year average earnings. You would be paying for growth that may not arrive. Wait for a lower price."); }
+  } else add("pe", "Price at most 15 times average 3-year earnings", "none", "Enter the price and the last three yearly earnings.", "");
+
+  if (price !== null && bv !== null && bv > 0) {
+    const pb = price / bv;
+    if (pb <= 1.5) add("pb", "Price at most 1.5 times book value, or (P/E × P/B) at most 22.5", "pass", `P/B ${fx(pb)}`, "");
+    else if (pe3 !== null) add("pb", "Price at most 1.5 times book value, or (P/E × P/B) at most 22.5", pe3 * pb <= 22.5 ? "pass" : "fail", `P/B ${fx(pb)}, P/E × P/B ${fx(pe3 * pb, 1)}`,
+      "The price is high against both assets and earnings. Neither the 1.5 times book test nor the combined 22.5 test is met. Wait for a lower price.");
+    else add("pb", "Price at most 1.5 times book value, or (P/E × P/B) at most 22.5", "none", `P/B ${fx(pb)}. Enter 3 years of earnings for the combined test.`, "");
+  } else add("pb", "Price at most 1.5 times book value, or (P/E × P/B) at most 22.5", "none", "Enter the price and book value per share.", "");
+
+  const passN = list.filter(x => x.status === "pass").length;
+  const failN = list.filter(x => x.status === "fail").length;
+  return { list, passN, failN, noneN: 8 - passN - failN, allPass: passN === 8 };
+}
+
+function entCriteria(c){
+  const g = c.g || {}, e = epsList(c);
+  const CA = has(g.ca) ? num(g.ca) : null, CL = has(g.cl) ? num(g.cl) : null, LTD = has(g.ltd) ? num(g.ltd) : null;
+  const price = has(g.price) ? num(g.price) : null, nta = has(g.nta) ? num(g.nta) : (has(g.bvps) ? num(g.bvps) : null);
+  const e3 = eps3(c);
+  const out = [];
+  const add = (label, status, detail) => out.push({ label, status, detail });
+  if (CA !== null && CL !== null && CL > 0 && LTD !== null) {
+    const ok = CA / CL >= 1.5 && LTD <= 1.1 * (CA - CL);
+    add("Financial condition: current ratio at least 1.5 and debt within 110% of net current assets", ok ? "pass" : "fail", `Ratio ${fx(CA / CL)}`);
+  } else add("Financial condition: current ratio at least 1.5 and debt within 110% of net current assets", "none", "Enter the balance sheet figures.");
+  const last5 = e.slice(5);
+  if (last5.some(v => v !== null && v <= 0)) add("Earnings stability: profit in each of the last 5 years", "fail", "A loss year in the last five");
+  else if (last5.every(v => v !== null)) add("Earnings stability: profit in each of the last 5 years", "pass", "No loss years");
+  else add("Earnings stability: profit in each of the last 5 years", "none", "Enter the last five years.");
+  if (has(g.divYears)) add("Dividend record: some dividend is being paid now", num(g.divYears) >= 1 ? "pass" : "fail", `${num(g.divYears)} years`);
+  else add("Dividend record: some dividend is being paid now", "none", "Enter the years of dividends.");
+  if (e[9] !== null && e[5] !== null) add("Earnings growth: latest year above 4 years earlier", e[9] > e[5] ? "pass" : "fail", `${fx(e[5])} to ${fx(e[9])}`);
+  else add("Earnings growth: latest year above 4 years earlier", "none", "Enter the latest and the year-4 earnings.");
+  if (price !== null && e3 !== null) {
+    if (e3 <= 0) add("Price against earnings: at most 10 times 3-year average", "fail", "No positive earnings");
+    else add("Price against earnings: at most 10 times 3-year average", price / e3 <= 10 ? "pass" : "fail", `${fx(price / e3, 1)} times`);
+  } else add("Price against earnings: at most 10 times 3-year average", "none", "Enter the price and 3 years of earnings.");
+  if (price !== null && nta !== null && nta > 0) add("Price against assets: at most 120% of net tangible assets", price <= 1.2 * nta ? "pass" : "fail", `${pct(price / nta, 0)} of assets`);
+  else add("Price against assets: at most 120% of net tangible assets", "none", "Enter the price and asset value per share.");
+  return out;
+}
+function ncavCalc(c){
+  const g = c.g || {};
+  if (!has(g.ca) || !has(g.tl) || !has(g.shares) || !has(g.price) || num(g.shares) <= 0) return null;
+  const per = (num(g.ca) - num(g.tl)) / num(g.shares);
+  return { per, ok: per > 0 && num(g.price) < per * (2 / 3) };
+}
+
+function quality(c){
+  const s = (c.revTrend === "Revenue growing" ? 1 : 0) + (c.debtLevel === "Low / manageable" ? 1 : 0) + (c.cashGen === "Yes, consistently" ? 1 : 0);
+  return { score:s, known: !!(c.revTrend || c.debtLevel || c.cashGen) };
+}
+function balanceStrength(c){
+  const d = defCriteria(c).list;
+  const cr = d.find(x => x.id === "cr"), debt = d.find(x => x.id === "debt");
+  const cov = intCover(c);
+  const tests = [cr.status, debt.status, cov === null ? "none" : (cov >= 3 ? "pass" : "fail")];
+  const avail = tests.filter(t => t !== "none"), fails = tests.filter(t => t === "fail").length;
+  const label = !avail.length ? "No data" : fails === 0 ? "Strong" : fails === 1 ? "Mixed" : "Weak";
+  return { label, tests, cov, fails };
+}
+function compMos(c){
+  const g = c.g || {};
+  const e3 = eps3(c);
+  return mosCalc({ price:g.price, eps: e3 === null ? "" : e3, bvps:g.bvps, nta:g.nta, req:defaultReq() });
+}
+function eqConcerns(c){
+  const eq = (c.g && c.g.eq) || {};
+  return ["oneOff", "dilution", "pension", "policy"].filter(k => eq[k]).length + (eq.cash === "No" ? 1 : 0);
+}
+function recordGrowthWarning(c){
+  const g = c.g || {};
+  if (!has(g.optGrowth)) return "";
+  const rec = recordCAGR(c);
+  if (rec === null) return `You assume ${fx(num(g.optGrowth), 1)}% growth a year, but there is no ten-year record to check it against. Enter the earnings record above, or drop the assumption.`;
+  if (num(g.optGrowth) - rec * 100 > 3) return `Graham's caution: obvious growth does not translate into obvious profits for the buyer who overpays. You assume ${fx(num(g.optGrowth), 1)}% a year. The record is ${fx(rec * 100, 1)}%. Cut the assumption to the record, or demand a bigger discount.`;
+  return "";
+}
+function companyWarnings(c){
+  const w = [];
+  const q = quality(c), m = compMos(c);
+  if (q.score >= 2 && (m.state === "none" || m.state === "inside"))
+    w.push("A wonderful business at the wrong price is not a margin of safety. Do not buy at this price. Write the price you would pay on your watchlist.");
+  const cov = intCover(c);
+  if (cov !== null && cov < 3) w.push(`Interest coverage is ${fx(cov, 1)} times, below 3. One weak year could strain the interest payments. Avoid it for a conservative holding.`);
+  const n = eqConcerns(c);
+  if (n) w.push(`${n} earnings-quality concern${n > 1 ? "s" : ""} flagged. Do not lean on reported earnings until you have read the notes to the accounts.`);
+  const rg = recordGrowthWarning(c);
+  if (rg) w.push(rg);
+  return w;
+}
+
+function ringSVG(years, goal){
+  const f = clamp(years / goal, 0, 1), r = 26, C = 2 * Math.PI * r;
+  return `<svg class="ring" viewBox="0 0 64 64" role="img" aria-label="${years} of ${goal} years of uninterrupted dividends">
+    <circle cx="32" cy="32" r="${r}" fill="none" style="stroke:var(--line)" stroke-width="7"/>
+    <circle cx="32" cy="32" r="${r}" fill="none" style="stroke:${f >= 1 ? "var(--ok)" : "var(--accent)"}" stroke-width="7" stroke-linecap="round"
+      stroke-dasharray="${(C * f).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 32 32)"/>
+    <text x="32" y="36" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--ink)">${years}</text></svg>`;
+}
+
+const STAT = { pass:["✓", "ok", "Pass"], fail:["✗", "danger", "Fail"], none:["–", "", "No data"] };
+function statusTag(s){ const x = STAT[s]; return `<span class="tag ${x[1]}">${x[0]} ${x[2]}</span>`; }
+
+function companyResults(c){
+  const d = defCriteria(c), bs = balanceStrength(c), m = compMos(c), v = mosVerdict(m), gc = growthCalc(c);
+  const g = c.g || {}, e = epsList(c), warns = companyWarnings(c);
+  const fails = d.list.filter(x => x.status === "fail"), none = d.list.filter(x => x.status === "none");
+  const yrs = has(g.divYears) ? num(g.divYears) : 0;
+  const losses = e.map((x, i) => (x !== null && x <= 0) ? (i === 9 ? "latest year" : (9 - i) + " yrs ago") : null).filter(Boolean);
+  return `
+    <div class="gl-score"><strong>Defensive score: ${d.passN} of 8</strong>
+      <span class="small"> ${d.failN} failed${d.noneN ? `, ${d.noneN} still need data` : ""}</span>
+      ${progressBar(d.passN / 8, d.allPass)}</div>
+    ${fails.length ? `<h4>What failed, and what to do</h4><ul class="plain">${fails.map(x => `<li>${statusTag("fail")} <strong>${esc(x.label)}</strong> (${esc(x.detail)}). ${esc(x.why)}</li>`).join("")}</ul>` : ""}
+    ${none.length ? `<h4>Still missing</h4><ul class="plain">${none.map(x => `<li>${statusTag("none")} ${esc(x.label)}. <span class="small">${esc(x.detail)}</span></li>`).join("")}</ul>` : ""}
+    ${d.passN ? `<h4>Passed</h4><p>${d.list.filter(x => x.status === "pass").map(x => `<span class="tag ok">✓ ${esc(x.label.split(" (")[0])}</span>`).join(" ")}</p>` : ""}
+    <div class="grid g3" style="margin-top:12px">
+      <div class="stat"><div class="k">Balance sheet strength</div><div class="v">${bs.label}</div>
+        <div class="n">Current ratio, debt vs working capital, interest cover ${bs.cov === null ? "(not entered)" : bs.cov === Infinity ? "(no interest)" : "(" + fx(bs.cov, 1) + "×)"}</div></div>
+      <div class="stat"><div class="k">Ten-year earnings record</div><div class="v">${losses.length ? "▼ " + losses.length + " loss yr" + (losses.length > 1 ? "s" : "") : (e.filter(x => x !== null).length === 10 ? "No losses" : "—")}</div>
+        <div class="n">${losses.length ? "Loss in: " + esc(losses.join(", ")) : "Enter all ten years to confirm"}</div></div>
+      <div class="stat"><div class="k">Dividend record</div><div class="v ring-wrap">${ringSVG(yrs, 20)}<span class="small">of 20 years</span></div></div>
+    </div>
+    <p class="small" style="margin-top:10px">Growth over the decade: <strong>${gc.change === null ? "—" : (gc.change >= 0 ? "▲ " : "▼ ") + pct(Math.abs(gc.change), 0)}</strong>
+      ${gc.start !== null && gc.end !== null ? `(three-year average ${fx(gc.start)} at the start, ${fx(gc.end)} at the end)` : ""}.</p>
+    <h4>Value against price</h4>
+    <div class="notice ${v.cls}"><strong>${esc(v.title)}</strong><br>${esc(v.text)}</div>
+    ${mosBandHTML(m)}
+    <p class="small">Graham Number ${m.gn === null ? "—" : money(m.gn)} is a ceiling, not a target.</p>
+    ${warns.length ? `<h4>Warnings</h4>${warns.map(x => `<div class="notice danger" style="margin-bottom:8px">${esc(x)}</div>`).join("")}` : ""}`;
+}
+LIVE.company = host => {
+  host.querySelector(".live-out").innerHTML = companyResults(S.companies[parseInt(host.dataset.idx, 10)]);
+  const ru = document.querySelector("[data-rollup]");
+  if (ru) ru.innerHTML = rollupHTML();
+};
+
+function screenerForm(c, i){
+  const P = k => `companies.${i}.g.${k}`;
+  const labels = ["9 years ago (oldest)", "8 years ago", "7 years ago", "6 years ago", "5 years ago", "4 years ago", "3 years ago", "2 years ago", "1 year ago", "Latest year"];
+  const eq = (c.g && c.g.eq) || {};
+  const chk = (k, text) => `<label class="check"><input type="checkbox" data-path="${P("eq." + k)}" ${eq[k] ? "checked" : ""}><span class="lbl">${esc(text)}</span></label>`;
+  return `
+    <h4>Size and balance sheet ($ millions)</h4>
+    <div class="row">
+      ${gField(P("size"), "Revenue or market value", { ph:"e.g. 2400" })}
+      ${gField(P("ca"), "Current assets", { ph:"e.g. 900" })}
+      ${gField(P("cl"), "Current liabilities", { ph:"e.g. 400" })}
+      ${gField(P("ltd"), "Long-term debt", { ph:"e.g. 300" })}
+      ${gField(P("ebit"), "Operating profit (EBIT)", { ph:"e.g. 250" })}
+      ${gField(P("interest"), "Interest expense", { ph:"e.g. 40" })}
+    </div>
+    <h4>Price per share</h4>
+    <div class="row">
+      ${gField(P("price"), "Current price", { ph:"e.g. 48.20" })}
+      ${gField(P("bvps"), "Book value per share", { ph:"e.g. 31.50" })}
+      ${gField(P("nta"), "Net tangible assets per share (optional)", { ph:"blank uses book value" })}
+    </div>
+    <h4>Earnings per share, last ten years</h4>
+    <div class="row eps-grid">${labels.map((l, k) => gField(P("eps." + k), l, { ph:"EPS" })).join("")}</div>
+    <div class="row">
+      ${gField(P("growthStart"), "Start 3-year average (optional override)", { ph:"auto from years above" })}
+      ${gField(P("growthEnd"), "End 3-year average (optional override)", { ph:"auto from years above" })}
+      ${gField(P("divYears"), "Years of uninterrupted dividends", { ph:"e.g. 12", min:0 })}
+      ${gField(P("optGrowth"), "Growth I assume in the optimistic case, % a year", { ph:"e.g. 12" })}
+    </div>
+    <h4>Earnings quality</h4>
+    <p class="small">Tick a box if you found the concern. Any tick is a reason to read the notes before trusting the profit.</p>
+    <div class="grid g2">
+      ${chk("oneOff", "One-off gains are included in earnings")}
+      ${chk("dilution", "The share count has risen (dilution)")}
+      ${chk("pension", "Pension or off-balance-sheet obligations are large or unexamined")}
+      ${chk("policy", "Accounting policy changed during the period")}
+    </div>
+    <div class="field"><label for="${"f_eqcash" + i}">Does reported profit convert into cash?</label>
+      <select id="${"f_eqcash" + i}" data-path="${P("eq.cash")}">${["", "Yes", "Partly", "No", "Not checked"].map(o => `<option ${eq.cash === o ? "selected" : ""}>${o}</option>`).join("")}</select></div>`;
+}
+
+function grahamCompanySection(c, i){
+  return `<div class="divider"></div>
+  <div class="gl" data-live="company" data-idx="${i}">
+    <h3>Graham lens</h3>
+    <p class="small">The eight defensive tests, a valuation check and the warnings that go with them. They screen. They do not predict.</p>
+    ${screenerForm(c, i)}
+    <div class="live-out">${companyResults(c)}</div>
+  </div>`;
+}
+
+function defRollup(){
+  let assessed = 0, allPass = 0, rate = 0;
+  S.companies.forEach(c => { const d = defCriteria(c); if (d.passN + d.failN > 0) { assessed++; rate += d.passN / 8; if (d.allPass) allPass++; } });
+  return { assessed, allPass, avgRate: assessed ? rate / assessed : 0, total: S.companies.length };
+}
+function snapshotDefensive(){
+  const r = defRollup();
+  if (!r.assessed) return;
+  const key = todayISO(), cur = S.graham.passHistory[key];
+  const rec = { rate: +r.avgRate.toFixed(4), allPass: r.allPass, assessed: r.assessed };
+  if (!cur || cur.rate !== rec.rate || cur.allPass !== rec.allPass || cur.assessed !== rec.assessed) { S.graham.passHistory[key] = rec; save(); }
+}
+
+function entUnlocked(){
+  const it = S.graham.investorType;
+  return it.result === "enterprising" && num(it.hoursPerWeek) >= 10 && (it.commitment || "").trim().length >= 20;
+}
+
+function rollupHTML(){
+  const r = defRollup();
+  return `${statBox("Companies screened", r.assessed, `of ${r.total} saved`)}
+    ${statBox("Pass all eight", `${r.allPass} of ${r.assessed}`, "Holdings that pass every test")}
+    ${statBox("Average score", r.assessed ? fx(r.avgRate * 8, 1) + " of 8" : "—", "Across screened companies")}`;
+}
+function viewDefensiveScreener(){
+  const r = defRollup(), thr = sizeThreshold();
+  const rows = S.companies.map(c => ({ c, d: defCriteria(c) }));
+  const crit = defCriteria({ g:{} }).list;
+  const it = S.graham.investorType;
+  return `
+  ${pageHeader("Defensive screener", "Eight plain tests for a company you might hold for years. Passing proves little. Failing tells you exactly where the risk is.")}
+  ${effectiveType() === "defensive" ? `<div class="notice accent">Your investor type is Defensive${it.done ? "" : " (the default until you take the assessment)"}. This is the screen to start with.</div>` : ""}
+  <div class="grid g3" style="margin-bottom:16px" data-rollup>${rollupHTML()}</div>
+  <section class="card">
+    <div class="card-head"><div><h2>The eight tests</h2></div></div>
+    <div class="row"><div class="field"><label for="size-thr">What counts as adequate size? ($ millions of revenue or market value)</label>
+      <input id="size-thr" type="number" min="0" data-path="graham.sizeThreshold" value="${esc(S.graham.sizeThreshold)}" placeholder="500"></div></div>
+    <ol class="plain">${crit.map(x => `<li>${esc(x.label)}</li>`).join("")}</ol>
+    <p class="small">These are the app's encoding of Graham's defensive criteria, paraphrased and simplified. Check them against the book before relying on them.</p>
+  </section>
+  ${rows.length ? `<section class="card"><div class="card-head"><div><h2>Side by side</h2></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Company</th>${crit.map((x, k) => `<th class="num" title="${esc(x.label)}">Test ${k + 1}</th>`).join("")}<th class="num">Score</th></tr></thead>
+      <tbody>${rows.map(({ c, d }) => `<tr><td><strong>${esc(tickerOf(c))}</strong></td>${d.list.map(x => `<td class="num" title="${esc(x.label)}">${STAT[x.status][0]}</td>`).join("")}<td class="num"><strong>${d.passN}/8</strong></td></tr>`).join("")}</tbody></table></div>
+    <p class="small" style="margin-top:8px">✓ pass, ✗ fail, – not enough data. Hover or tap a column for the test.</p></section>` : ""}
+  <section class="card">
+    <div class="card-head"><div><h2>Screen a company</h2><div class="sub">Everything you need is on this page. Financial statements are on the company's annual report.</div></div>
+      <button class="btn primary sm no-print" style="margin-left:auto" data-act="add-company">+ Add a company</button></div>
+    ${S.companies.length ? S.companies.map((c, i) => `
+      <details ${i === 0 ? "open" : ""}><summary><strong>${esc(tickerOf(c))}</strong> <span class="small">${defCriteria(c).passN} of 8</span></summary>
+        <div class="row">${gField("companies." + i + ".ticker", "Ticker", { type:"text", ph:"e.g. KO" })}${gField("companies." + i + ".name", "Company name", { type:"text", ph:"e.g. Coca-Cola" })}</div>
+        <div class="gl" data-live="company" data-idx="${i}">${screenerForm(c, i)}<div class="live-out">${companyResults(c)}</div></div>
+      </details>`).join("") : `<div class="empty">No companies yet. Add one, then fill in the figures from its annual report.</div>`}
+  </section>
+  ${enterprisingSection()}`;
+}
+
+function enterprisingSection(){
+  const it = S.graham.investorType;
+  if (!entUnlocked()) {
+    const why = [];
+    if (it.result !== "enterprising") why.push(it.done ? "The assessment placed you as Defensive." : "You have not taken the investor-type assessment.");
+    if (num(it.hoursPerWeek) < 10) why.push("You have not committed at least 10 research hours a week.");
+    if ((it.commitment || "").trim().length < 20) why.push("You have not written down how you will find the time.");
+    return `<section class="card"><div class="card-head"><div><h2>Enterprising screener</h2></div></div>
+      <div class="notice warn"><strong>Locked.</strong> ${why.map(esc).join(" ")} Most people are Defensive. If you are not sure, you are. <a href="#investor-type">Go to the assessment</a>.</div></section>`;
+  }
+  return `<section class="card"><div class="card-head"><div><h2>Enterprising screener</h2><div class="sub">Looser on finances and history, strict on price. It rewards work. It punishes shortcuts.</div></div></div>
+    ${S.companies.length ? `<div class="tbl-wrap"><table>
+      <thead><tr><th>Test</th>${S.companies.map(c => `<th>${esc(tickerOf(c))}</th>`).join("")}</tr></thead>
+      <tbody>${entCriteria(S.companies[0]).map((x, k) => `<tr><td style="white-space:normal">${esc(x.label)}</td>${S.companies.map(c => { const y = entCriteria(c)[k]; return `<td>${statusTag(y.status)}<div class="small">${esc(y.detail)}</div></td>`; }).join("")}</tr>`).join("")}</tbody></table></div>`
+      : `<div class="empty">Add a company above first.</div>`}
+    <h4>Bargain issues, special situations and net-nets</h4>
+    <p style="font-size:.9rem">A <strong>bargain issue</strong> sells for much less than a careful estimate of its worth. A <strong>special situation</strong> depends on an event, such as a merger or a breakup, rather than on the market's mood. A <strong>net-net</strong> sells below its current assets minus all liabilities. All three are crowded with traps. Net-nets are usually tiny, neglected or shrinking. Diversify across many, and do not fall in love with one.</p>
+    ${S.companies.map((c, i) => { const n = ncavCalc(c); return `<details><summary><strong>${esc(tickerOf(c))}</strong> net current asset value ${n ? money(n.per) + " per share" : "(needs figures)"}</summary>
+      <div class="row">${gField("companies." + i + ".g.tl", "Total liabilities ($M)", {})}${gField("companies." + i + ".g.shares", "Shares outstanding (millions)", {})}</div>
+      <p class="small">${n ? (n.ok ? `Price is below two-thirds of net current asset value: a net-net by this test. Find out why it is this cheap.` : n.per <= 0 ? "Net current assets are negative: not a net-net." : "Price is not below two-thirds of net current asset value.") : "Needs current assets, total liabilities, shares and price."}</p></details>`; }).join("")}
+  </section>`;
+}
+
+/* ============================================================
+   GRAHAM LAYER, part 2: investor type, Mr. Market, allocation, lessons, roll-ups
+   ============================================================ */
+
+/* ---------- 10, 14. Investor type ---------- */
+
+const ITYPE_Q = [
+  { id:"t1", q:"How many hours a week can you give to research, every week, for years?",
+    o:[["0","Under 2"],["1","2 to 5"],["2","5 to 10"],["3","10 or more"]] },
+  { id:"t2", q:"Your holdings fall 30% in a year. What are you most likely to do?",
+    o:[["0","Sell some to stop the pain"],["1","Worry a lot, then probably hold"],["2","Hold and carry on with my plan"],["3","Re-check my analysis, and buy more only if the price is below my value"]] },
+  { id:"t3", q:"How do you feel about reading annual reports and comparing companies?",
+    o:[["0","I would rather not"],["1","I will skim summaries"],["2","I will read the key sections of a few"],["3","I enjoy full filings and doing the arithmetic"]] }
+];
+
+function itypeCompute(){
+  const it = S.graham.investorType, a = it.answers;
+  const done = ITYPE_Q.every(q => a[q.id] !== undefined && a[q.id] !== "");
+  it.done = done;
+  it.result = done ? (ITYPE_Q.every(q => String(a[q.id]) === "3") ? "enterprising" : "defensive") : "";
+  save();
+}
+function itypeResultHTML(){
+  const it = S.graham.investorType;
+  if (!it.done) return `<div class="notice">Answer all three questions. Until you do, the app treats you as Defensive.</div>`;
+  if (it.result === "enterprising") return `<div class="notice warn"><strong>Result: Enterprising, with a condition.</strong><br>You gave the top answer on all three, which is rare. That only matters if you actually do the work. Write your weekly hours below to unlock the enterprising screener. If the honest hours fall short, stay Defensive.</div>`;
+  return `<div class="notice ok"><strong>Result: Defensive.</strong><br>That is the right answer for most people, and it is not the lesser one. Your dashboard now leads with the screener and allocation, and treats the trading pages as optional practice.</div>`;
+}
+LIVE.itype = host => { itypeCompute(); host.querySelector(".live-out").innerHTML = itypeResultHTML(); renderNav(); };
+
+function viewInvestorType(){
+  const it = S.graham.investorType;
+  return `
+  ${pageHeader("Investor type", "Graham described two kinds of investor. Most people are the first kind. Be honest about which you are.")}
+  <section class="card" data-live="itype">
+    <div class="card-head"><div><h2>Three questions</h2></div></div>
+    ${ITYPE_Q.map((q, i) => `<fieldset class="qset"><legend>${i + 1}. ${esc(q.q)}</legend>${gRadios("graham.investorType.answers." + q.id, q.o)}</fieldset>`).join("")}
+    <div class="live-out">${itypeResultHTML()}</div>
+  </section>
+  <section class="card">
+    <div class="card-head"><div><h2>The two types</h2></div></div>
+    <div class="grid g2">
+      <div><h3>Defensive</h3><p style="font-size:.9rem">Wants safety and freedom from effort. Holds a broad, diversified portfolio, buys only companies that pass strict tests, and rebalances by rule. Spends little time and makes few decisions.</p></div>
+      <div><h3>Enterprising</h3><p style="font-size:.9rem">Is willing to spend real, regular time hunting for bargains and special situations, and accepts that effort is the price of any edge. Needs the temperament to sit through being wrong for years.</p></div>
+    </div>
+  </section>
+  <section class="card">
+    <div class="card-head"><div><h2>For most people</h2></div></div>
+    <div class="notice accent" style="font-size:1rem"><strong>For most people, the most Intelligent-Investor-compatible action is a low-cost, broadly diversified portfolio and a mechanical allocation — not active trading.</strong></div>
+    <p>If that describes you, the best use of this app is the <a href="#allocation">allocation policy</a>, the <a href="#defensive-screener">defensive screener</a> and the weekly review. The trading pages are practice, and Phase 4 is optional.</p>
+    <p><button class="btn" data-act="goto-honesty">Read the Month 12 honesty check</button></p>
+  </section>
+  <section class="card">
+    <div class="card-head"><div><h2>Enterprising commitment</h2><div class="sub">Needed to unlock the enterprising screener. Ignore this if you are Defensive.</div></div></div>
+    <div class="row">${gField("graham.investorType.hoursPerWeek", "Research hours a week I commit to (at least 10)", { min:0, ph:"e.g. 12" })}</div>
+    <div class="field"><label for="itype-commit">In writing: where will those hours come from?</label>
+      <textarea id="itype-commit" data-path="graham.investorType.commitment" placeholder="Which hours, on which days, and what you will stop doing.">${esc(it.commitment || "")}</textarea></div>
+    <p class="small">Status: ${entUnlocked() ? "enterprising screener unlocked." : "enterprising screener locked."}</p>
+  </section>`;
+}
+
+/* ---------- 7, 9. Mr. Market ---------- */
+
+function mmEntries(){
+  return Object.entries(S.graham.mrMarket.log).sort((a, b) => a[0].localeCompare(b[0]));
+}
+function timingLast7(){
+  const cut = addDays(todayISO(), -6);
+  return S.graham.mrMarket.timingLog.filter(d => d >= cut).length;
+}
+function twoLineChart(points){
+  const W = 700, H = 200, pad = 34;
+  const px = i => pad + (points.length === 1 ? 0 : i / (points.length - 1)) * (W - pad * 2);
+  const py = v => H - pad - (v / 100) * (H - pad * 2);
+  const line = k => points.map((p, i) => `${px(i).toFixed(1)},${py(p[k]).toFixed(1)}`).join(" ");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Market mood and your mood over ${points.length} check-ins">
+    <line x1="${pad}" y1="${py(50)}" x2="${W - pad}" y2="${py(50)}" style="stroke:var(--line)" stroke-dasharray="3 3"/>
+    <text x="${pad - 6}" y="${py(100) + 4}" font-size="10" text-anchor="end" style="fill:var(--muted)">100</text>
+    <text x="${pad - 6}" y="${py(0) + 4}" font-size="10" text-anchor="end" style="fill:var(--muted)">0</text>
+    <polyline points="${line("market")}" fill="none" style="stroke:var(--amber)" stroke-width="2.5" stroke-linejoin="round"/>
+    <polyline points="${line("mood")}" fill="none" style="stroke:var(--accent)" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="6 4"/>
+  </svg>
+  <div class="legend"><span><i class="swatch" style="background:var(--amber)"></i>Market mood (solid line)</span><span><i class="swatch" style="background:var(--accent)"></i>Your mood (dashed line)</span></div>`;
+}
+LIVE.mm = host => { host.querySelectorAll("[data-outfor]").forEach(o => { o.textContent = getPath(o.dataset.outfor) || 50; }); };
+
+function viewMrMarket(){
+  const mm = S.graham.mrMarket, today = todayISO(), saved = mm.log[today];
+  const entries = mmEntries(), recent = entries.slice(-60);
+  const gaps = entries.map(([, e]) => Math.abs(num(e.market) - num(e.mood)));
+  const infl = entries.filter(([, e]) => e.influenced === "yes").length;
+  const draft = mm.draft;
+  const slider = (path, label, lo, hi) => `<div class="field"><label for="s_${path.replace(/\W/g, "_")}">${esc(label)}: <output data-outfor="${path}">${esc(getPath(path) || 50)}</output> of 100</label>
+    <input id="s_${path.replace(/\W/g, "_")}" type="range" min="0" max="100" step="5" data-path="${path}" value="${esc(getPath(path) || 50)}">
+    <div class="range-ends"><span>${esc(lo)}</span><span>${esc(hi)}</span></div></div>`;
+  return `
+  ${pageHeader("Mr. Market", "Picture a business partner who offers, every day, to buy your share or sell you his, at a price that swings with his mood. You may take the offer or ignore it.")}
+  <div class="notice accent">The purpose is detachment, not prediction. There is no streak here, and checking in more often earns nothing. Skip days freely.</div>
+  <section class="card" data-live="mm">
+    <div class="card-head"><div><h2>Today's check-in</h2><div class="sub">${saved ? "Saved for today. Saving again replaces it." : "Takes under a minute."}</div></div></div>
+    ${slider("graham.mrMarket.draft.market", "Market mood today", "Despair, prices are collapsing", "Euphoria, prices only go up")}
+    ${slider("graham.mrMarket.draft.mood", "My mood today", "Fearful, I want to act", "Greedy, I want to act")}
+    <fieldset class="qset"><legend>Did price action influence a decision today?</legend>
+      ${gRadios("graham.mrMarket.draft.influenced", [["no", "No"], ["yes", "Yes"]])}</fieldset>
+    <button class="btn primary" data-act="mm-save">Save today's check-in</button>
+  </section>
+  <section class="card">
+    <div class="card-head"><div><h2>Market mood and yours</h2></div></div>
+    ${recent.length >= 2 ? twoLineChart(recent.map(([d, e]) => ({ market:num(e.market), mood:num(e.mood) }))) : `<div class="empty">Two check-ins draw the first line. Until then there is nothing to read into.</div>`}
+    ${entries.length ? `<div class="grid g3" style="margin-top:12px">
+      ${statBox("Average gap", fx(avgOf(gaps), 0) + " pts", "Between market mood and yours")}
+      ${statBox("Price action swayed me", pct(infl / entries.length, 0), `${infl} of ${entries.length} check-ins`)}
+      ${statBox("Check-ins saved", entries.length, "No target")}
+    </div>
+    <p class="small" style="margin-top:10px">If your line rises and falls with his, his mood is running your decisions. Detachment looks like your line staying calmer than his.</p>` : ""}
+  </section>
+  <section class="card">
+    <div class="card-head"><div><h2>Catch yourself forecasting</h2></div></div>
+    <p>Each time you notice you are trying to predict where the market goes next, press the button. The count is a mirror, not a score.</p>
+    <div class="inline"><button class="btn primary" data-act="timing-tap">I caught myself forecasting</button>
+      <button class="btn sm ghost" data-act="timing-undo" ${mm.timingCount ? "" : "disabled"}>Undo last</button></div>
+    <div class="grid g3" style="margin-top:12px">${statBox("Total", mm.timingCount)}${statBox("Last 7 days", timingLast7())}</div>
+    <p class="small" style="margin-top:10px">Graham's advice is not to forecast, but to be prepared.</p>
+    <div class="notice warn" style="margin-top:12px">If the count keeps climbing: write down what you would do if the market rose 30% and what you would do if it fell 30%. Then stop forecasting.</div>
+  </section>
+  ${entries.length ? `<section class="card"><div class="card-head"><div><h2>Recent check-ins</h2></div></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Date</th><th class="num">Market</th><th class="num">Me</th><th class="num">Gap</th><th>Price action swayed me</th></tr></thead>
+    <tbody>${entries.slice(-14).reverse().map(([d, e]) => `<tr><td class="mono">${esc(d)}</td><td class="num">${esc(e.market)}</td><td class="num">${esc(e.mood)}</td><td class="num">${Math.abs(num(e.market) - num(e.mood))}</td><td>${e.influenced === "yes" ? '<span class="tag warn">yes</span>' : e.influenced === "no" ? "no" : "—"}</td></tr>`).join("")}</tbody></table></div></section>` : ""}`;
+}
+
+/* ---------- 23, 24. Allocation policy, rebalancing, DCA ---------- */
+
+function allocCalc(){
+  const a = S.graham.allocation;
+  const raw = has(a.stockPct) ? num(a.stockPct) : 50;
+  const out = { raw, outOfBounds: raw < 25 || raw > 75 };
+  const pol = clamp(raw, 25, 75);
+  out.pol = pol;
+  const stocks = Math.max(0, num(a.cur.stocks)), def = Math.max(0, num(a.cur.defensive)), add = Math.max(0, num(a.cur.add));
+  const before = stocks + def, total = before + add;
+  out.total = total;
+  if (before <= 0) { out.ready = false; return out; }
+  out.ready = true;
+  out.curPct = stocks / before * 100;
+  out.drift = out.curPct - pol;
+  out.curOutOfBounds = out.curPct < 25 || out.curPct > 75;
+  out.targetStocks = total * pol / 100;
+  out.targetDef = total - out.targetStocks;
+  out.tStocks = out.targetStocks - stocks;
+  out.tDef = out.targetDef - def;
+  out.newMoneyOnly = add > 0 && out.tStocks >= 0 && out.tDef >= 0;
+  if (a.trigger === "calendar") {
+    const months = has(a.calMonths) ? num(a.calMonths) : 12;
+    if (!a.lastRebalance) out.trig = { fire:false, text:"Enter the date of your last rebalance so the calendar rule can work." };
+    else {
+      const d0 = new Date(a.lastRebalance + "T12:00:00"), now = new Date();
+      const elapsed = (now.getFullYear() - d0.getFullYear()) * 12 + now.getMonth() - d0.getMonth();
+      out.trig = elapsed >= months ? { fire:true, text:`${elapsed} months since the last rebalance. Your rule says every ${months}. Rebalance now.` }
+        : { fire:false, text:`${elapsed} months since the last rebalance. Your rule says every ${months}. Do nothing yet.` };
+    }
+  } else {
+    const band = has(a.bandPts) ? num(a.bandPts) : 5;
+    out.trig = Math.abs(out.drift) >= band ? { fire:true, text:`Stocks are ${fx(Math.abs(out.drift), 1)} points ${out.drift > 0 ? "above" : "below"} target. Your band is ${band}. Rebalance now.` }
+      : { fire:false, text:`Stocks are ${fx(Math.abs(out.drift), 1)} points from target. Your band is ${band}. Do nothing.` };
+  }
+  if (out.curOutOfBounds) out.trig = { fire:true, text:`Your stock share (${fx(out.curPct, 1)}%) is outside the 25 to 75% bounds. Rebalance now, whatever the trigger says.` };
+  return out;
+}
+function tradeLine(name, v){
+  if (Math.abs(v) < 0.005) return `<tr><td>${name}</td><td class="num">No trade</td></tr>`;
+  return `<tr><td>${name}</td><td class="num"><strong>${v > 0 ? "▲ Buy " : "▼ Sell "}${money(Math.abs(v), 0)}</strong></td></tr>`;
+}
+function allocResultHTML(){
+  const r = allocCalc();
+  let h = "";
+  if (r.outOfBounds) h += `<div class="notice danger"><strong>Your policy of ${fx(r.raw, 0)}% in stocks is outside the 25 to 75% bounds.</strong> The calculator is using ${r.pol}% until you change it. Set a policy inside the bounds.</div>`;
+  if (!r.ready) return h + `<div class="notice">Enter the current value of your stocks and your defensive assets (bonds and cash) to see the trades.</div>`;
+  h += `<div class="notice ${r.trig.fire ? "warn" : "ok"}"><strong>${r.trig.fire ? "Rebalance." : "Do nothing."}</strong> ${esc(r.trig.text)}</div>`;
+  h += `<div class="grid g3">${statBox("Stocks now", fx(r.curPct, 1) + "%", `target ${r.pol}%`)}${statBox("Drift", (r.drift >= 0 ? "▲ " : "▼ ") + fx(Math.abs(r.drift), 1) + " pts", "From target")}${statBox("Total after new money", money(r.total, 0))}</div>`;
+  h += `<h4>Trades to reach ${r.pol}% stocks, ${100 - r.pol}% defensive</h4><div class="tbl-wrap"><table><tbody>${tradeLine("Stocks", r.tStocks)}${tradeLine("Defensive assets (bonds and cash)", r.tDef)}</tbody></table></div>`;
+  if (r.newMoneyOnly) h += `<p class="small">New money alone is enough. You can rebalance without selling.</p>`;
+  h += `<p style="margin-top:10px"><strong>Rebalance by rule, not by feeling.</strong> If the trigger says do nothing, do nothing, even when the news is exciting.</p>`;
+  return h;
+}
+LIVE.alloc = host => { host.querySelector(".live-out").innerHTML = allocResultHTML(); };
+
+function allocTool(){
+  const a = S.graham.allocation;
+  return `<section class="card" data-live="alloc">
+    <div class="card-head"><div><h2>Allocation policy and rebalancing</h2>
+      <div class="sub">Graham's default for a defensive investor is a fixed split, about half in stocks and half in high-grade bonds, kept between a quarter and three quarters in stocks.</div></div></div>
+    <div class="row">
+      ${gField("graham.allocation.stockPct", "Stocks, % of the portfolio (25 to 75)", { min:25, max:75, ph:"50" })}
+      <div class="field"><label for="alloc-trig">Rebalancing trigger</label>
+        <select id="alloc-trig" data-path="graham.allocation.trigger"><option value="band" ${a.trigger !== "calendar" ? "selected" : ""}>Band: when stocks drift this far</option><option value="calendar" ${a.trigger === "calendar" ? "selected" : ""}>Calendar: every set number of months</option></select></div>
+      ${gField("graham.allocation.bandPts", "Band, in percentage points", { min:1, ph:"5" })}
+      ${gField("graham.allocation.calMonths", "Calendar, every N months", { min:1, ph:"12" })}
+      ${gField("graham.allocation.lastRebalance", "Date of last rebalance", { type:"date" })}
+    </div>
+    <div class="divider"></div>
+    <h4>Rebalancing calculator</h4>
+    <div class="row">
+      ${gField("graham.allocation.cur.stocks", "Stocks now ($)", { min:0, ph:"e.g. 6200" })}
+      ${gField("graham.allocation.cur.defensive", "Bonds and cash now ($)", { min:0, ph:"e.g. 3800" })}
+      ${gField("graham.allocation.cur.add", "New money to add ($, optional)", { min:0, ph:"0" })}
+    </div>
+    <div class="live-out">${allocResultHTML()}</div>
+    <p class="small" style="margin-top:10px">This policy is for long-term money. It is a different world from the stops and trades in the rest of Phase 3.</p>
+  </section>`;
+}
+
+function dcaCalc(){
+  const d = S.graham.dca;
+  const m = num(d.monthly), yrs = clamp(num(d.years), 0, 40), start = Math.max(0, num(d.start));
+  if (!(m > 0) || !(yrs > 0)) return null;
+  const n = Math.round(yrs * 12), contributed = start + m * n;
+  const rows = [-3, 0, 3, 6, 9].map(r => {
+    const rm = Math.pow(1 + r / 100, 1 / 12) - 1;
+    const fv = start * Math.pow(1 + r / 100, yrs) + (rm === 0 ? m * n : m * ((Math.pow(1 + rm, n) - 1) / rm));
+    return { r, fv };
+  });
+  return { n, contributed, rows };
+}
+function dcaResultHTML(){
+  const r = dcaCalc();
+  if (!r) return `<div class="notice">Enter a monthly amount and a number of years.</div>`;
+  const d = S.graham.dca, day = clamp(Math.round(num(d.day) || 1), 1, 28);
+  return `<p><strong>Schedule:</strong> ${money(num(d.monthly), 0)} on day ${day} of every month, for ${r.n} months, whatever the market is doing.</p>
+    <div class="grid g3">${statBox("Total you put in", money(r.contributed, 0), `${r.n} contributions`)}</div>
+    <div class="tbl-wrap" style="margin-top:12px"><table><thead><tr><th>If the portfolio earned, per year</th><th class="num">It would be worth</th><th class="num">Against what you put in</th></tr></thead>
+    <tbody>${r.rows.map(x => `<tr><td>${x.r > 0 ? "+" : x.r < 0 ? "−" : ""}${Math.abs(x.r)}%</td><td class="num">${money(x.fv, 0)}</td>
+      <td class="num ${x.fv >= r.contributed ? "pos" : "neg"}">${x.fv >= r.contributed ? "▲ " : "▼ "}${money(Math.abs(x.fv - r.contributed), 0)}</td></tr>`).join("")}</tbody></table></div>
+    <div class="notice warn" style="margin-top:12px"><strong>These are illustrations, not forecasts.</strong> No formula removes the risk of loss, and Graham warned that formulas can fail at extremes. A steady schedule only removes timing decisions. It does not remove losses. Keep a cash reserve so you never have to sell at a bad moment.</div>`;
+}
+LIVE.dca = host => { host.querySelector(".live-out").innerHTML = dcaResultHTML(); };
+
+function viewAllocation(){
+  return `
+  ${pageHeader("Allocation policy", "Decide the split once, write the trigger down, and let the rule do the deciding.")}
+  ${allocTool()}
+  <section class="card" data-live="dca">
+    <div class="card-head"><div><h2>Regular investing planner</h2><div class="sub">Putting in a fixed amount at fixed intervals. Useful because it removes decisions. Not magic.</div></div></div>
+    <div class="row">
+      ${gField("graham.dca.monthly", "Amount each month ($)", { min:0, ph:"e.g. 200" })}
+      ${gField("graham.dca.years", "Years (up to 40)", { min:1, max:40, ph:"e.g. 10" })}
+      ${gField("graham.dca.start", "Starting amount ($, optional)", { min:0, ph:"0" })}
+      ${gField("graham.dca.day", "Day of the month (1 to 28)", { min:1, max:28, ph:"1" })}
+    </div>
+    <div class="live-out">${dcaResultHTML()}</div>
+  </section>`;
+}
+
+/* ---------- 28 lessons ---------- */
+
+const LESSONS = [
+  ["A", "The central distinction"],
+  ["L1", "Investment is not the same as speculation", "An investment operation rests on thorough analysis, promises safety of the money you put in, and offers an adequate return. Anything that misses one of those three is speculation, whatever you call it. Speculation is allowed. Mislabelling it is the danger.", "The classifier on Investment or speculation, a classification on every journal trade and thesis, and the dashboard split.", "graham-investor", "Think of your last purchase. Which of the three tests did it fail?"],
+  ["L2", "Thorough analysis comes first", "Analysis means studying the facts and reaching conclusions that survive scrutiny, not collecting reasons to feel good about a decision already made. The test of analysis is whether you went looking for what could prove you wrong.", "The Thesis Builder will not accept Buy until you answer what you checked that could have contradicted you and what a hostile analyst would say.", "thesis", "What is one fact you found that went against your view?"],
+  ["L3", "Define safety and an adequate return", "Safety of principal means protection against loss under reasonable conditions, not a promise that nothing goes wrong. An adequate return is a modest number you can name in advance. If you cannot state both, you cannot tell whether a purchase meets them.", "Settings requires a minimum acceptable return and a maximum acceptable permanent loss. The dashboard shows both, and live trades that cannot say how they meet them are flagged.", "settings", "What yearly return would be enough, and what permanent loss could you accept?"],
+  ["B", "Margin of safety"],
+  ["L4", "Margin of safety is the central idea", "A margin of safety is the gap between what you pay and what the thing is reasonably worth. It protects you from errors in your estimate, from bad luck and from a future worse than you hoped. Without it, your plan depends on being right about everything.", "The Margin of safety calculator combines asset floor, earnings power and the Graham Number into a range, with a clear no-margin verdict when price is above it.", "graham-mos", "At what price would you buy your favourite company, and what is that price below?"],
+  ["L5", "The margin comes from the price, not the business", "A great company bought at a high price offers no cushion. Quality changes what a business is worth. It does not change what you paid. A wonderful business at the wrong price is not a margin of safety.", "Company cards warn when quality is high and the margin is negative, and the same case raises an automatic red flag.", "phase2", "Name a business you admire. Would you still buy it at twice today's price?"],
+  ["L6", "Safety for lenders too", "Lenders depend on a company earning enough to pay its interest. Graham judged this by how many times operating profit covers the interest bill. A thin cover means one bad year can threaten the payments.", "Interest coverage is computed on the company scorecard, with a warning below 3 times.", "defensive-screener", "How many times does this company's operating profit cover its interest?"],
+  ["C", "Mr. Market"],
+  ["L7", "Mr. Market is a moody partner, not an oracle", "Imagine a business partner who offers every day to buy your share or sell you his at a price that swings with his mood. Sometimes he is euphoric, sometimes despairing. You may ignore him, and you should never let him tell you what your business is worth.", "The Mr. Market tracker records the market's mood and yours each day and charts the gap.", "mr-market", "Whose mood is moving your decisions this week, yours or his?"],
+  ["L8", "Price swings are opportunities, not instructions", "A falling price tells you about other people's feelings. It becomes an opportunity only when it falls below your own careful estimate of value. It is never an order to sell.", "Every journal entry records whether the decision was driven by price movement or by the thesis, and Metrics reports the shares.", "journal", "When did a price move last change your mind, and did the facts change too?"],
+  ["L9", "Do not forecast the market", "Nobody reliably predicts the next turn, so plans built on forecasts add risk without adding knowledge. Prepare for several outcomes instead of betting on one.", "A one-tap forecasting counter, a dashboard tile and an automatic red flag when the count keeps climbing.", "mr-market", "What would you do if the market rose 30% tomorrow, and what if it fell 30%?"],
+  ["D", "Two kinds of investor"],
+  ["L10", "Defensive and enterprising, and most people are defensive", "The defensive investor wants safety and freedom from effort. The enterprising investor spends real time and skill hunting for bargains. Honestly assessed, most people are defensive, and pretending otherwise is expensive.", "The investor-type assessment defaults to Defensive and reshapes the dashboard and navigation.", "investor-type", "How many hours a week will you research in your busiest month?"],
+  ["L11", "The defensive investor's checklist", "Graham gave the defensive investor a short list of tests: adequate size, strong finances, a long record of profits and dividends, decent growth over a decade, and a moderate price against both earnings and assets. Failing a test is information, not an insult. It shows where the risk lives.", "The defensive screener scores each company out of eight and explains every failure.", "defensive-screener", "Which of the eight tests does your favourite company fail?"],
+  ["L12", "Diversify, but not endlessly", "Too few holdings lets one mistake dominate. Too many dilutes your attention and adds little protection. Roughly ten to thirty holdings was Graham's comfort zone for the defensive investor.", "Metrics shows a concentration monitor: holdings count, flags, and sector shares.", "metrics", "How many positions would one bad year in one sector hurt?"],
+  ["L13", "Enterprising rules are for people with time", "The enterprising investor may accept looser tests on finances and history, but must be strict on price and willing to do the work. Bargain issues, special situations and net-nets are the hunting grounds, and they punish carelessness.", "A second screener, locked until the assessment says Enterprising and you write down your weekly research hours.", "defensive-screener", "What will you stop doing to find the hours you wrote down?"],
+  ["L14", "For most beginners, keep it boring", "For most people, a low-cost, broadly diversified portfolio and a mechanical allocation beat active trading on effort and on regret. That is not a consolation prize. It is the plan that works for people who will not do the research.", "The investor-type page says so plainly and links to the Month 12 honesty check.", "investor-type", "If you had to defend active trading to a sceptical friend, what is your evidence?"],
+  ["E", "Valuation"],
+  ["L15", "Anchor value in earnings and assets", "Start from what the business earns and what it owns, not from stories. The Graham Number combines earnings and book value into a ceiling on what a defensive investor should pay. A ceiling is a limit, not a target.", "The Graham Number is computed on the margin-of-safety page and on each company card, always labelled as a ceiling.", "graham-mos", "What are this company's normalized earnings and book value per share?"],
+  ["L16", "Beware glamour and growth projections", "Growth that everyone can see is usually already in the price. Obvious growth does not translate into obvious profits for the buyer who overpays. Projections far above a company's own record deserve suspicion.", "A warning appears when an optimistic scenario assumes growth well above the ten-year record. Metrics logs how often your theses lean on growth stories.", "thesis", "What growth does your case assume, and what did the company actually deliver?"],
+  ["L17", "Compare with peers, not narratives", "A ratio means little alone. Put a company beside its competitors on the same tests and the story gets honest quickly.", "The Phase 2 comparison table carries the defensive criteria for every company side by side.", "phase2", "Which of two similar companies passes more tests, and why?"],
+  ["F", "Financial statements"],
+  ["L18", "Financial condition comes first", "A business that cannot pay its bills does not get to deliver its earnings. Check short-term assets against short-term liabilities, and long-term debt against spare working capital, before admiring the profit.", "Current ratio and debt-versus-working-capital fields feed the screener and a balance sheet strength scorecard.", "defensive-screener", "Could this company survive two bad years without borrowing more?"],
+  ["L19", "Earnings stability", "A long record of profits shows resilience. One great year shows luck. Ten years of figures show how the business behaves in recessions.", "Each company holds a ten-year earnings record with automatic loss-year flags.", "defensive-screener", "Which year was the worst, and why?"],
+  ["L20", "Dividend record", "A long, unbroken dividend record suggests earnings real enough to pay out even in bad times. It is no guarantee, but a long record is hard to fake.", "Years of unbroken dividends are tracked against the 20-year threshold with a progress ring.", "defensive-screener", "Has this company ever cut its dividend, and what was happening then?"],
+  ["L21", "Growth over a decade, not a quarter", "Judge growth by comparing three-year averages at each end of ten years, which smooths lucky and unlucky years. Short windows reward noise.", "Enter the ten yearly figures or the two three-year averages and the app computes the change.", "defensive-screener", "Is the decade's growth steady, or mostly one jump?"],
+  ["L22", "Earnings quality", "Reported profit can flatter: one-off gains, rising share counts, pension and off-balance-sheet obligations, changed accounting rules. The plain test is whether profit turns into cash.", "An earnings-quality checklist on each company ends with: does reported profit convert into cash?", "defensive-screener", "How much of last year's profit arrived as cash?"],
+  ["G", "Portfolio and behaviour"],
+  ["L23", "A fixed split and mechanical rebalancing", "Graham's default for the defensive investor is a split near half stocks and half high-grade bonds, kept between a quarter and three quarters in stocks. You adjust by rule when the mix drifts, not when you feel clever or scared.", "The allocation policy enforces the 25 to 75% bounds and the rebalancing calculator outputs the exact trades.", "allocation", "What is your written trigger for rebalancing?"],
+  ["L24", "Formulas help, but they are not magic", "Investing the same amount at regular intervals removes some timing decisions and some regret. It does not remove the risk of loss, and Graham warned that formulas can fail at extremes.", "The regular investing planner shows contributions and a range of outcomes, with the caveat on screen.", "allocation", "What would you do if your balance fell 30% a year into the schedule?"],
+  ["L25", "Stops belong to traders", "A stop-loss is a short-term trading tool. For a long-term investor a price touch is not a reason to sell. Sell because the thesis is broken or the valuation no longer supports the holding.", "Phase 3 keeps trading stops and long-term selling rules visibly apart, with a note and a link to the allocation policy.", "phase3", "Under what condition, other than price, would you sell?"],
+  ["L26", "The investor's chief enemy is himself", "Most damage comes from impulse, haste and doing what you did not plan. A businesslike habit checks each decision against evidence and plan.", "The weekly review asks whether you acted on evidence and did what you said. Metrics tracks the businesslike rate beside rule adherence.", "review", "Last week, which decision was driven by feeling?"],
+  ["L27", "Keep investing and speculating apart", "If you want to speculate, do it with a small, separate sum you can afford to lose, and never let it leak into your savings. The danger is speculation dressed as investment.", "Live speculation counts against the sandbox cap with a hard warning. Phase 0 splits your money into two pots, and the dashboard shows the split.", "phase0", "How many dollars are in your speculation pot?"],
+  ["L28", "Avoid hot tips, new issues and optimism", "New issues tend to arrive when sellers are keen and buyers are excited. Tips come from people who gain when you act. Raising your bet because the price keeps rising is optimism, not analysis.", "Phase 0 restrictions ban new issues, tip-driven entries and unplanned averaging up. The journal flags entries that break them.", "phase0", "Who benefits if you act on this idea?"]
+];
+
+function viewGrahamLessons(){
+  const items = LESSONS.filter(x => x[0].startsWith("L"));
+  const answered = items.filter(x => (S.graham.lessons[x[0]] || "").trim()).length;
+  let body = "";
+  LESSONS.forEach(x => {
+    if (!x[0].startsWith("L")) { body += `<h2 class="lesson-group">${esc(x[0])}. ${esc(x[1])}</h2>`; return; }
+    const [id, title, principle, enforce, route, check] = x;
+    body += `<section class="card lesson"><h3>${id.slice(1)}. ${esc(title)}</h3>
+      <p>${esc(principle)}</p>
+      <p class="enforce"><strong>How this app enforces it:</strong> ${esc(enforce)} <a href="#${route}">Open it</a></p>
+      <div class="field"><label for="ls_${id}">Self-check: ${esc(check)}</label>
+        <textarea id="ls_${id}" data-path="graham.lessons.${id}" style="min-height:56px">${esc(S.graham.lessons[id] || "")}</textarea></div></section>`;
+  });
+  return `
+  ${pageHeader("Graham lessons", "Twenty-eight ideas from The Intelligent Investor, paraphrased, each tied to something the app does. About twenty minutes to read.")}
+  <section class="card">
+    <div class="card-head"><div><h2>The whole philosophy in one chain</h2></div></div>
+    <p>An <strong>investment</strong> is a purchase backed by analysis, safety of principal and an adequate return. Everything else is <strong>speculation</strong>. You protect yourself by paying less than the thing is worth, which is the <strong>margin of safety</strong>. You treat the market as a quote machine run by a moody partner you may ignore. You choose a lane that fits your time and temperament, and most people belong in the <strong>defensive</strong> one. Then you protect yourself from the person most likely to hurt your results, which is you, with rules written in advance.</p>
+    <div class="notice warn">That chain has an uncomfortable consequence for this plan. <strong>Phase 4 is speculation by Graham's definition.</strong> It is capped at $500, kept apart from your savings, and optional for that reason. Choosing to invest defensively instead is a good outcome, not a lesser one.</div>
+    <p class="small">Self-checks answered: <strong>${answered} of ${items.length}</strong>. Your answers stay in this browser.</p>
+    <button class="btn" data-act="goto-honesty">Go to the Month 12 honesty check</button>
+  </section>
+  ${body}`;
+}
+
+/* ---------- roll-ups: MoS, concentration, behaviour ---------- */
+
+function portfolioMoS(){
+  const open = S.journal.filter(t => t.status === "open");
+  const withMos = open.filter(t => has(t.marginOfSafetyAtEntry));
+  if (!withMos.length) return { value:null, n:0, total:open.length };
+  const w = withMos.map(t => Math.max(posValue(t), 0));
+  const sw = w.reduce((a, b) => a + b, 0);
+  const v = sw > 0 ? withMos.reduce((s, t, i) => s + num(t.marginOfSafetyAtEntry) * w[i], 0) / sw : avgOf(withMos.map(t => num(t.marginOfSafetyAtEntry)));
+  return { value:v, n:withMos.length, total:open.length };
+}
+function pmosBlock(){
+  const p = portfolioMoS();
+  return `<div class="stat" style="margin-top:12px"><div class="k">Portfolio margin of safety</div>
+    <div class="v ${p.value !== null && p.value <= 0 ? "neg" : ""}">${p.value === null ? "—" : fx(p.value, 1) + "%"}</div>
+    <div class="n">${p.value === null ? "Record the margin of safety in the journal when you enter." : `Weighted by position size across ${p.n} of ${p.total} open position${p.total === 1 ? "" : "s"}. ${p.n < p.total ? "Positions without a recorded margin are left out. That is a gap, not a pass." : ""}`}</div></div>`;
+}
+function concentration(){
+  const open = S.journal.filter(t => t.status === "open");
+  const tickers = [...new Set(open.map(t => (t.ticker || "").trim().toUpperCase()).filter(Boolean))];
+  const useVal = open.some(t => posValue(t) > 0);
+  const sectors = {};
+  open.forEach(t => {
+    const co = S.companies.find(c => (c.ticker || "").trim().toUpperCase() === (t.ticker || "").trim().toUpperCase());
+    const s = (t.sector || "").trim() || (co && co.industry) || "Unassigned";
+    sectors[s] = (sectors[s] || 0) + (useVal ? posValue(t) : 1);
+  });
+  const total = Object.values(sectors).reduce((a, b) => a + b, 0);
+  const n = tickers.length;
+  const flag = n === 0 ? { cls:"", text:"No open positions." }
+    : n < 10 ? { cls:"warn", text:`Under-diversified: ${n} holding${n > 1 ? "s" : ""}, below 10. With a small sandbox that is normal. Do not fix it by buying ten stocks. Put your long-term money in a broad fund.` }
+    : n > 30 ? { cls:"warn", text:`${n} holdings is more than 30. That is diffusion: you cannot watch them all and gain little protection. Consolidate.` }
+    : { cls:"ok", text:`${n} holdings is within the 10 to 30 range.` };
+  return { n, flag, sectors:Object.entries(sectors).sort((a, b) => b[1] - a[1]), total, useVal };
+}
+function behaviourStats(){
+  const t = S.journal.filter(x => x.priceInfluencedDecision);
+  const c = k => t.filter(x => x.priceInfluencedDecision === k).length;
+  return { n:t.length, thesis:c("thesis"), price:c("price"), both:c("both") };
+}
+function blText(){
+  const b = businesslikeRate();
+  return `Businesslike decisions across all weeks: <strong>${b.rate === null ? "no answers yet" : pct(b.rate, 0)}</strong>. Rule adherence is on the <a href="#metrics">Metrics</a> page.`;
+}
+LIVE.bl = host => { const o = host.querySelector(".bl-out"); if (o) o.innerHTML = blText(); };
+function businesslikeRate(){
+  let yes = 0, tot = 0;
+  Object.values(S.reviews).forEach(r => { ["evidence", "didWhatSaid"].forEach(k => { if (r && (r[k] === "yes" || r[k] === "no")) { tot++; if (r[k] === "yes") yes++; } }); });
+  return { yes, tot, rate: tot ? yes / tot : null };
+}
+function growthReliance(){
+  const th = S.theses.filter(t => t.growthStory === "yes").length;
+  const over = S.companies.filter(c => recordGrowthWarning(c)).length;
+  return { th, totalTh:S.theses.length, over };
+}
+function tradeFlags(t){
+  const f = [];
+  if (t.mode === "live" && !(t.satisfiesLimits || "").trim()) f.push("Live, with no statement of how it meets your return and loss limits");
+  if (t.ideaSource === "tip") f.push("Entered on an unsolicited tip");
+  if (t.ideaSource === "ipo") f.push("New issue or IPO in the first year");
+  if (has(t.marginOfSafetyAtEntry) && num(t.marginOfSafetyAtEntry) <= 0) f.push("No margin of safety at entry");
+  return f;
+}
+
+function autoRedFlags(){
+  const out = [];
+  S.companies.forEach(c => {
+    const q = quality(c), m = compMos(c);
+    if (q.score >= 2 && (m.state === "none" || m.state === "inside"))
+      out.push({ text:`Paying up for quality: ${tickerOf(c)} looks like a good business with no margin of safety.`, action:"Do not buy at this price. Write the price you would pay on your watchlist." });
+  });
+  const open = S.journal.filter(t => t.status === "open");
+  open.filter(t => has(t.marginOfSafetyAtEntry) && num(t.marginOfSafetyAtEntry) <= 0).forEach(t =>
+    out.push({ text:`No margin of safety: ${t.ticker || "a position"} was entered with a margin of ${fx(num(t.marginOfSafetyAtEntry), 1)}%.`, action:"Decide in writing whether to exit, and do not add to it." }));
+  const ex = specExposure();
+  if (ex.liveSpec > ex.cap) out.push({ text:`Speculation above the cap: ${money(ex.liveSpec, 0)} of live speculation against a ${money(ex.cap, 0)} cap.`, action:"Reduce it to the cap or below, and write down how it got past." });
+  if (timingLast7() >= 3) out.push({ text:`Forecasting the market: you caught yourself ${timingLast7()} times in the last 7 days.`, action:"Write what you would do if the market rose 30% and what you would do if it fell 30%, then stop forecasting." });
+  const pots = S.graham.pots, held = S.phase0.allocation;
+  if (num(pots.speculation) > ex.cap || num(held.sandboxHeld) > ex.cap) out.push({ text:"Mingling pots: more is in the speculation pot than the sandbox cap allows.", action:"Move the excess back into your investment pot or savings today." });
+  const cut = addDays(todayISO(), -29);
+  if (S.journal.filter(t => (t.date || "") >= cut && t.priceInfluencedDecision === "price").length >= 2)
+    out.push({ text:"Buying on optimism: two or more decisions this month were driven by price movement.", action:"Before the next entry, write the thesis and the value estimate. If you cannot, do not enter." });
+  return out;
+}
+
+/* ---------- dashboard section ---------- */
+
+function dashboardGraham(){
+  const ex = specExposure(), r = defRollup(), pm = portfolioMoS(), mm = S.graham.mrMarket;
+  const tot = ex.counts.investment + ex.counts.speculation + ex.counts.unclear;
+  const invPct = tot ? ex.counts.investment / tot * 100 : 0;
+  const req = S.graham.required;
+  const limitsSet = has(req.minReturn) && has(req.maxLoss);
+  const banner = ex.pctOfCap > 1
+    ? `<div class="notice danger"><strong>Speculation is over the cap.</strong> ${money(ex.liveSpec, 0)} of live speculation against a ${money(ex.cap, 0)} cap. Reduce it now. Money you need does not belong here. <a href="#graham-investor">Review the classifier</a>.</div>`
+    : ex.pctOfCap > 0.8 ? `<div class="notice warn"><strong>Speculation is at ${pct(ex.pctOfCap, 0)} of the cap.</strong> Do not add more. If a new idea tempts you, stay in simulation. <a href="#graham-investor">Review the classifier</a>.</div>` : "";
+  return `
+  ${banner}
+  <section class="card">
+    <div class="card-head"><div><h2>Graham check</h2><div class="sub">Investor type: <strong>${effectiveType() === "defensive" ? "Defensive" : "Enterprising"}</strong>${S.graham.investorType.done ? "" : " (default). <a href=\"#investor-type\">Take the assessment</a>"}</div></div></div>
+    <div class="grid g4">
+      <div class="stat"><div class="k">Investment vs speculation</div>
+        <div class="v">${ex.counts.investment} / ${ex.counts.speculation + ex.counts.unclear}</div>
+        <div class="bar split" role="img" aria-label="${tot ? Math.round(invPct) + "% of open positions are investment" : "No open positions"}"><i style="width:${invPct.toFixed(0)}%"></i></div>
+        <div class="n">Open positions. Live speculation ${money(ex.liveSpec, 0)} of ${money(ex.cap, 0)}. Unclear counts as speculation.</div></div>
+      ${statBox("Portfolio margin of safety", pm.value === null ? "—" : fx(pm.value, 1) + "%", pm.value === null ? '<a href="#graham-mos">Check a price</a>' : `${pm.n} of ${pm.total} open positions`, pm.value !== null && pm.value <= 0 ? "neg" : "")}
+      ${statBox("Defensive criteria", `${r.allPass} of ${r.assessed}`, r.assessed ? "companies pass all eight" : '<a href="#defensive-screener">Screen a company</a>')}
+      ${statBox("Forecasting caught", mm.timingCount, `${timingLast7()} in the last 7 days`)}
+    </div>
+    <div class="divider"></div>
+    ${limitsSet ? `<p style="margin:0"><strong>Your two limits.</strong> Minimum acceptable return: <strong>${esc(req.minReturn)}%</strong> a year. Maximum acceptable permanent loss: <strong>${esc(req.maxLoss)}%</strong> of capital. Every live trade must say how it meets both.</p>`
+      : `<div class="notice warn" style="margin:0"><strong>Your two limits are not set.</strong> Write a minimum acceptable return and a maximum acceptable permanent loss. Live trades are blocked until you do. <a href="#settings">Open Settings</a>.</div>`}
+  </section>`;
+}
+
+/* ---------- metrics section ---------- */
+
+function grahamMetricsHTML(){
+  const heat = portfolioHeat(), pm = portfolioMoS(), con = concentration(), b = behaviourStats(), bl = businesslikeRate(), gr = growthReliance();
+  const closed = S.journal.filter(t => t.status === "closed" && tradeNet(t) !== null);
+  const byClass = ["investment", "speculation", "unclear"].map(k => {
+    const cl = closed.filter(t => classOf(t) === k), wins = cl.filter(t => tradeNet(t) > 0).length;
+    return { k, n:cl.length, open:S.journal.filter(t => t.status === "open" && classOf(t) === k).length, win: cl.length ? wins / cl.length : null, net: cl.reduce((s, t) => s + tradeNet(t), 0) };
+  });
+  const mosVals = S.journal.filter(t => has(t.marginOfSafetyAtEntry)).map(t => num(t.marginOfSafetyAtEntry));
+  const bins = [["Below zero: no margin", v => v < 0], ["0 to 15%: thin", v => v >= 0 && v < 15], ["15 to 33%: moderate", v => v >= 15 && v < 33], ["33% and above: wide", v => v >= 33]]
+    .map(([l, f]) => [l, mosVals.filter(f).length]);
+  const hist = Object.entries(S.graham.passHistory).sort((a, b) => a[0].localeCompare(b[0]));
+  const maxSec = con.sectors.length ? con.sectors[0][1] : 1;
+  return `
+  <h2 class="lesson-group">Graham lens</h2>
+  <div class="grid g4" style="margin-bottom:16px">
+    ${statBox("Portfolio heat", money(heat.total), `${pct(heat.pctOf)} of ${money(heat.capital, 0)}. 2% ceiling.`, heat.pctOf > 0.02 ? "neg" : "")}
+    ${statBox("Portfolio margin of safety", pm.value === null ? "—" : fx(pm.value, 1) + "%", pm.value === null ? "Record it in the journal" : `${pm.n} of ${pm.total} open positions`, pm.value !== null && pm.value <= 0 ? "neg" : "")}
+    ${statBox("Holdings", con.n, "Distinct open tickers")}
+    ${statBox("Businesslike decisions", bl.rate === null ? "—" : pct(bl.rate, 0), bl.rate === null ? "From the weekly review" : `${bl.yes} of ${bl.tot} answers`)}
+  </div>
+  <section class="card">
+    <div class="card-head"><div><h2>Concentration monitor</h2></div></div>
+    <div class="notice ${con.flag.cls}">${esc(con.flag.text)}</div>
+    ${con.sectors.length ? `<h4>Sector shares</h4>${con.sectors.map(([s, v]) => `<div class="sec-row"><span>${esc(s)}</span><div class="bar"><i style="width:${(v / maxSec * 100).toFixed(0)}%"></i></div><span class="num">${con.useVal ? pct(v / con.total, 0) : Math.round(v) + (v === 1 ? " position" : " positions")}</span></div>`).join("")}` : ""}
+  </section>
+  <section class="card">
+    <div class="card-head"><div><h2>Results by classification</h2></div></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Class</th><th class="num">Open</th><th class="num">Closed</th><th class="num">Win rate</th><th class="num">Net</th></tr></thead>
+    <tbody>${byClass.map(x => `<tr><td>${x.k === "unclear" ? "Unclear (counts as speculation)" : x.k[0].toUpperCase() + x.k.slice(1)}</td><td class="num">${x.open}</td><td class="num">${x.n}</td><td class="num">${x.win === null ? "—" : pct(x.win, 0)}</td><td class="num ${x.net > 0 ? "pos" : x.net < 0 ? "neg" : ""}">${x.n ? plText(x.net) : "—"}</td></tr>`).join("")}</tbody></table></div>
+    <p class="small" style="margin-top:8px">Judge the classes by how well the process held, not by which one made more.</p>
+  </section>
+  <section class="card">
+    <div class="card-head"><div><h2>Margin of safety at entry</h2></div></div>
+    ${mosVals.length ? bins.map(([l, n]) => `<div class="sec-row"><span>${esc(l)}</span><div class="bar"><i style="width:${(n / mosVals.length * 100).toFixed(0)}%"></i></div><span class="num">${n}</span></div>`).join("") : `<div class="empty">No entries record a margin of safety yet. Add it to the journal entry.</div>`}
+  </section>
+  <section class="card">
+    <div class="card-head"><div><h2>Behaviour</h2></div></div>
+    <div class="grid g3">
+      ${statBox("Driven by the thesis", b.n ? pct(b.thesis / b.n, 0) : "—", `${b.thesis} of ${b.n} recorded decisions`)}
+      ${statBox("Driven by price movement", b.n ? pct(b.price / b.n, 0) : "—", `${b.price} of ${b.n}. Both: ${b.both}`, b.n && b.price / b.n > 0.25 ? "neg" : "")}
+      ${statBox("Leaning on growth stories", gr.totalTh ? `${gr.th} of ${gr.totalTh}` : "—", `theses. ${gr.over} company case${gr.over === 1 ? "" : "s"} assume growth above the record`)}
+    </div>
+  </section>
+  <section class="card">
+    <div class="card-head"><div><h2>Defensive pass rate over time</h2></div></div>
+    ${hist.length >= 2 ? lineChart(hist.map(([d, h], i) => ({ i, v:h.rate * 100 }))) + `<p class="small" style="margin-top:8px">Average share of the eight tests passed across screened companies, in percent. Each point is a day you opened the app after changing a figure. Latest ${pct(hist[hist.length - 1][1].rate, 0)}.</p>`
+      : `<div class="empty">${hist.length ? "One day recorded so far. The line needs a second." : "Screen a company to start the record."}</div>`}
+  </section>`;
+}
+
+/* ---------- Phase 0: two pots ---------- */
+
+function twoPotsCard(){
+  const p = S.graham.pots, cap = sandboxCap();
+  const over = num(p.speculation) > cap;
+  return `<section class="card">
+    <div class="card-head"><div><h2>Separate the two pots</h2><div class="sub">Graham's line between investing and speculating becomes two buckets of money that never mix.</div></div></div>
+    <div class="grid g2">
+      <div><h3>Investment pot</h3><p style="font-size:.9rem">Long-term money. Broad diversified funds and companies that pass the defensive screen. Moves by rule, not by news.</p></div>
+      <div><h3>Speculation sandbox</h3><p style="font-size:.9rem">Money you can afford to lose, capped at ${money(cap, 0)}. Optional. Anything classified as speculation or unclear lives here, and only here.</p></div>
+    </div>
+    <div class="row">
+      ${gField("graham.pots.investment", "Investment pot ($)", { min:0, ph:"e.g. 4500" })}
+      ${gField("graham.pots.speculation", "Speculation sandbox ($)", { min:0, ph:"e.g. 500" })}
+    </div>
+    ${over ? `<div class="notice danger"><strong>The sandbox is above your ${money(cap, 0)} cap.</strong> Move ${money(num(p.speculation) - cap, 0)} back to the investment pot or to savings. Mixing the pots is how speculation becomes a habit.</div>` : ""}
+  </section>`;
+}
+
+/* ---------- Settings card ---------- */
+
+function settingsGrahamCard(){
+  const req = S.graham.required, a = S.graham.allocation, it = S.graham.investorType;
+  const missing = !has(req.minReturn) || !has(req.maxLoss);
+  return `<section class="card">
+    <div class="card-head"><div><h2>Graham settings</h2><div class="sub">Two limits you write once, and every live trade has to meet.</div></div></div>
+    ${missing ? `<div class="notice warn">Both limits are required. Live trades cannot be logged until they are set.</div>` : ""}
+    <div class="row">
+      ${gField("graham.required.minReturn", "Minimum acceptable return, % a year", { min:0, ph:"e.g. 6" })}
+      ${gField("graham.required.maxLoss", "Maximum acceptable permanent loss, % of capital", { min:0, ph:"e.g. 15" })}
+      ${gField("graham.sandboxCap", "Sandbox cap, $ (never above 500)", { min:0, max:500, ph:"500" })}
+      ${gField("graham.sizeThreshold", "Defensive size threshold, $ millions", { min:0, ph:"500" })}
+    </div>
+    <div class="row">
+      ${gField("graham.allocation.stockPct", "Allocation policy: stocks %, 25 to 75", { min:25, max:75, ph:"50" })}
+      <div class="field"><label for="set-trig">Rebalancing trigger</label>
+        <select id="set-trig" data-path="graham.allocation.trigger"><option value="band" ${a.trigger !== "calendar" ? "selected" : ""}>Band</option><option value="calendar" ${a.trigger === "calendar" ? "selected" : ""}>Calendar</option></select></div>
+    </div>
+    <p class="small">Investor type: <strong>${effectiveType() === "defensive" ? "Defensive" : "Enterprising"}</strong>${it.done ? "" : " (default)"}. <a href="#investor-type">${it.done ? "Retake the assessment" : "Take the assessment"}</a>. Allocation details are on the <a href="#allocation">allocation page</a>.</p>
+  </section>`;
+}
+
+/* ---------- Graham lens toggle ---------- */
+
+function lensToggle(){
+  return `<button class="btn sm" data-act="toggle-lens" aria-pressed="${S.graham.lens ? "true" : "false"}">Graham lens: ${S.graham.lens ? "on" : "off"}</button>`;
+}
+
+/* ---------- thesis helpers ---------- */
+
+function thesisGrowthWarning(t){
+  if (!has(t.growthAssumed)) return "";
+  const co = S.companies.find(c => (c.ticker || "").trim().toUpperCase() === (t.ticker || "").trim().toUpperCase());
+  const rec = co ? recordCAGR(co) : null;
+  if (rec === null) return `This case assumes ${fx(num(t.growthAssumed), 1)}% growth a year, and there is no ten-year record for ${esc(t.ticker || "this company")} to check it against. Add the record in Phase 2, or drop the assumption.`;
+  if (num(t.growthAssumed) - rec * 100 > 3) return `Graham's caution: obvious growth does not translate into obvious profits for the buyer who overpays. This case assumes ${fx(num(t.growthAssumed), 1)}% a year. The record is ${fx(rec * 100, 1)}%. Cut the assumption to the record, or demand a bigger discount.`;
+  return "";
+}
+function thesisGrahamFields(){
+  return `<h4>Graham review</h4>
+      <div class="row">
+        <div class="field"><label for="th-class">Investment or speculation?</label>
+          <select id="th-class" name="classification" required><option value="">Choose…</option><option value="investment">Investment</option><option value="speculation">Speculation</option><option value="unclear">Unclear (counts as speculation)</option></select></div>
+        <div class="field"><label for="th-gs">Does the case depend on a growth story?</label>
+          <select id="th-gs" name="growthStory"><option value="no">No</option><option value="yes">Yes</option></select></div>
+        <div class="field"><label for="th-ga">Growth I assume in the optimistic case, % a year</label><input id="th-ga" type="number" step="any" name="growthAssumed"></div>
+      </div>
+      <div class="field"><label for="th-sc">What did I check that could have contradicted me?</label><textarea id="th-sc" name="skeptCheck" style="min-height:56px" placeholder="Required before you can mark Buy."></textarea></div>
+      <div class="field"><label for="th-sh">What would a hostile analyst say?</label><textarea id="th-sh" name="skeptHostile" style="min-height:56px" placeholder="Required before you can mark Buy."></textarea></div>`;
+}
+function thesisLensPanel(){
+  return `<div class="notice accent"><strong>Graham lens.</strong> Before you mark Buy: is it an investment or speculation? Is the price below a value you can justify? What did you check that could prove you wrong? A thesis with no answer to that last question is a wish.
+    <a href="#graham-mos">Check the margin of safety</a> · <a href="#graham-investor">Classify it</a></div>`;
+}
+
 const VIEWS = {
   dashboard: viewDashboard,
   phase0: viewPhase0,
@@ -2879,7 +4185,14 @@ const VIEWS = {
   glossary: viewGlossary,
   review: viewReview,
   report: viewReport,
-  settings: viewSettings
+  settings: viewSettings,
+  "investor-type": viewInvestorType,
+  "graham-investor": viewGrahamInvestor,
+  "graham-mos": viewGrahamMos,
+  "defensive-screener": viewDefensiveScreener,
+  "mr-market": viewMrMarket,
+  "allocation": viewAllocation,
+  "graham-lessons": viewGrahamLessons
 };
 
 let lastRoute = null;
@@ -2895,7 +4208,7 @@ function render(){
   document.title = route === "dashboard" ? "Sylvia · 12-Month Investor Plan by Akoo" : label + " · Sylvia";
   const md = document.querySelector('meta[name="description"]');
   if (md) md.content = route === "dashboard" ? "Sylvia is Akoo's 12-month plan for learning to invest with discipline." : label + " in Sylvia, Akoo's 12-month investor plan. Educational, not financial advice.";
-  animateCounters();
+  snapshotDefensive();
   // live calculators
   calcPositionSize();
   renderHeat("heat-result");
@@ -2940,7 +4253,9 @@ document.addEventListener("input", e => {
 
   // generic path saving
   if (t.dataset.path){
-    setPath(t.dataset.path, t.value);
+    setPath(t.dataset.path, t.type === "checkbox" ? t.checked : t.value);
+    const liveHost = t.closest("[data-live]");
+    if (liveHost && LIVE[liveHost.dataset.live]) LIVE[liveHost.dataset.live](liveHost);
     if (t.dataset.path === "phase3.heat.capital"){
       calcPositionSize();
       renderHeat("heat-result");
@@ -2951,6 +4266,15 @@ document.addEventListener("input", e => {
 
 document.addEventListener("change", e => {
   const t = e.target;
+  if (t.dataset.act === "mos-load"){
+    const co = S.companies[parseInt(t.value, 10)];
+    if (co){
+      const g = co.g || {}, e3 = eps3(co), m = S.graham.mos;
+      m.price = g.price || ""; m.eps = e3 === null ? "" : String(+e3.toFixed(4)); m.bvps = g.bvps || ""; m.nta = g.nta || "";
+      save(); render();
+    }
+    return;
+  }
   if (t.dataset.act === "watch-cat"){
     const w = S.watchlist.find(x => x.id === t.dataset.id);
     if (w){ w.category = t.value; save(); render(); }
@@ -2991,6 +4315,38 @@ document.addEventListener("click", e => {
 
     case "print":
       window.print();
+      break;
+
+    /* ---- graham ---- */
+    case "toggle-lens":
+      S.graham.lens = !S.graham.lens;
+      save(); render();
+      break;
+    case "clear-classifier":
+      S.graham.classifier.answers = {};
+      save(); render();
+      break;
+    case "mm-save": {
+      const d = S.graham.mrMarket.draft;
+      S.graham.mrMarket.log[todayISO()] = { market: num(d.market === "" ? 50 : d.market), mood: num(d.mood === "" ? 50 : d.mood), influenced: d.influenced || "" };
+      save(); render();
+      break;
+    }
+    case "timing-tap": {
+      const mm = S.graham.mrMarket;
+      mm.timingCount = num(mm.timingCount) + 1;
+      mm.timingLog.push(todayISO());
+      save(); render();
+      break;
+    }
+    case "timing-undo": {
+      const mm = S.graham.mrMarket;
+      if (mm.timingCount > 0){ mm.timingCount--; mm.timingLog.pop(); save(); render(); }
+      break;
+    }
+    case "goto-honesty":
+      if (route !== "phase4") location.hash = "#phase4"; else render();
+      setTimeout(() => { const el = document.getElementById("honesty"); if (el) el.scrollIntoView({ block:"start" }); }, 150);
       break;
 
     /* ---- phase 0 ---- */
@@ -3078,7 +4434,8 @@ document.addEventListener("click", e => {
       S.companies.push({
         id: uid(), ticker:"", name:"", industry:"",
         s1:"", s2:"", s3:"", s7:"", revTrend:"", debtLevel:"", cashGen:"",
-        pe:"", ps:"", fcf:"", valuation:"", pess:"", base:"", opt:""
+        pe:"", ps:"", fcf:"", valuation:"", pess:"", base:"", opt:"",
+        g:{ eps:{}, eq:{} }
       });
       save(); render();
       break;
@@ -3269,6 +4626,27 @@ document.addEventListener("submit", e => {
     const data = Object.fromEntries(new FormData(f).entries());
     data.id = uid();
     data.num = String(S.journal.length + 1);
+    if (!data.classification){
+      alert("Choose a classification: investment, speculation or unclear. If you cannot decide, choose unclear. Graham says to treat it as speculation.");
+      return;
+    }
+    if (!has(data.marginOfSafetyAtEntry)){
+      const co = S.companies.find(c => (c.ticker || "").trim().toUpperCase() === (data.ticker || "").trim().toUpperCase());
+      if (co){ const mo = compMos(co); if (mo.mosLow !== null) data.marginOfSafetyAtEntry = String(+(mo.mosLow * 100).toFixed(1)); }
+    }
+    if (data.mode === "live"){
+      if (!has(S.graham.required.minReturn) || !has(S.graham.required.maxLoss)){
+        alert("Stop. Before you log a live trade, write your minimum acceptable return and your maximum acceptable permanent loss in Settings. They are the test this trade has to pass.");
+        return;
+      }
+      if (data.status === "open" && isSpecLike(data)){
+        const ex = specExposure(), val = posValue(data);
+        if (ex.liveSpec + val > ex.cap){
+          if (!confirm(`HARD WARNING.\n\nThis would put ${money(ex.liveSpec + val, 0)} of live money into speculation, above your ${money(ex.cap, 0)} sandbox cap.\n\nGraham: speculate only with a small, separate sum you can afford to lose.\n\nCancel to stop. OK to log it anyway, as a rule violation.`)) return;
+          data.violations = [data.violations, "Speculation above the sandbox cap"].filter(Boolean).join("; ");
+        }
+      }
+    }
     S.journal.push(data);
     save(); render();
     return;
@@ -3277,6 +4655,14 @@ document.addEventListener("submit", e => {
   if (f.id === "thesis-form"){
     const data = Object.fromEntries(new FormData(f).entries());
     data.id = uid();
+    if (!data.classification){
+      alert("Choose a classification: investment, speculation or unclear.");
+      return;
+    }
+    if (data.decision === "Buy" && ((data.skeptCheck || "").trim().length < 10 || (data.skeptHostile || "").trim().length < 10)){
+      alert("This thesis cannot be marked Buy yet. Answer both questions in the Graham review: what did you check that could have contradicted you, and what would a hostile analyst say? Or set the decision to Watch.");
+      return;
+    }
     S.theses.push(data);
     save(); render();
     return;
@@ -3295,7 +4681,7 @@ document.addEventListener("change", e => {
         const imported = JSON.parse(reader.result);
         if (!imported || typeof imported !== "object") throw new Error("bad file");
         if (!confirm("Importing replaces all current data. Continue?")) return;
-        S = Object.assign(defaultState(), imported);
+        S = migrate(imported);
         save(); render();
       } catch(err){
         alert("That file could not be read as valid plan data.");
@@ -3314,7 +4700,8 @@ function exportTradesCSV(){
     "num","date","ticker","secType","strategy","mode","status",
     "entry","stop","size","plannedRisk","entryRationale","evidence","target","exitPlan",
     "exitPrice","costs","grossPL","netPL","RMultiple",
-    "marketConditions","emotionBefore","emotionAfter","violations","lessons"
+    "marketConditions","emotionBefore","emotionAfter","violations","lessons",
+    "classification","marginOfSafetyAtEntry","priceInfluencedDecision","ideaSource","sector","satisfiesLimits"
   ];
   const rows = S.journal.map(t => {
     const risk = tradeRisk(t);
@@ -3330,7 +4717,8 @@ function exportTradesCSV(){
       gross === "" ? "" : gross.toFixed(2),
       net === null ? "" : net.toFixed(2),
       r === null ? "" : r.toFixed(4),
-      t.marketConditions, t.emotionBefore, t.emotionAfter, t.violations, t.lessons
+      t.marketConditions, t.emotionBefore, t.emotionAfter, t.violations, t.lessons,
+      t.classification, t.marginOfSafetyAtEntry, t.priceInfluencedDecision, t.ideaSource, t.sector, t.satisfiesLimits
     ];
   });
 
