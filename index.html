@@ -350,6 +350,7 @@ input[type=range]:focus{outline:2px solid var(--accent);outline-offset:3px}
   main{padding:0;max-width:none}
   .card{break-inside:avoid;border-color:#ccc}
 }
+[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -534,6 +535,14 @@ const RESOURCES = {
 };
 
 const GLOSSARY = [
+  ["Cost basis","What you paid for a holding, including fees. Sylvia uses the average cost method."],
+  ["Realized gain or loss","The profit or loss locked in by selling, after fees."],
+  ["Unrealized gain or loss","The change in value of something you still hold, compared with its cost. It can disappear before you sell."],
+  ["Compound interest","Interest earned on earlier interest as well as on the original amount."],
+  ["Drawdown","The fall from a peak to a later low. A 50% fall needs a 100% gain to recover."],
+  ["Dollar-cost averaging","Investing a fixed amount at regular intervals, so you buy more units when prices are low and fewer when they are high."],
+  ["Concentration","How much of a portfolio sits in one holding. High concentration means one bad result matters more."],
+  ["Net deposits","Money you have put in, minus money you have taken out."],
   ["Bid / ask / spread","The highest price a buyer offers, the lowest a seller accepts, and the gap between them."],
   ["Market order","An order to buy or sell immediately at the best available price. Fast, but the price is not guaranteed."],
   ["Limit order","An order to buy or sell only at your price or better. Price control, but it may never fill."],
@@ -604,7 +613,10 @@ const GLOSSARY = [
 
 function defaultState(){
   return {
-    version:1,
+    version:3,
+    fin:{},
+    portfolio:{ assets:[], tx:[], snapshots:[], concLimit:"25" },
+    planner:{ created:false, startMonth:"", defaultMonthly:"", annualTarget:"", reminders:false, months:{}, goals:[] },
     profile:{
       name:"", startDate: todayISO(), currentPhase:0, theme:"",
       goal:"", horizon:"", maxLoss:"", newsSources:""
@@ -662,7 +674,11 @@ function migrate(st){
     if (!c.g.eps || typeof c.g.eps !== "object") c.g.eps = {};
     if (!c.g.eq || typeof c.g.eq !== "object") c.g.eq = {};
   });
-  st.version = 2;
+  ["assets","tx","snapshots"].forEach(k => { st.portfolio[k] = Array.isArray(st.portfolio[k]) ? st.portfolio[k].filter(x => x && typeof x === "object") : []; });
+  if (!Array.isArray(st.planner.goals)) st.planner.goals = [];
+  if (!st.planner.months || typeof st.planner.months !== "object" || Array.isArray(st.planner.months)) st.planner.months = {};
+  if (!st.fin || typeof st.fin !== "object" || Array.isArray(st.fin)) st.fin = {};
+  st.version = 3;
   return st;
 }
 
@@ -946,6 +962,12 @@ const NAV = [
     { id:"phase3", label:"3 · Risk" },
     { id:"phase4", label:"4 · Small live test" }
   ]},
+  { group:"Portfolio", items:[
+    { id:"portfolio",      label:"Portfolio" },
+    { id:"transactions",   label:"Transactions" },
+    { id:"planner",        label:"12-month planner" },
+    { id:"financial-tools",label:"Financial tools" }
+  ]},
   { group:"Practice", items:[
     { id:"journal",    label:"Trade Journal" },
     { id:"metrics",    label:"Metrics" },
@@ -968,6 +990,7 @@ const NAV = [
     { id:"resources", label:"Resources" },
     { id:"glossary",  label:"Glossary" },
     { id:"report",    label:"Plan Report (PDF)" },
+    { id:"legal",     label:"Help and legal" },
     { id:"settings",  label:"Settings" }
   ]}
 ];
@@ -978,6 +1001,14 @@ const VALID = NAV.flatMap(g => g.items.map(i => i.id));
 if (!VALID.includes(route)) route = "dashboard";
 
 const NAV_ICON = {"dashboard": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"9\" rx=\"1.5\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"5\" rx=\"1.5\"/><rect x=\"14\" y=\"12\" width=\"7\" height=\"9\" rx=\"1.5\"/><rect x=\"3\" y=\"16\" width=\"7\" height=\"5\" rx=\"1.5\"/>", "phase0": "<path d=\"M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0\"/><circle cx=\"16\" cy=\"6\" r=\"2\"/><circle cx=\"10\" cy=\"12\" r=\"2\"/><circle cx=\"18\" cy=\"18\" r=\"2\"/>", "phase1": "<path d=\"M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5z\"/><path d=\"M4 21.5V4.5\"/>", "phase2": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M20 20l-3.5-3.5\"/>", "investor-type": "<circle cx=\"12\" cy=\"8\" r=\"4\"/><path d=\"M4 21c0-4 4-6 8-6s8 2 8 6\"/>", "phase3": "<path d=\"M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z\"/>", "phase4": "<path d=\"M5 21V4M5 4h11l-2 4 2 4H5\"/>", "journal": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M9 8h6M9 12h6M9 16h3\"/>", "metrics": "<path d=\"M4 20V11M10 20V4M16 20v-7M2 20h20\"/>", "thesis": "<path d=\"M4 20l1-4L16 5l3 3L8 19z\"/><path d=\"M14 7l3 3\"/>", "calculator": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01\"/>", "watchlist": "<path d=\"M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>", "review": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4\"/>", "graham-investor": "<path d=\"M12 4v16M7 20h10M5 8h14\"/><path d=\"M5 8l-2.5 6a3 3 0 0 0 5 0zM19 8l-2.5 6a3 3 0 0 0 5 0z\"/>", "graham-mos": "<path d=\"M4 7h16M4 17h16\"/><path d=\"M12 7v10M9 14l3 3 3-3\"/>", "defensive-screener": "<path d=\"M3 5h18l-7 8v6l-4 2v-8z\"/>", "mr-market": "<path d=\"M3 12h4l3-8 4 16 3-8h4\"/>", "allocation": "<path d=\"M12 3v9h9\"/><path d=\"M21 12A9 9 0 1 1 12 3\"/>", "graham-lessons": "<path d=\"M2 9l10-5 10 5-10 5z\"/><path d=\"M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5\"/>", "redflags": "<path d=\"M12 3l10 18H2z\"/><path d=\"M12 10v5M12 18h.01\"/>", "resources": "<path d=\"M5 4h4v16H5zM11 4h4v16h-4z\"/><path d=\"M17 5l3 1-3.5 14-3-1z\"/>", "glossary": "<path d=\"M4 19l5-14 5 14M6 14h6\"/><path d=\"M16 11h4M16 15h4\"/>", "report": "<path d=\"M6 3h8l5 5v13H6z\"/><path d=\"M14 3v5h5M9 13h7M9 17h7\"/>", "settings": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1\"/>"};
+
+Object.assign(NAV_ICON, {
+  "portfolio": "<rect x=\"3\" y=\"7\" width=\"18\" height=\"13\" rx=\"2\"/><path d=\"M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18\"/>",
+  "transactions": "<path d=\"M7 4L3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7\"/>",
+  "planner": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M3 10h18M8 3v4M16 3v4M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01\"/>",
+  "financial-tools": "<path d=\"M3 17l6-6 4 4 8-8\"/><path d=\"M15 7h6v6\"/>",
+  "legal": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 11v5M12 8h.01\"/>"
+});
 const navIcon = id => `<span class="nav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${NAV_ICON[id] || '<circle cx="12" cy="12" r="4"/>'}</svg></span>`;
 
 const ICONS = {"up": "<path d=\"M12 19V5M5 12l7-7 7 7\"/>", "down": "<path d=\"M12 5v14M19 12l-7 7-7-7\"/>", "x": "<path d=\"M18 6L6 18M6 6l12 12\"/>", "check": "<path d=\"M20 6L9 17l-5-5\"/>", "minus": "<path d=\"M5 12h14\"/>", "alert": "<path d=\"M12 3l10 18H2z\"/><path d=\"M12 10v5M12 18h.01\"/>", "external": "<path d=\"M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"/>"};
@@ -1144,7 +1175,7 @@ function viewDashboard(){
     const cur = ph.n === p;
     const seg = done ? 100 : (cur ? Math.round(frac*100) : 0);
     return `<li class="stop ${done?"done":""} ${cur?"current":""}" style="--p:${seg}%;--i:${i}">
-      <span class="dot">${done?"&#10003;":""}</span>
+      <span class="dot">${done?ico("check"):""}</span>
       <div class="stop-name">${esc(ph.name)}</div>
       <div class="stop-meta">${esc(ph.when)}<br>${esc(ph.focus)}</div>
       <div class="stop-pct">${(frac*100).toFixed(0)}% done</div>
@@ -1186,6 +1217,8 @@ function viewDashboard(){
   </div>` : ""}
 
 
+
+  ${dashboardPortfolio()}
 
   ${effectiveType() === "defensive" ? dashboardGraham() : ""}
 
@@ -3063,6 +3096,8 @@ function viewReport(){
         <td>${gatePassed(ph.n) && ph.n < 4 ? '<span class="tag ok">passed</span>' : '<span class="tag">open</span>'}</td></tr>`).join("")}</tbody></table></div>
   </section>
 
+  ${reportPortfolio()}
+
   <section class="card">
     <div class="card-head"><div><h2>Results</h2><div class="sub">${all.count} closed trades, paper and live combined.</div></div></div>
     ${all.count ? `<div class="grid g4">
@@ -4276,6 +4311,10 @@ function thesisLensPanel(){
 
 function viewWelcome(){
   const tools = [
+    ["portfolio", "Portfolio", "Holdings, cash, allocation and results, calculated from the transactions you record. Prices are entered by you."],
+    ["transactions", "Transactions", "Record buys, sales, dividends, deposits, withdrawals and fees. Export them as CSV."],
+    ["planner", "12-month planner", "Monthly tasks, planned contributions, quarterly reviews and goals for one year."],
+    ["financial-tools", "Financial tools", "Eight calculators: compound growth, retirement, inflation, dividends, allocation, drawdown and more."],
     ["journal", "Trade journal", "Record every trade, paper or live, with the reason, the plan and the result."],
     ["thesis", "Thesis builder", "Write down why you would own a business before you buy it. A thesis cannot be marked Buy until its checks are done."],
     ["graham-mos", "Margin of safety calculator", "Compare a price with three estimates of value. It shows a gap. It does not predict a return."],
@@ -4300,6 +4339,7 @@ function viewWelcome(){
     ["Do I need a brokerage account?", "Not for phases 0 to 3, which use paper trades. You only need one for the optional live test in phase 4."],
     ["What happens if I clear my browser data?", "Your entries are deleted, because they are stored in the browser. Export a JSON backup from Settings now and then, and import it to restore your work."],
     ["Can I use it on my phone and my laptop?", "Yes, but each device keeps its own data. To move your work, export a backup on one device and import it on the other."],
+    ["Does Sylvia show live prices?", "No. It has no server, so it cannot fetch market data. You enter prices by hand and each one is labelled as manual, with its date."],
     ["Who made it?", "Akoo. Sylvia is an independent project and is not affiliated with the author or publisher of The Intelligent Investor."]
   ];
   return `
@@ -4417,12 +4457,963 @@ function viewWelcome(){
         <p><a href="#dashboard">Open the planner</a></p>
         <p><a href="Sylvia-User-Guide.pdf" target="_blank" rel="noopener">User guide (PDF)</a></p>
         <p><a href="#glossary">Glossary</a></p>
+        <p><a href="#legal">Help and legal</a></p>
       </div>
     </footer>
   </div>`;
 }
 
+/* ============================================================
+   FINANCIAL TOOLS: calculation engine and eight calculators
+   Pure functions first, so every formula can be tested on its own.
+   ============================================================ */
+
+const FIN = {
+  parse(v){
+    if (v === null || v === undefined) return NaN;
+    const s = String(v).trim().replace(/,/g, "");
+    if (s === "") return NaN;
+    const n = Number(s);
+    return isFinite(n) ? n : NaN;
+  },
+  monthlyRate(rate, perYear){ return Math.pow(1 + rate / perYear, perYear / 12) - 1; },
+  grow(principal, monthly, rate, perYear, months){
+    const i = FIN.monthlyRate(rate, perYear), g = Math.pow(1 + i, months);
+    const annuity = Math.abs(i) < 1e-12 ? monthly * months : monthly * (g - 1) / i;
+    return principal * g + annuity;
+  },
+  realValue(amount, inflation, years){ return amount / Math.pow(1 + inflation, years); },
+  futureCost(amount, inflation, years){ return amount * Math.pow(1 + inflation, years); },
+  realReturn(nominal, inflation){ return (1 + nominal) / (1 + inflation) - 1; },
+  recoveryGain(drawdown){ return drawdown / (1 - drawdown); },
+  recoveryYears(drawdown, annualReturn){
+    if (annualReturn <= 0) return null;
+    return Math.log(1 / (1 - drawdown)) / Math.log(1 + annualReturn);
+  },
+  maxDrawdown(series){
+    let peak = series[0], peakI = 0, best = { dd: 0, peakI: 0, troughI: 0 };
+    for (let k = 1; k < series.length; k++){
+      if (series[k] > peak){ peak = series[k]; peakI = k; }
+      const dd = (peak - series[k]) / peak;
+      if (dd > best.dd) best = { dd, peakI, troughI: k };
+    }
+    return best;
+  },
+  dca(amount, prices){
+    const units = prices.map(p => amount / p);
+    const totalUnits = units.reduce((a, b) => a + b, 0);
+    const invested = amount * prices.length;
+    return { units, totalUnits, invested, avgCost: invested / totalUnits, simpleAvg: prices.reduce((a, b) => a + b, 0) / prices.length };
+  },
+  hhi(shares){ return shares.reduce((a, s) => a + s * s, 0); },
+  splitList(text){ return String(text || "").split(/[\s,;]+/).filter(x => x !== ""); }
+};
+
+const FREQ_OPTS = [["1", "Annually"], ["2", "Semi-annually"], ["4", "Quarterly"], ["12", "Monthly"], ["365", "Daily"]];
+const PAY_OPTS = [["1", "Annually"], ["2", "Twice a year"], ["4", "Quarterly"], ["12", "Monthly"]];
+const COMMON_ASSUMPTIONS = [
+  "Projections use the figures you enter. They are not forecasts and not guaranteed returns.",
+  "Fees, taxes and changes in the return rate are not included."
+];
+
+function yearLabel(m){ return m % 12 === 0 ? "Year " + (m / 12) : "Month " + m; }
+function yearSteps(months){
+  const out = [];
+  for (let y = 12; y < months; y += 12) out.push(y);
+  out.push(months);
+  return out;
+}
+
+const CALCS = [
+  { id: "compound", title: "Compound interest",
+    about: "Shows how an amount grows when returns are added back and you keep contributing.",
+    fields: [
+      { k: "principal", label: "Initial capital ($)", min: 0, def: "10000" },
+      { k: "monthly", label: "Monthly contribution ($)", min: 0, def: "200" },
+      { k: "rate", label: "Annual return assumption (%)", min: -50, max: 100, def: "6" },
+      { k: "years", label: "Duration (years)", min: 0.1, max: 100, def: "10" },
+      { k: "freq", label: "Compounding frequency", sel: FREQ_OPTS, def: "12" }
+    ],
+    run(v){
+      const r = v.rate / 100, n = +v.freq, months = Math.round(v.years * 12);
+      const bal = m => FIN.grow(v.principal, v.monthly, r, n, m);
+      const end = bal(months), contrib = v.principal + v.monthly * months;
+      const steps = yearSteps(months);
+      return {
+        stats: [
+          ["Projected ending balance", money(end), "After " + yearLabel(months).toLowerCase()],
+          ["Total contributed", money(contrib), "Initial capital plus all monthly contributions"],
+          ["Estimated growth", money(end - contrib), "Ending balance minus contributions", end - contrib >= 0 ? "pos" : "neg"],
+          ["Effective annual rate", pct(Math.pow(1 + r / n, n) - 1, 2), "The yearly rate after compounding " + FREQ_OPTS.find(o => o[0] === String(n))[1].toLowerCase()]
+        ],
+        table: { head: ["Point in time", "Balance", "Contributed", "Growth"], rows: steps.map(m => [yearLabel(m), money(bal(m)), money(v.principal + v.monthly * m), money(bal(m) - v.principal - v.monthly * m)]) },
+        series: [
+          { name: "Balance", pts: [[0, v.principal]].concat(steps.map(m => [m / 12, bal(m)])) },
+          { name: "Contributed", pts: [[0, v.principal]].concat(steps.map(m => [m / 12, v.principal + v.monthly * m])) }
+        ],
+        assumptions: ["Contributions are made at the end of each month.", "The return rate stays constant for the whole period.", "The annual rate is a nominal rate compounded at the chosen frequency."].concat(COMMON_ASSUMPTIONS)
+      };
+    }
+  },
+  { id: "growth", title: "Investment growth",
+    about: "Compares three return assumptions side by side, so you can see a range instead of one number.",
+    fields: [
+      { k: "principal", label: "Starting investment ($)", min: 0, def: "5000" },
+      { k: "monthly", label: "Regular monthly contribution ($)", min: 0, def: "300" },
+      { k: "years", label: "Investment period (years)", min: 0.1, max: 100, def: "15" },
+      { k: "low", label: "Low return assumption (% a year)", min: -50, max: 100, def: "3" },
+      { k: "base", label: "Base return assumption (% a year)", min: -50, max: 100, def: "6" },
+      { k: "high", label: "High return assumption (% a year)", min: -50, max: 100, def: "9" }
+    ],
+    check(v){ return (v.low <= v.base && v.base <= v.high) ? null : "Low must not be above base, and base must not be above high."; },
+    run(v){
+      const months = Math.round(v.years * 12), steps = yearSteps(months), rates = [v.low, v.base, v.high];
+      const bal = (rate, m) => FIN.grow(v.principal, v.monthly, rate / 100, 12, m);
+      const contrib = v.principal + v.monthly * months;
+      return {
+        stats: [
+          ["Low scenario", money(bal(v.low, months)), pct(v.low / 100, 1) + " a year"],
+          ["Base scenario", money(bal(v.base, months)), pct(v.base / 100, 1) + " a year"],
+          ["High scenario", money(bal(v.high, months)), pct(v.high / 100, 1) + " a year"],
+          ["Total contributed", money(contrib), "The same in every scenario"]
+        ],
+        table: { head: ["Point in time", "Low", "Base", "High"], rows: steps.map(m => [yearLabel(m)].concat(rates.map(r => money(bal(r, m))))) },
+        series: [["Low", v.low], ["Base", v.base], ["High", v.high]].map(x => ({ name: x[0], pts: [[0, v.principal]].concat(steps.map(m => [m / 12, bal(x[1], m)])) })),
+        assumptions: ["Returns compound monthly and contributions are made at the end of each month."].concat(COMMON_ASSUMPTIONS)
+      };
+    }
+  },
+  { id: "retirement", title: "Retirement planning",
+    about: "Estimates your savings at a planned retirement age and at an alternative age, in future and in today's money.",
+    fields: [
+      { k: "age", label: "Current age", min: 16, max: 90, def: "35" },
+      { k: "planned", label: "Planned retirement age", min: 17, max: 100, def: "65" },
+      { k: "expected", label: "Expected retirement age (alternative)", min: 17, max: 100, def: "70" },
+      { k: "savings", label: "Current savings ($)", min: 0, def: "25000" },
+      { k: "monthly", label: "Monthly contribution ($)", min: 0, def: "500" },
+      { k: "rate", label: "Expected annual return (%)", min: -50, max: 100, def: "6" },
+      { k: "inflation", label: "Expected inflation (% a year)", min: -10, max: 50, def: "2.5" }
+    ],
+    check(v){ return (v.planned > v.age && v.expected > v.age) ? null : "Both retirement ages must be above your current age."; },
+    run(v){
+      const calc = ret => {
+        const years = ret - v.age, months = Math.round(years * 12);
+        const nominal = FIN.grow(v.savings, v.monthly, v.rate / 100, 12, months);
+        return { years, months, nominal, real: FIN.realValue(nominal, v.inflation / 100, years), contrib: v.savings + v.monthly * months };
+      };
+      const a = calc(v.planned), b = calc(v.expected);
+      const steps = []; for (let m = 12; m < a.months; m += 12) steps.push(m); steps.push(a.months);
+      return {
+        stats: [
+          ["Savings at age " + v.planned, money(a.nominal), a.years + " years from now"],
+          ["In today's money", money(a.real), "Adjusted for " + v.inflation + "% inflation a year"],
+          ["Savings at age " + v.expected, money(b.nominal), b.years + " years from now"],
+          ["In today's money", money(b.real), "Adjusted for " + v.inflation + "% inflation a year"]
+        ],
+        table: { head: ["Age", "Estimated savings", "Total contributed"], rows: steps.map(m => [String(+(v.age + m / 12).toFixed(1)), money(FIN.grow(v.savings, v.monthly, v.rate / 100, 12, m)), money(v.savings + v.monthly * m)]) },
+        series: [{ name: "Estimated savings", pts: [[v.age, v.savings]].concat(steps.map(m => [v.age + m / 12, FIN.grow(v.savings, v.monthly, v.rate / 100, 12, m)])) }],
+        assumptions: ["Returns compound monthly and contributions are made at the end of each month.", "Contributions do not rise with inflation or with your income.", "This does not estimate how much income you will need in retirement."].concat(COMMON_ASSUMPTIONS)
+      };
+    }
+  },
+  { id: "inflation", title: "Inflation",
+    about: "Shows what a sum of money may buy in the future, and how a nominal return compares with a return after inflation.",
+    fields: [
+      { k: "amount", label: "Amount today ($)", min: 0, def: "10000" },
+      { k: "inflation", label: "Inflation assumption (% a year)", min: -10, max: 50, def: "3" },
+      { k: "years", label: "Years", min: 0.1, max: 100, def: "20" },
+      { k: "nominal", label: "Nominal return for comparison (% a year)", min: -50, max: 100, def: "5" }
+    ],
+    run(v){
+      const i = v.inflation / 100, n = v.nominal / 100, t = v.years;
+      const months = Math.round(t * 12), steps = yearSteps(months);
+      const at = m => m / 12;
+      return {
+        stats: [
+          ["Cost of today's $" + v.amount.toLocaleString() + " in the future", money(FIN.futureCost(v.amount, i, t)), "What the same goods may cost after " + t + " years"],
+          ["Purchasing power of the amount", money(FIN.realValue(v.amount, i, t)), "What the amount buys, in today's money"],
+          ["Real return", pct(FIN.realReturn(n, i), 2), "Nominal return after removing inflation"],
+          ["Amount invested at the nominal return", money(v.amount * Math.pow(1 + n, t)), "Worth " + money(FIN.realValue(v.amount * Math.pow(1 + n, t), i, t)) + " in today's money"]
+        ],
+        table: { head: ["Point in time", "Cost of same goods", "Purchasing power of amount", "Invested, nominal", "Invested, in today's money"], rows: steps.map(m => [yearLabel(m), money(FIN.futureCost(v.amount, i, at(m))), money(FIN.realValue(v.amount, i, at(m))), money(v.amount * Math.pow(1 + n, at(m))), money(FIN.realValue(v.amount * Math.pow(1 + n, at(m)), i, at(m)))]) },
+        series: [
+          { name: "Purchasing power of amount", pts: [[0, v.amount]].concat(steps.map(m => [at(m), FIN.realValue(v.amount, i, at(m))])) },
+          { name: "Invested, in today's money", pts: [[0, v.amount]].concat(steps.map(m => [at(m), FIN.realValue(v.amount * Math.pow(1 + n, at(m)), i, at(m))])) }
+        ],
+        assumptions: ["Inflation and the nominal return stay constant every year.", "Real return = (1 + nominal) divided by (1 + inflation), minus 1."].concat(COMMON_ASSUMPTIONS)
+      };
+    }
+  },
+  { id: "dividend", title: "Dividend income",
+    about: "Estimates dividend income from the number of shares and the dividend per payment.",
+    fields: [
+      { k: "shares", label: "Number of shares", min: 0, def: "100" },
+      { k: "dps", label: "Dividend per share, per payment ($)", min: 0, def: "0.50" },
+      { k: "freq", label: "Payment frequency", sel: PAY_OPTS, def: "4" },
+      { k: "price", label: "Share price for yield (optional, $)", min: 0.0001, opt: true, def: "" }
+    ],
+    run(v){
+      const f = +v.freq, perPay = v.shares * v.dps, annual = perPay * f;
+      const stats = [
+        ["Estimated annual dividend income", money(annual), f + (f === 1 ? " payment" : " payments") + " a year"],
+        ["Income per payment", money(perPay), "Shares times dividend per share"],
+        ["Average per month", money(annual / 12), "Annual income divided by 12"]
+      ];
+      if (v.price !== null && v.shares > 0) stats.push(["Dividend yield on price", pct(annual / (v.shares * v.price), 2), "Annual income divided by position value of " + money(v.shares * v.price)]);
+      return {
+        stats,
+        assumptions: ["Dividends are not guaranteed. Companies can cut, suspend or raise them.", "No growth in the dividend, no tax, and no reinvestment is included."]
+      };
+    }
+  },
+  { id: "allocation", title: "Portfolio allocation",
+    about: "Compares what you hold with the targets you set, and shows how concentrated the portfolio is.",
+    fields: [
+      { k: "rows", label: "One holding per line: name, value, target % (target optional)", txt: true, rows: 6, def: "Global stock fund, 6000, 60\nBond fund, 3000, 30\nCash, 1000, 10" },
+      { k: "limit", label: "Concentration limit for one holding (% of total)", min: 1, max: 100, def: "25" }
+    ],
+    run(v){
+      const lines = v.rows.split(/\n/).map(s => s.trim()).filter(Boolean);
+      if (!lines.length) return { error: "Enter at least one holding." };
+      const items = [];
+      for (let k = 0; k < lines.length; k++){
+        const p = lines[k].split(",").map(s => s.trim());
+        const val = FIN.parse(p[1]), tgt = p.length > 2 && p[2] !== "" ? FIN.parse(p[2]) : null;
+        if (!p[0] || isNaN(val) || val < 0) return { error: "Line " + (k + 1) + " needs a name and a value of zero or more." };
+        if (tgt !== null && (isNaN(tgt) || tgt < 0 || tgt > 100)) return { error: "Line " + (k + 1) + " has a target that is not between 0 and 100." };
+        items.push({ name: p[0], val, tgt });
+      }
+      const total = items.reduce((a, b) => a + b.val, 0);
+      if (total <= 0) return { error: "The total value must be above zero." };
+      items.forEach(x => { x.share = x.val / total; });
+      const withT = items.filter(x => x.tgt !== null), tsum = withT.reduce((a, b) => a + b.tgt, 0);
+      const hhi = FIN.hhi(items.map(x => x.share)), top = items.reduce((a, b) => b.share > a.share ? b : a);
+      const over = items.filter(x => x.share * 100 > v.limit);
+      const notes = [];
+      if (withT.length && Math.abs(tsum - 100) > 0.01) notes.push("Your targets add up to " + +tsum.toFixed(2) + "%, not 100%. Adjust them before acting on the differences.");
+      if (over.length) notes.push(over.map(x => x.name).join(", ") + (over.length === 1 ? " is" : " are") + " above your " + v.limit + "% concentration limit. Review whether that level of exposure is intended.");
+      return {
+        stats: [
+          ["Total value", money(total), items.length + (items.length === 1 ? " holding" : " holdings")],
+          ["Largest holding", pct(top.share, 1), top.name],
+          ["Concentration index (HHI)", hhi.toFixed(3), "1.000 means everything in one holding. Lower is more spread."],
+          ["Effective number of holdings", (1 / hhi).toFixed(1), "How many equal-sized holdings would give the same spread"]
+        ],
+        notes,
+        table: { head: ["Holding", "Value", "Share", "Target", "Difference", "To reach target"], rows: items.map(x => {
+          const diff = x.tgt === null ? null : x.share * 100 - x.tgt, move = x.tgt === null ? null : x.tgt / 100 * total - x.val;
+          return [x.name, money(x.val), pct(x.share, 1), x.tgt === null ? "n/a" : x.tgt + "%", diff === null ? "n/a" : (diff >= 0 ? "+" : "-") + Math.abs(diff).toFixed(1) + " pts", move === null ? "n/a" : (move >= 0 ? "Add " : "Reduce by ") + money(Math.abs(move))];
+        }) },
+        assumptions: ["Differences are measured against the total of the values you entered.", "This compares numbers only. It does not say what you should buy or sell, and it ignores taxes and trading costs."]
+      };
+    }
+  },
+  { id: "drawdown", title: "Risk and drawdown",
+    about: "Shows what a fall in value does to your portfolio and what gain it takes to recover.",
+    fields: [
+      { k: "value", label: "Portfolio value ($)", min: 0.01, def: "50000" },
+      { k: "rate", label: "Assumed annual return for recovery (%)", min: -50, max: 100, def: "6" },
+      { k: "custom", label: "Your own fall to test (%, optional)", min: 0.1, max: 99.9, opt: true, def: "" },
+      { k: "series", label: "Optional: your past values in order, to find the maximum drawdown", txt: true, rows: 2, opt: true, def: "" }
+    ],
+    run(v){
+      const falls = [10, 20, 30, 40, 50]; if (v.custom !== null && !falls.includes(v.custom)) falls.push(v.custom);
+      falls.sort((a, b) => a - b);
+      const stats = [["Portfolio value", money(v.value), "Starting point for each scenario"]];
+      let note = null;
+      if (v.series){
+        const parts = FIN.splitList(v.series).map(FIN.parse);
+        if (parts.length < 2 || parts.some(x => isNaN(x) || x <= 0)) return { error: "Past values need at least two numbers, each above zero, separated by commas or spaces." };
+        const m = FIN.maxDrawdown(parts);
+        stats.push(["Maximum drawdown in your series", pct(m.dd, 1), "Peak of " + money(parts[m.peakI]) + " (entry " + (m.peakI + 1) + ") to trough of " + money(parts[m.troughI]) + " (entry " + (m.troughI + 1) + ")"]);
+      }
+      return {
+        stats, notes: note ? [note] : [],
+        table: { head: ["Fall in value", "Value after fall", "Loss", "Gain needed to recover", "Years to recover at assumed return"], rows: falls.map(d => {
+          const dd = d / 100, yrs = FIN.recoveryYears(dd, v.rate / 100);
+          return [d + "%", money(v.value * (1 - dd)), money(v.value * dd), pct(FIN.recoveryGain(dd), 1), yrs === null ? "n/a (return is not above zero)" : yrs.toFixed(1) + " years"];
+        }) },
+        assumptions: ["A fall of d needs a gain of d divided by (1 - d) to get back to the starting value. A 50% fall needs a 100% gain.", "Recovery time assumes a constant return with no withdrawals or new contributions.", "These are scenarios, not predictions. Real falls and recoveries vary widely."]
+      };
+    }
+  },
+  { id: "dca", title: "Dollar-cost averaging",
+    about: "Shows what happens when you invest the same amount at each purchase, at the prices you list.",
+    fields: [
+      { k: "amount", label: "Amount invested at each purchase ($)", min: 0.01, def: "200" },
+      { k: "prices", label: "Price at each purchase, in order (commas or spaces)", txt: true, rows: 2, def: "50, 40, 45, 55, 60, 48" },
+      { k: "current", label: "Current price (optional, $)", min: 0.0001, opt: true, def: "" }
+    ],
+    run(v){
+      const prices = FIN.splitList(v.prices).map(FIN.parse);
+      if (!prices.length || prices.some(p => isNaN(p) || p <= 0)) return { error: "List at least one price. Each price must be a number above zero." };
+      const d = FIN.dca(v.amount, prices);
+      const stats = [
+        ["Total invested", money(d.invested), prices.length + " purchases of " + money(v.amount)],
+        ["Total units bought", +d.totalUnits.toFixed(4) + "", "Each purchase buys amount divided by price"],
+        ["Average cost per unit", money(d.avgCost), "Total invested divided by total units"],
+        ["Simple average of prices", money(d.simpleAvg), "Equal amounts buy more units when the price is low, so your cost is at or below this"]
+      ];
+      if (v.current !== null){ const val = d.totalUnits * v.current; stats.push(["Value at current price", money(val), "Gain or loss of " + money(val - d.invested) + " on the amount invested"]); }
+      return {
+        stats,
+        table: { head: ["Purchase", "Price", "Amount", "Units bought", "Units so far"], rows: prices.map((p, k) => [String(k + 1), money(p), money(v.amount), (+d.units[k].toFixed(4)) + "", (+d.units.slice(0, k + 1).reduce((a, b) => a + b, 0).toFixed(4)) + ""]) },
+        series: [{ name: "Price", pts: prices.map((p, k) => [k + 1, p]) }],
+        assumptions: ["Fractional units are allowed. Fees are not included.", "Dollar-cost averaging does not remove the risk of loss and does not guarantee a profit."]
+      };
+    }
+  }
+];
+
+function finValues(def){
+  const saved = (S.fin && S.fin[def.id]) || {};
+  const vals = {}; let err = null;
+  def.fields.forEach(f => {
+    const raw = saved[f.k] !== undefined ? saved[f.k] : f.def;
+    if (f.sel){ vals[f.k] = String(raw); return; }
+    if (f.txt){ vals[f.k] = String(raw || ""); return; }
+    const n = FIN.parse(raw);
+    if (isNaN(n)){
+      if (f.opt && String(raw).trim() === "") { vals[f.k] = null; return; }
+      err = err || "Enter a number for " + f.label.replace(/ \(.*$/, "") + ".";
+    } else if (f.min !== undefined && n < f.min){ err = err || f.label.replace(/ \(.*$/, "") + " must be at least " + f.min + "."; }
+    else if (f.max !== undefined && n > f.max){ err = err || f.label.replace(/ \(.*$/, "") + " must be at most " + f.max + "."; }
+    vals[f.k] = n;
+  });
+  return { vals, err };
+}
+function runCalc(def){
+  const { vals, err } = finValues(def);
+  if (err) return { error: err };
+  const extra = def.check ? def.check(vals) : null;
+  if (extra) return { error: extra };
+  try { return def.run(vals); } catch(e){ return { error: "These inputs could not be calculated." }; }
+}
+function numberAxis(v){ return Math.abs(v) >= 1000 ? (v / 1000).toFixed(Math.abs(v) >= 10000 ? 0 : 1) + "k" : String(+v.toFixed(2)); }
+function seriesChart(series, xTitle){
+  const W = 700, H = 260, padL = 54, padR = 16, padT = 14, padB = 34;
+  const all = series.flatMap(s => s.pts);
+  if (all.length < 2) return "";
+  let minX = Math.min(...all.map(p => p[0])), maxX = Math.max(...all.map(p => p[0]));
+  let minY = Math.min(0, ...all.map(p => p[1])), maxY = Math.max(...all.map(p => p[1]));
+  if (maxX === minX) maxX = minX + 1; if (maxY === minY) maxY = minY + 1;
+  const px = x => padL + (x - minX) / (maxX - minX) * (W - padL - padR), py = y => H - padB - (y - minY) / (maxY - minY) * (H - padT - padB);
+  const colors = ["var(--accent)", "var(--amber)", "var(--muted)"];
+  const grid = [0, 1, 2, 3].map(k => { const y = minY + (maxY - minY) * k / 3; return `<line x1="${padL}" x2="${W - padR}" y1="${py(y)}" y2="${py(y)}" style="stroke:var(--line)"/><text x="${padL - 8}" y="${py(y) + 4}" text-anchor="end" font-size="11" style="fill:var(--muted);font-family:var(--sans)">${numberAxis(y)}</text>`; }).join("");
+  const xs = [0, 1, 2, 3, 4].map(k => { const x = minX + (maxX - minX) * k / 4; return `<text x="${px(x)}" y="${H - 10}" text-anchor="middle" font-size="11" style="fill:var(--muted);font-family:var(--sans)">${+x.toFixed(1)}</text>`; }).join("");
+  const lines = series.map((s, k) => `<path d="${smoothPath(s.pts.map(p => [px(p[0]), py(p[1])]), padT, H - padB)}" fill="none" style="stroke:${colors[k % 3]}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"${k === 2 ? ' stroke-dasharray="6 5"' : ""}/>`).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Chart of ${series.map(s => esc(s.name)).join(", ")}. The same figures are in the table below.">${grid}${xs}${lines}<text x="${W - padR}" y="${H - 22}" text-anchor="end" font-size="11" style="fill:var(--muted);font-family:var(--sans)">${esc(xTitle || "")}</text></svg>
+  <div class="legend">${series.map((s, k) => `<span><i class="swatch" style="background:${colors[k % 3]}"></i>${esc(s.name)}</span>`).join("")}</div>`;
+}
+function calcOutputHTML(def){
+  const r = runCalc(def);
+  if (r.error) return `<div class="notice warn" role="alert">${esc(r.error)}</div>`;
+  return `
+    ${(r.notes || []).map(n => `<div class="notice warn">${esc(n)}</div>`).join("")}
+    <div class="grid g2" style="margin-bottom:16px">${r.stats.map(s => statBox(s[0], s[1], s[2] ? esc(s[2]) : "", s[3])).join("")}</div>
+    ${r.series && r.series.length ? `<div style="margin-bottom:16px">${seriesChart(r.series, def.id === "retirement" ? "Age" : def.id === "dca" ? "Purchase number" : "Years")}</div>` : ""}
+    ${r.table ? `<div class="tbl-wrap"><table><thead><tr>${r.table.head.map((h, k) => `<th${k ? ' class="num"' : ""}>${esc(h)}</th>`).join("")}</tr></thead><tbody>${r.table.rows.map(row => `<tr>${row.map((c, k) => `<td${k ? ' class="num"' : ""}>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>` : ""}
+    <h4 style="margin-top:16px">Assumptions</h4>
+    <ul class="plain">${r.assumptions.map(a => `<li>${esc(a)}</li>`).join("")}</ul>`;
+}
+LIVE.fin = host => {
+  const def = CALCS.find(c => c.id === host.dataset.calc), out = host.querySelector(".live-out");
+  if (def && out) out.innerHTML = calcOutputHTML(def);
+};
+let finTab = "compound";
+function finField(def, f){
+  const path = "fin." + def.id + "." + f.k, saved = getPath(path), v = saved !== undefined ? saved : f.def, id = "fin_" + def.id + "_" + f.k;
+  if (f.sel) return `<div class="field"><label for="${id}">${esc(f.label)}</label><select id="${id}" data-path="${path}">${f.sel.map(o => `<option value="${o[0]}" ${String(v) === o[0] ? "selected" : ""}>${esc(o[1])}</option>`).join("")}</select></div>`;
+  if (f.txt) return `<div class="field" style="grid-column:1/-1"><label for="${id}">${esc(f.label)}</label><textarea id="${id}" rows="${f.rows || 3}" data-path="${path}" spellcheck="false">${esc(v)}</textarea></div>`;
+  return `<div class="field"><label for="${id}">${esc(f.label)}</label><input id="${id}" type="text" inputmode="decimal" data-path="${path}" value="${esc(v)}" autocomplete="off"></div>`;
+}
+function viewFinTools(){
+  const def = CALCS.find(c => c.id === finTab) || CALCS[0];
+  return `
+  ${pageHeader("Financial tools", "Eight calculators. Each one shows its assumptions. Projections are illustrations, not guaranteed returns.")}
+  <div class="inline" role="tablist" aria-label="Calculators" style="margin-bottom:16px">
+    ${CALCS.map(c => `<button class="btn sm ${c.id === def.id ? "primary" : ""}" role="tab" aria-selected="${c.id === def.id}" data-act="fin-tab" data-id="${c.id}">${esc(c.title)}</button>`).join("")}
+  </div>
+  <section class="card" data-live="fin" data-calc="${def.id}">
+    <div class="card-head"><div><h2>${esc(def.title)}</h2><div class="sub">${esc(def.about)}</div></div></div>
+    <div class="row">${def.fields.map(f => finField(def, f)).join("")}</div>
+    ${def.id === "allocation" ? `<p><button class="btn sm" data-act="fin-fill-alloc">Fill from my portfolio</button> <span class="small">Replaces the lines above with your recorded holdings and cash.</span></p>` : ""}
+    <div class="divider"></div>
+    <div class="live-out" aria-live="polite">${calcOutputHTML(def)}</div>
+  </section>`;
+}
+
+/* ============================================================
+   PORTFOLIO: ledger engine, holdings, profit and loss
+   Transactions are the source of truth. Holdings, cash and returns
+   are always calculated from them (average cost method).
+   ============================================================ */
+
+const TX_TYPES = [["buy", "Buy"], ["sell", "Sell"], ["dividend", "Dividend or distribution"], ["deposit", "Deposit"], ["withdrawal", "Withdrawal"], ["fee", "Fee or expense"]];
+const ASSET_CATEGORIES = ["Stock", "ETF", "Bond", "Mutual fund", "Real estate", "Commodity", "Other"];
+
+function pfCalc(assets, txs){
+  const order = txs.map((t, i) => ({ t, i })).sort((a, b) => (a.t.date || "").localeCompare(b.t.date || "") || a.i - b.i).map(x => x.t);
+  const A = {};
+  assets.forEach(a => { A[a.id] = { asset: a, qty: 0, cost: 0, realized: 0, income: 0, fees: 0 }; });
+  const T = { cash: 0, deposits: 0, withdrawals: 0, realized: 0, income: 0, tradeFees: 0, otherFees: 0 };
+  const issues = [], byMonth = {};
+  const mo = d => (d || "").slice(0, 7);
+  const bm = d => (byMonth[mo(d)] = byMonth[mo(d)] || { deposits: 0, withdrawals: 0, income: 0 });
+  order.forEach(t => {
+    const q = num(t.qty), pr = num(t.price), fee = num(t.fee), amt = num(t.amount), a = A[t.assetId];
+    if (t.type === "deposit"){ T.cash += amt; T.deposits += amt; bm(t.date).deposits += amt; }
+    else if (t.type === "withdrawal"){ T.cash -= amt; T.withdrawals += amt; bm(t.date).withdrawals += amt; }
+    else if (t.type === "fee"){ T.cash -= amt; T.otherFees += amt; }
+    else if (t.type === "dividend"){
+      if (!a){ issues.push({ id: t.id, msg: "A dividend refers to an asset that no longer exists." }); return; }
+      T.cash += amt; T.income += amt; a.income += amt; bm(t.date).income += amt;
+    } else if (t.type === "buy"){
+      if (!a){ issues.push({ id: t.id, msg: "A purchase refers to an asset that no longer exists." }); return; }
+      const total = q * pr + fee; T.cash -= total; a.qty += q; a.cost += total; a.fees += fee; T.tradeFees += fee;
+    } else if (t.type === "sell"){
+      if (!a || q > a.qty + 1e-9){ issues.push({ id: t.id, msg: "A sale of " + q + " is larger than the quantity held on " + t.date + "." }); return; }
+      const avg = a.qty > 0 ? a.cost / a.qty : 0, proceeds = q * pr - fee, costOut = avg * q, gain = proceeds - costOut;
+      T.cash += proceeds; T.realized += gain; a.realized += gain; a.fees += fee; T.tradeFees += fee;
+      a.qty -= q; a.cost -= costOut;
+      if (a.qty < 1e-9){ a.qty = 0; a.cost = 0; }
+    }
+  });
+  const rows = Object.values(A).map(x => {
+    const price = FIN.parse(x.asset.price), priced = !isNaN(price) && price >= 0;
+    const value = x.qty > 0 ? (priced ? x.qty * price : x.cost) : 0;
+    return { id: x.asset.id, asset: x.asset, qty: x.qty, cost: x.cost, avgCost: x.qty > 0 ? x.cost / x.qty : null, priced, price: priced ? price : null,
+      value, unrealized: (x.qty > 0 && priced) ? value - x.cost : null, realized: x.realized, income: x.income, fees: x.fees };
+  });
+  const held = rows.filter(r => r.qty > 0);
+  const marketValue = held.reduce((a, r) => a + r.value, 0), costBasis = held.reduce((a, r) => a + r.cost, 0);
+  const unrealized = held.filter(r => r.priced).reduce((a, r) => a + r.unrealized, 0);
+  const netDeposits = T.deposits - T.withdrawals, equity = marketValue + T.cash;
+  return { rows, held, issues, byMonth, cash: T.cash, deposits: T.deposits, withdrawals: T.withdrawals, netDeposits,
+    realized: T.realized, income: T.income, fees: T.tradeFees + T.otherFees, otherFees: T.otherFees, marketValue, costBasis, unrealized,
+    unpricedCount: held.filter(r => !r.priced).length, equity, totalReturn: equity - netDeposits,
+    returnPct: netDeposits > 0 ? (equity - netDeposits) / netDeposits : null };
+}
+function pf(){ return pfCalc(S.portfolio.assets, S.portfolio.tx); }
+function pfHasData(){ return S.portfolio.assets.length > 0 || S.portfolio.tx.length > 0; }
+function pfCheckTx(t){
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(t.date) || isNaN(Date.parse(t.date))) return "Enter a valid date.";
+  if (t.date > todayISO()) return "The date cannot be in the future. Record transactions after they happen.";
+  const known = TX_TYPES.some(x => x[0] === t.type); if (!known) return "Choose a transaction type.";
+  const pos = v => { const n = FIN.parse(v); return !isNaN(n) && n > 0; }, nonneg = v => { const n = FIN.parse(v); return !isNaN(n) && n >= 0; };
+  if (t.type === "buy" || t.type === "sell"){
+    if (!S.portfolio.assets.some(a => a.id === t.assetId)) return "Choose an asset. Add it under Portfolio first.";
+    if (!pos(t.qty)) return "Quantity must be a number above zero.";
+    if (!nonneg(t.price)) return "Price per unit must be zero or more.";
+    if (t.fee !== "" && !nonneg(t.fee)) return "Fee must be zero or more.";
+  } else {
+    if (t.type === "dividend" && !S.portfolio.assets.some(a => a.id === t.assetId)) return "Choose the asset that paid the dividend.";
+    if (!pos(t.amount)) return "Amount must be a number above zero.";
+  }
+  const before = pfCalc(S.portfolio.assets, S.portfolio.tx).issues.length;
+  const after = pfCalc(S.portfolio.assets, S.portfolio.tx.concat([t])).issues.length;
+  if (after > before) return "You are selling more than you held on that date. Check the quantity and the date.";
+  return null;
+}
+function qtyText(q){ return String(+Number(q).toFixed(6)); }
+function csvCell(v){
+  if (v === null || v === undefined) return "";
+  let s = String(v);
+  if (typeof v === "string" && /^[=+@\t\r-]/.test(s) && isNaN(Number(s))) s = "'" + s;
+  return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+}
+function toCSV(head, rows){ return [head].concat(rows).map(r => r.map(csvCell).join(",")).join("\n"); }
+function assetName(id){ const a = S.portfolio.assets.find(x => x.id === id); return a ? a.name : "Removed asset"; }
+
+function pfExportTx(){
+  download("sylvia-transactions-" + todayISO() + ".csv", toCSV(["date", "type", "asset", "quantity", "price", "fee", "amount", "note"],
+    S.portfolio.tx.slice().sort((a, b) => a.date.localeCompare(b.date)).map(t => [t.date, t.type, t.assetId ? assetName(t.assetId) : "", t.qty, t.price, t.fee, t.amount, t.note])), "text/csv;charset=utf-8");
+}
+function pfExportHoldings(){
+  const c = pf();
+  download("sylvia-holdings-" + todayISO() + ".csv", toCSV(["asset", "ticker", "category", "quantity", "unit", "average_cost", "cost_basis", "manual_price", "price_date", "value", "value_basis", "unrealized", "realized", "income", "fees"],
+    c.rows.map(r => [r.asset.name, r.asset.ticker, r.asset.category, qtyText(r.qty), r.asset.unit, r.avgCost === null ? "" : r.avgCost.toFixed(4), r.cost.toFixed(2), r.priced ? r.price : "", r.asset.priceDate, r.value.toFixed(2), r.qty > 0 ? (r.priced ? "manual price" : "cost, no price entered") : "", r.unrealized === null ? "" : r.unrealized.toFixed(2), r.realized.toFixed(2), r.income.toFixed(2), r.fees.toFixed(2)])), "text/csv;charset=utf-8");
+}
+
+/* ---------- charts for the portfolio ---------- */
+function barChart(items, title){
+  if (!items.length) return "";
+  const W = 700, H = 220, padL = 54, padR = 12, padT = 12, padB = 30;
+  const max = Math.max(...items.map(i => i.value), 1), bw = (W - padL - padR) / items.length;
+  const py = v => H - padB - v / max * (H - padT - padB);
+  const grid = [0, 1, 2].map(k => { const y = max * k / 2; return `<line x1="${padL}" x2="${W - padR}" y1="${py(y)}" y2="${py(y)}" style="stroke:var(--line)"/><text x="${padL - 8}" y="${py(y) + 4}" text-anchor="end" font-size="11" style="fill:var(--muted);font-family:var(--sans)">${numberAxis(y)}</text>`; }).join("");
+  const bars = items.map((it, k) => `<rect x="${(padL + k * bw + bw * 0.18).toFixed(1)}" y="${py(it.value).toFixed(1)}" width="${(bw * 0.64).toFixed(1)}" height="${Math.max(0, H - padB - py(it.value)).toFixed(1)}" rx="2" style="fill:var(--accent)"/><text x="${(padL + k * bw + bw / 2).toFixed(1)}" y="${H - 10}" text-anchor="middle" font-size="10" style="fill:var(--muted);font-family:var(--sans)">${esc(it.label)}</text>`).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(title)}">${grid}${bars}</svg>
+  <details><summary>View as a table</summary><div class="tbl-wrap"><table><tbody>${items.map(i => `<tr><td>${esc(i.label)}</td><td class="num">${money(i.value)}</td></tr>`).join("")}</tbody></table></div></details>`;
+}
+function timeChart(points, title){
+  if (points.length < 2) return "";
+  const W = 700, H = 220, padL = 60, padR = 16, padT = 12, padB = 30;
+  const ts = points.map(p => Date.parse(p.d)), vs = points.map(p => p.v);
+  const minT = Math.min(...ts), maxT = Math.max(...ts) === minT ? minT + 86400000 : Math.max(...ts);
+  const minV = Math.min(0, ...vs), maxV = Math.max(...vs) === minV ? minV + 1 : Math.max(...vs);
+  const px = t => padL + (t - minT) / (maxT - minT) * (W - padL - padR), py = v => H - padB - (v - minV) / (maxV - minV) * (H - padT - padB);
+  const grid = [0, 1, 2].map(k => { const y = minV + (maxV - minV) * k / 2; return `<line x1="${padL}" x2="${W - padR}" y1="${py(y)}" y2="${py(y)}" style="stroke:var(--line)"/><text x="${padL - 8}" y="${py(y) + 4}" text-anchor="end" font-size="11" style="fill:var(--muted);font-family:var(--sans)">${numberAxis(y)}</text>`; }).join("");
+  const pts = points.map((p, k) => [px(ts[k]), py(p.v)]);
+  const dots = pts.map(q => `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="3.5" style="fill:var(--panel);stroke:var(--accent)" stroke-width="2"/>`).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(title)}">${grid}
+    <path d="${smoothPath(pts, padT, H - padB)}" fill="none" style="stroke:var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>${dots}
+    <text x="${padL}" y="${H - 10}" font-size="11" style="fill:var(--muted);font-family:var(--sans)">${esc(points[0].d)}</text>
+    <text x="${W - padR}" y="${H - 10}" text-anchor="end" font-size="11" style="fill:var(--muted);font-family:var(--sans)">${esc(points[points.length - 1].d)}</text></svg>
+  <details><summary>View as a table</summary><div class="tbl-wrap"><table><tbody>${points.map(p => `<tr><td>${esc(p.d)}</td><td class="num">${money(p.v)}</td></tr>`).join("")}</tbody></table></div></details>`;
+}
+function monthKeysBack(n){
+  const out = [], now = new Date();
+  for (let k = n - 1; k >= 0; k--){ const d = new Date(now.getFullYear(), now.getMonth() - k, 1); out.push(d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0")); }
+  return out;
+}
+function monthShort(key){ const [y, m] = key.split("-").map(Number); return new Date(y, m - 1, 1).toLocaleString("en-US", { month: "short" }) + " " + String(y).slice(2); }
+
+function pfAllocationSlices(c){
+  const groups = {};
+  c.held.forEach(r => { const k = (r.asset.category || "").trim() || "Uncategorised"; groups[k] = (groups[k] || 0) + r.value; });
+  if (c.cash > 0.005) groups["Cash"] = (groups["Cash"] || 0) + c.cash;
+  const colors = ["var(--accent)", "var(--amber)", "var(--ink)", "var(--muted)", "var(--ok)", "var(--danger)", "var(--line-strong)"];
+  return Object.keys(groups).sort((a, b) => groups[b] - groups[a]).map((k, i) => ({ label: k, value: groups[k], color: colors[i % colors.length] })).filter(s => s.value > 0);
+}
+
+/* ---------- Portfolio view ---------- */
+function pfStat(c){
+  const e = c.unpricedCount ? " (includes holdings valued at cost)" : "";
+  return `<div class="grid g4" style="margin-bottom:16px">
+    ${statBox("Total portfolio value", money(c.equity), "Holdings plus cash" + e)}
+    ${statBox("Invested capital", money(c.costBasis), "Cost of open holdings, fees included")}
+    ${statBox("Cash balance", money(c.cash), c.cash < -0.005 ? "Negative: record the deposit that funded your purchases" : "Calculated from your transactions", c.cash < -0.005 ? "neg" : "")}
+    ${statBox("Unrealized gain or loss", c.held.some(r => r.priced) ? money(c.unrealized) : "n/a", c.held.some(r => r.priced) ? "Only holdings with a manual price" : "Enter a manual price on a holding", c.unrealized > 0 ? "pos" : c.unrealized < 0 ? "neg" : "")}
+    ${statBox("Realized gain or loss", money(c.realized), "From sales, after fees", c.realized > 0 ? "pos" : c.realized < 0 ? "neg" : "")}
+    ${statBox("Income received", money(c.income), "Dividends and distributions")}
+    ${statBox("Fees and expenses", money(c.fees), "Trading fees and other expenses")}
+    ${statBox("Total return", money(c.totalReturn), c.returnPct === null ? "Needs a recorded deposit" : pct(c.returnPct, 1) + " of net deposits (simple return, not time-weighted)", c.totalReturn > 0 ? "pos" : c.totalReturn < 0 ? "neg" : "")}
+  </div>`;
+}
+function viewPortfolio(){
+  const c = pf(), P = S.portfolio, limit = FIN.parse(P.concLimit) || 25;
+  const slices = pfAllocationSlices(c);
+  const months = monthKeysBack(12).map(k => ({ label: monthShort(k), value: (c.byMonth[k] || { deposits: 0 }).deposits }));
+  const incomeM = monthKeysBack(12).map(k => ({ label: monthShort(k), value: (c.byMonth[k] || { income: 0 }).income }));
+  const snaps = P.snapshots.slice().sort((a, b) => a.d.localeCompare(b.d)).map(s => ({ d: s.d, v: num(s.v) }));
+  const totalForConc = c.equity > 0 ? c.equity : 0;
+  const conc = c.held.filter(r => totalForConc > 0 && r.value / totalForConc * 100 > limit);
+  return `
+  ${pageHeader("Portfolio", "Your holdings, cash and results, calculated from the transactions you record.")}
+  <div class="notice accent"><strong>Where the numbers come from.</strong> Everything here is calculated from your own records. Sylvia does not fetch market prices. A holding is valued at the manual price you enter, with its date. If you enter no price, it is valued at cost and labelled that way.</div>
+  ${c.issues.length ? `<div class="notice danger" role="alert"><strong>${ico("alert")}Some transactions do not add up.</strong> ${esc(c.issues[0].msg)} Review the history under Transactions.</div>` : ""}
+  ${pfHasData() ? pfStat(c) : `
+  <section class="card empty-card"><div class="txt"><h2>Start your portfolio</h2><p>Add an asset below, then record a deposit and a purchase under Transactions. Totals, allocation and results appear here once you have entries.</p>
+    <a class="btn primary" href="#transactions">Record a transaction</a></div></section>`}
+  ${conc.length ? `<div class="notice warn" role="status"><strong>${ico("alert")}Concentration above your ${limit}% limit.</strong> ${esc(conc.map(r => r.asset.name + " (" + (r.value / totalForConc * 100).toFixed(1) + "%)").join(", "))}. Decide whether that exposure is intended. Sylvia does not tell you what to buy or sell.</div>` : ""}
+
+  <div class="grid g2">
+    ${card("Asset allocation", "By category, at current recorded values", slices.length ? pieChart(slices) : `<div class="empty">Allocation appears when you hold an asset or cash.</div>`)}
+    ${card("Monthly contributions", "Deposits recorded in the last 12 months", months.some(m => m.value > 0) ? barChart(months, "Monthly contributions for the last 12 months") : `<div class="empty">Record a deposit to see contributions.</div>`)}
+  </div>
+  <div class="grid g2">
+    ${card("Investment income", "Dividends and distributions, last 12 months", incomeM.some(m => m.value > 0) ? barChart(incomeM, "Investment income for the last 12 months") : `<div class="empty">Record a dividend to see income.</div>`)}
+    ${card("Valuation history", "From snapshots you record. Not market history.", snaps.length >= 2 ? timeChart(snaps, "Portfolio value at each recorded snapshot") : `<div class="empty">${snaps.length ? "One snapshot saved. Record another on a later date to draw a line." : "Record a snapshot to start a history."}</div>`)
+      .replace("</section>", `<div class="inline" style="margin-top:12px"><button class="btn sm" data-act="pf-snapshot">Record snapshot of today's value</button><span class="small">Saves ${money(c.equity)} for ${todayISO()}.</span></div>${P.snapshots.length ? `<details style="margin-top:10px"><summary>Saved snapshots (${P.snapshots.length})</summary><ul class="plain">${P.snapshots.slice().sort((a, b) => b.d.localeCompare(a.d)).map(s => `<li>${esc(s.d)}: ${money(num(s.v))}${s.est ? " (includes holdings valued at cost)" : ""} <button class="btn sm ghost" data-act="pf-del-snapshot" data-id="${esc(s.id)}" aria-label="Delete snapshot" title="Delete snapshot">${ico("x")}</button></li>`).join("")}</ul></details>` : ""}</section>`)}
+  </div>
+
+  ${card("Holdings", "Edit an asset's details or price by opening it. Prices are manual.", `
+    ${c.rows.length ? `<div class="tbl-wrap"><table>
+      <thead><tr><th>Asset</th><th>Category</th><th class="num">Quantity</th><th class="num">Average cost</th><th class="num">Price</th><th class="num">Value</th><th class="num">Unrealized</th><th class="num">Share</th></tr></thead>
+      <tbody>${c.rows.map(r => `<tr>
+        <td><strong>${esc(r.asset.name)}</strong>${r.asset.ticker ? ` <span class="small">${esc(r.asset.ticker)}</span>` : ""}</td>
+        <td>${esc(r.asset.category || "Uncategorised")}</td>
+        <td class="num">${qtyText(r.qty)} ${esc(r.asset.unit || "")}</td>
+        <td class="num">${r.avgCost === null ? "n/a" : money(r.avgCost)}</td>
+        <td class="num">${r.priced ? money(r.price) + `<div class="small">manual${r.asset.priceDate ? ", " + esc(r.asset.priceDate) : ""}</div>` : `<span class="small">no price entered</span>`}</td>
+        <td class="num">${r.qty > 0 ? money(r.value) + (r.priced ? "" : `<div class="small">at cost</div>`) : "n/a"}</td>
+        <td class="num ${r.unrealized > 0 ? "pos" : r.unrealized < 0 ? "neg" : ""}">${r.unrealized === null ? "n/a" : money(r.unrealized) + (r.cost > 0 ? `<div class="small">${pct(r.unrealized / r.cost, 1)}</div>` : "")}</td>
+        <td class="num">${r.qty > 0 && c.equity > 0 ? pct(r.value / c.equity, 1) : "n/a"}</td></tr>`).join("")}</tbody></table></div>
+      <p class="small" style="margin-top:8px">Share is the portion of total portfolio value, cash included. Unrealized gain or loss is shown only for holdings that have a manual price.</p>` : `<div class="empty">No assets yet.</div>`}
+    <div class="inline" style="margin-top:12px"><button class="btn sm" data-act="pf-export-holdings">Export holdings (CSV)</button></div>`)}
+
+  ${c.rows.length ? card("Asset details and profit and loss", "Open an asset to edit it, see its transactions or remove it.", c.rows.map(r => {
+    const A = r.asset, txs = S.portfolio.tx.filter(t => t.assetId === A.id).sort((a, b) => b.date.localeCompare(a.date));
+    return `<details>
+      <summary>${esc(A.name)}${A.ticker ? " (" + esc(A.ticker) + ")" : ""}: realized ${money(r.realized)}, income ${money(r.income)}, fees ${money(r.fees)}</summary>
+      <div class="row">
+        <div class="field"><label for="a_n_${esc(A.id)}">Name</label><input id="a_n_${esc(A.id)}" data-path="portfolio.assets.${S.portfolio.assets.indexOf(A)}.name" data-rerender value="${esc(A.name)}"></div>
+        <div class="field"><label for="a_t_${esc(A.id)}">Ticker or code</label><input id="a_t_${esc(A.id)}" data-path="portfolio.assets.${S.portfolio.assets.indexOf(A)}.ticker" data-rerender value="${esc(A.ticker)}"></div>
+        <div class="field"><label for="a_c_${esc(A.id)}">Category</label><input id="a_c_${esc(A.id)}" list="asset-cats" data-path="portfolio.assets.${S.portfolio.assets.indexOf(A)}.category" data-rerender value="${esc(A.category)}"></div>
+        <div class="field"><label for="a_u_${esc(A.id)}">Unit</label><input id="a_u_${esc(A.id)}" data-path="portfolio.assets.${S.portfolio.assets.indexOf(A)}.unit" data-rerender value="${esc(A.unit)}"></div>
+        <div class="field"><label for="a_p_${esc(A.id)}">Manual price per unit ($)</label><input id="a_p_${esc(A.id)}" type="text" inputmode="decimal" data-path="portfolio.assets.${S.portfolio.assets.indexOf(A)}.price" data-rerender value="${esc(A.price)}"></div>
+        <div class="field"><label for="a_d_${esc(A.id)}">Price date</label><input id="a_d_${esc(A.id)}" type="date" max="${todayISO()}" data-path="portfolio.assets.${S.portfolio.assets.indexOf(A)}.priceDate" data-rerender value="${esc(A.priceDate)}"></div>
+      </div>
+      <p class="small">Realized ${money(r.realized)}. Income ${money(r.income)}. Fees ${money(r.fees)}. Unrealized ${r.unrealized === null ? "n/a" : money(r.unrealized)}.</p>
+      ${txs.length ? `<div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Type</th><th class="num">Quantity</th><th class="num">Price</th><th class="num">Fee</th><th class="num">Amount</th></tr></thead><tbody>${txs.map(t => `<tr><td>${esc(t.date)}</td><td>${esc(t.type)}</td><td class="num">${esc(t.qty || "")}</td><td class="num">${t.price !== "" ? money(num(t.price)) : ""}</td><td class="num">${t.fee ? money(num(t.fee)) : ""}</td><td class="num">${t.amount ? money(num(t.amount)) : ""}</td></tr>`).join("")}</tbody></table></div>` : `<p class="small">No transactions for this asset yet.</p>`}
+      <p style="margin-top:10px"><button class="btn sm danger" data-act="pf-del-asset" data-id="${esc(A.id)}">Remove this asset</button></p>
+    </details>`;
+  }).join("")) : ""}
+
+  ${card("Add an asset", "An asset is something you hold or plan to record, such as a fund or a bond. Quantities and prices go in Transactions.", `
+    <form id="asset-form" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))" novalidate>
+      <div class="field"><label for="af-name">Name</label><input id="af-name" name="name" required maxlength="80" placeholder="e.g. Global stock fund"></div>
+      <div class="field"><label for="af-ticker">Ticker or code (optional)</label><input id="af-ticker" name="ticker" maxlength="20"></div>
+      <div class="field"><label for="af-cat">Category</label><input id="af-cat" name="category" list="asset-cats" maxlength="40" placeholder="Stock, ETF, Bond or your own"></div>
+      <div class="field"><label for="af-unit">Unit</label><input id="af-unit" name="unit" maxlength="20" value="shares"></div>
+      <div class="field"><label for="af-price">Manual price per unit (optional, $)</label><input id="af-price" name="price" inputmode="decimal"></div>
+      <div class="field"><label for="af-date">Price date (optional)</label><input id="af-date" name="priceDate" type="date" max="${todayISO()}"></div>
+      <datalist id="asset-cats">${ASSET_CATEGORIES.map(x => `<option value="${x}">`).join("")}</datalist>
+    </form>
+    <div id="asset-error" class="notice danger" role="alert" hidden></div>
+    <button class="btn primary" type="submit" form="asset-form">Add asset</button>`)}
+
+  ${card("Concentration limit", "Warns you when one holding passes this share of the portfolio.", `
+    <div class="field" style="max-width:240px"><label for="pf-limit">Limit for one holding (% of total value)</label>
+    <input id="pf-limit" type="text" inputmode="decimal" data-path="portfolio.concLimit" data-rerender value="${esc(P.concLimit)}"></div>
+    <p class="small">You choose the limit. It is a prompt to review, not an instruction to trade.</p>`)}`;
+}
+
+/* ---------- Transactions view ---------- */
+let txFilter = { type: "", asset: "", text: "", from: "", to: "" };
+function viewTransactions(){
+  const P = S.portfolio, c = pf();
+  const bad = new Set(c.issues.map(i => i.id));
+  const list = P.tx.slice().sort((a, b) => b.date.localeCompare(a.date)).filter(t =>
+    (!txFilter.type || t.type === txFilter.type) && (!txFilter.asset || t.assetId === txFilter.asset) &&
+    (!txFilter.from || t.date >= txFilter.from) && (!txFilter.to || t.date <= txFilter.to) &&
+    (!txFilter.text || (t.note + " " + assetName(t.assetId)).toLowerCase().includes(txFilter.text.toLowerCase())));
+  return `
+  ${pageHeader("Transactions", "Every buy, sale, dividend, deposit, withdrawal and fee. Your portfolio is calculated from this list.")}
+  ${card("Record a transaction", "Record what actually happened, on the date it happened.", `
+    <form id="tx-form" novalidate>
+      <div class="row">
+        <div class="field"><label for="tx-date">Date</label><input id="tx-date" name="date" type="date" required max="${todayISO()}" value="${todayISO()}"></div>
+        <div class="field"><label for="tx-type">Type</label><select id="tx-type" name="type">${TX_TYPES.map(x => `<option value="${x[0]}">${x[1]}</option>`).join("")}</select></div>
+        <div class="field" data-for="buy sell dividend"><label for="tx-asset">Asset</label><select id="tx-asset" name="assetId"><option value="">Choose an asset</option>${P.assets.map(a => `<option value="${esc(a.id)}">${esc(a.name)}</option>`).join("")}</select></div>
+        <div class="field" data-for="buy sell"><label for="tx-qty">Quantity</label><input id="tx-qty" name="qty" inputmode="decimal"></div>
+        <div class="field" data-for="buy sell"><label for="tx-price">Price per unit ($)</label><input id="tx-price" name="price" inputmode="decimal"></div>
+        <div class="field" data-for="buy sell"><label for="tx-fee">Transaction fee ($)</label><input id="tx-fee" name="fee" inputmode="decimal" placeholder="0"></div>
+        <div class="field" data-for="dividend deposit withdrawal fee"><label for="tx-amount">Amount ($)</label><input id="tx-amount" name="amount" inputmode="decimal"></div>
+        <div class="field" style="grid-column:1/-1"><label for="tx-note">Note (optional)</label><input id="tx-note" name="note" maxlength="200"></div>
+      </div>
+    </form>
+    <div id="tx-error" class="notice danger" role="alert" hidden></div>
+    ${P.assets.length ? "" : `<p class="small">To record a buy, sale or dividend, add an asset under <a href="#portfolio">Portfolio</a> first. Deposits, withdrawals and fees need no asset.</p>`}
+    <button class="btn primary" type="submit" form="tx-form">Save transaction</button>`)}
+  ${card("History", `${list.length} of ${P.tx.length} shown`, `
+    <div class="row" style="margin-bottom:12px">
+      <div class="field"><label for="txf-type">Type</label><select id="txf-type" data-act="tx-filter" data-key="type"><option value="">All</option>${TX_TYPES.map(x => `<option value="${x[0]}" ${txFilter.type === x[0] ? "selected" : ""}>${x[1]}</option>`).join("")}</select></div>
+      <div class="field"><label for="txf-asset">Asset</label><select id="txf-asset" data-act="tx-filter" data-key="asset"><option value="">All</option>${P.assets.map(a => `<option value="${esc(a.id)}" ${txFilter.asset === a.id ? "selected" : ""}>${esc(a.name)}</option>`).join("")}</select></div>
+      <div class="field"><label for="txf-from">From</label><input id="txf-from" type="date" data-act="tx-filter" data-key="from" value="${esc(txFilter.from)}"></div>
+      <div class="field"><label for="txf-to">To</label><input id="txf-to" type="date" data-act="tx-filter" data-key="to" value="${esc(txFilter.to)}"></div>
+      <div class="field"><label for="txf-text">Search</label><input id="txf-text" data-act="tx-filter" data-key="text" value="${esc(txFilter.text)}" placeholder="Asset or note"></div>
+    </div>
+    ${list.length ? `<div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Asset</th><th class="num">Quantity</th><th class="num">Price</th><th class="num">Fee</th><th class="num">Amount</th><th>Note</th><th></th></tr></thead><tbody>
+      ${list.map(t => `<tr>
+        <td>${esc(t.date)}</td><td>${esc(t.type)}${bad.has(t.id) ? ` <span class="tag danger">Check</span>` : ""}</td><td>${t.assetId ? esc(assetName(t.assetId)) : ""}</td>
+        <td class="num">${esc(t.qty || "")}</td><td class="num">${t.price !== "" && t.price != null ? money(num(t.price)) : ""}</td><td class="num">${t.fee ? money(num(t.fee)) : ""}</td><td class="num">${t.amount ? money(num(t.amount)) : ""}</td>
+        <td style="white-space:normal;max-width:240px">${esc(t.note || "")}</td>
+        <td><button class="btn sm ghost" data-act="pf-del-tx" data-id="${esc(t.id)}" aria-label="Delete transaction" title="Delete transaction">${ico("x")}</button></td></tr>`).join("")}
+    </tbody></table></div>` : `<div class="empty">${P.tx.length ? "No transactions match these filters." : "No transactions yet. Record a deposit first, then your purchases."}</div>`}
+    <div class="inline" style="margin-top:12px"><button class="btn sm" data-act="pf-export-tx">Export transactions (CSV)</button></div>`)}`;
+}
+function txFormSync(){
+  const f = document.getElementById("tx-form"); if (!f) return;
+  const type = f.querySelector("#tx-type").value;
+  f.querySelectorAll("[data-for]").forEach(el => { el.hidden = !el.dataset.for.split(" ").includes(type); });
+}
+
+/* ============================================================
+   12-MONTH PLANNER
+   ============================================================ */
+let plSel = "";
+function plMonthKey(d){ return (d || todayISO()).slice(0, 7); }
+function plKeys(){
+  const P = S.planner; if (!P.created) return [];
+  const [y, m] = P.startMonth.split("-").map(Number), out = [];
+  for (let k = 0; k < 12; k++){ const d = new Date(y, m - 1 + k, 1); out.push(d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0")); }
+  return out;
+}
+function plMonthLabel(key){ const [y, m] = key.split("-").map(Number); return new Date(y, m - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" }); }
+function plDefaultTasks(i){
+  const t = ["Review portfolio and transactions", "Check allocation against targets", "Check risk and concentration"];
+  if ((i + 1) % 3 === 0) t.push("Quarterly review: results, goals and lessons");
+  if (i === 11) t.push("Annual summary: write what worked and what to change");
+  return t.map(x => ({ id: uid(), text: x, done: false }));
+}
+function plCreate(startMonth, monthly, target){
+  const P = S.planner; P.created = true; P.startMonth = startMonth; P.defaultMonthly = monthly; P.annualTarget = target;
+  P.months = {};
+  plKeys().forEach((k, i) => { P.months[k] = { objective: "", planned: monthly, notes: "", tasks: plDefaultTasks(i) }; });
+  plSel = plMonthKey();
+  if (!plKeys().includes(plSel)) plSel = plKeys()[0];
+}
+function plMonth(key){
+  const P = S.planner;
+  if (!P.months[key]) P.months[key] = { objective: "", planned: P.defaultMonthly, notes: "", tasks: [] };
+  return P.months[key];
+}
+function plStatus(key){
+  const m = plMonth(key), now = plMonthKey(), all = m.tasks.length > 0 && m.tasks.every(t => t.done);
+  if (all) return "Done";
+  if (key < now) return "Missed";
+  if (key === now) return "Current";
+  return "Upcoming";
+}
+function plActual(key, c){ return (c.byMonth[key] || { deposits: 0 }).deposits; }
+function plGoalProgress(g, c){
+  const t = FIN.parse(g.target); if (isNaN(t) || t <= 0) return null;
+  return clamp(c.equity / t, 0, 1);
+}
+function viewPlanner(){
+  const P = S.planner, c = pf();
+  if (!P.created){
+    return `${pageHeader("12-month planner", "Plan one year of investing: monthly tasks, contributions and goals.")}
+    ${card("Create your plan", "You can change every month afterwards.", `
+      <form id="plan-form" novalidate><div class="row">
+        <div class="field"><label for="pl-start">First month</label><input id="pl-start" name="start" type="month" value="${plMonthKey()}" required></div>
+        <div class="field"><label for="pl-monthly">Planned contribution each month ($)</label><input id="pl-monthly" name="monthly" inputmode="decimal" placeholder="e.g. 200"></div>
+        <div class="field"><label for="pl-target">Target for the year ($, optional)</label><input id="pl-target" name="target" inputmode="decimal"></div>
+      </div></form>
+      <div id="plan-error" class="notice danger" role="alert" hidden></div>
+      <p class="small">Each month starts with three tasks: a portfolio review, an allocation check and a risk check. Every third month adds a quarterly review. The last month adds an annual summary. You can add, edit or delete tasks.</p>
+      <button class="btn primary" type="submit" form="plan-form">Create the 12-month plan</button>`)}`;
+  }
+  const keys = plKeys(); if (!keys.includes(plSel)) plSel = keys.includes(plMonthKey()) ? plMonthKey() : keys[0];
+  const sm = plMonth(plSel), plannedTotal = keys.reduce((a, k) => a + num(plMonth(k).planned), 0), actualTotal = keys.reduce((a, k) => a + plActual(k, c), 0);
+  const done = keys.filter(k => plStatus(k) === "Done").length;
+  const missed = keys.filter(k => plStatus(k) === "Missed");
+  const idx = keys.indexOf(plSel), actual = plActual(plSel, c), planned = num(sm.planned);
+  const tTotal = keys.reduce((a, k) => a + plMonth(k).tasks.length, 0), tDone = keys.reduce((a, k) => a + plMonth(k).tasks.filter(t => t.done).length, 0);
+  return `
+  ${pageHeader("12-month planner", plMonthLabel(keys[0]) + " to " + plMonthLabel(keys[11]) + ". Contributions come from the deposits you record in Transactions.")}
+  ${missed.length ? `<div class="notice warn" role="status"><strong>${ico("alert")}${missed.length} past month${missed.length > 1 ? "s have" : " has"} open tasks.</strong> ${esc(missed.map(plMonthLabel).join(", "))}. Open a month to finish its tasks or edit them.</div>` : ""}
+  <div class="grid g4" style="margin-bottom:16px">
+    ${statBox("Months completed", done + " of 12", "All tasks ticked")}
+    ${statBox("Tasks done", tDone + " of " + tTotal)}
+    ${statBox("Planned contributions", money(plannedTotal, 0), "Sum of the 12 months")}
+    ${statBox("Contributed so far", money(actualTotal, 0), "Deposits recorded in these months" + (num(P.annualTarget) > 0 ? ", target " + money(num(P.annualTarget), 0) : ""))}
+  </div>
+  <section class="card"><div class="card-head"><div><h2>Months</h2><div class="sub">Choose a month to open it.</div></div></div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px">
+    ${keys.map(k => { const st = plStatus(k), m = plMonth(k), td = m.tasks.filter(t => t.done).length; return `<button class="btn ${k === plSel ? "primary" : ""}" style="flex-direction:column;align-items:flex-start;height:auto;padding:10px 12px;text-align:left" data-act="pl-select" data-id="${k}" aria-pressed="${k === plSel}">
+      <strong>${esc(monthShort(k))}</strong><span class="small" style="color:inherit">${st}, ${td} of ${m.tasks.length} tasks</span></button>`; }).join("")}
+    </div></section>
+  ${card(plMonthLabel(plSel), "Status: " + plStatus(plSel), `
+    <div class="row">
+      <div class="field" style="grid-column:1/-1"><label for="pl-obj">Objective for this month</label><input id="pl-obj" data-path="planner.months.${plSel}.objective" value="${esc(sm.objective)}" maxlength="200"></div>
+      <div class="field"><label for="pl-planned">Planned contribution ($)</label><input id="pl-planned" inputmode="decimal" data-path="planner.months.${plSel}.planned" data-rerender value="${esc(sm.planned)}"></div>
+    </div>
+    <div class="grid g3" style="margin:12px 0">
+      ${statBox("Planned", money(planned))}
+      ${statBox("Contributed", money(actual), "From deposits dated this month")}
+      ${statBox("Difference", planned > 0 ? money(actual - planned) : "n/a", planned > 0 ? (actual >= planned ? "Plan met" : (plSel < plMonthKey() ? "Below plan" : "Not yet met")) : "Set a planned amount", planned > 0 && actual >= planned ? "pos" : (planned > 0 && plSel < plMonthKey() ? "neg" : ""))}
+    </div>
+    <h3 style="font-size:1rem;margin:14px 0 6px">Tasks</h3>
+    ${sm.tasks.length ? sm.tasks.map(t => `<div class="inline" style="margin-bottom:6px;flex-wrap:nowrap">
+      <label class="check ${t.done ? "done" : ""}" style="flex:1"><input type="checkbox" ${t.done ? "checked" : ""} data-act="pl-task" data-id="${esc(t.id)}"><span><span class="lbl">${esc(t.text)}</span></span></label>
+      <button class="btn sm ghost" data-act="pl-del-task" data-id="${esc(t.id)}" aria-label="Delete task: ${esc(t.text)}" title="Delete task">${ico("x")}</button></div>`).join("") : `<div class="empty">No tasks for this month.</div>`}
+    <form id="task-form" class="inline" style="margin-top:10px" novalidate><div class="field" style="flex:1;min-width:220px"><label for="pl-newtask">Add a task</label><input id="pl-newtask" name="text" maxlength="120"></div><button class="btn" type="submit" style="align-self:flex-end">Add task</button></form>
+    <div class="field" style="margin-top:12px"><label for="pl-notes">Notes</label><textarea id="pl-notes" rows="3" data-path="planner.months.${plSel}.notes">${esc(sm.notes)}</textarea></div>
+    <div class="inline" style="margin-top:8px">${idx > 0 ? `<button class="btn sm" data-act="pl-select" data-id="${keys[idx - 1]}">Previous month</button>` : ""}${idx < 11 ? `<button class="btn sm" data-act="pl-select" data-id="${keys[idx + 1]}">Next month</button>` : ""}</div>`)}
+
+  ${card("Goals", "Progress compares each target with your total portfolio value.", `
+    ${P.goals.length ? P.goals.map((g, i) => { const p = plGoalProgress(g, c); return `<div style="border-top:1px solid var(--line);padding:12px 0">
+      <div class="row">
+        <div class="field"><label for="g_n_${i}">Goal</label><input id="g_n_${i}" data-path="planner.goals.${i}.name" value="${esc(g.name)}" maxlength="80"></div>
+        <div class="field"><label for="g_t_${i}">Target value ($)</label><input id="g_t_${i}" inputmode="decimal" data-path="planner.goals.${i}.target" data-rerender value="${esc(g.target)}"></div>
+        <div class="field"><label for="g_d_${i}">Target date</label><input id="g_d_${i}" type="date" data-path="planner.goals.${i}.date" value="${esc(g.date)}"></div>
+      </div>
+      ${p === null ? `<p class="small">Enter a target above zero to see progress.</p>` : `${progressBar(p, p >= 1)}<p class="small" style="margin-top:6px">${money(c.equity)} of ${money(FIN.parse(g.target))} (${pct(p, 0)})${g.date && g.date < todayISO() && p < 1 ? ". The target date has passed." : ""}</p>`}
+      <button class="btn sm danger" data-act="pl-del-goal" data-id="${esc(g.id)}">Delete goal</button></div>`; }).join("") : `<div class="empty">No goals yet.</div>`}
+    <form id="goal-form" class="row" style="margin-top:12px" novalidate>
+      <div class="field"><label for="gf-name">New goal</label><input id="gf-name" name="name" maxlength="80" placeholder="e.g. Emergency fund plus first $5,000 invested"></div>
+      <div class="field"><label for="gf-target">Target value ($)</label><input id="gf-target" name="target" inputmode="decimal"></div>
+      <div class="field"><label for="gf-date">Target date (optional)</label><input id="gf-date" name="date" type="date"></div>
+    </form>
+    <div id="goal-error" class="notice danger" role="alert" hidden></div>
+    <button class="btn" type="submit" form="goal-form">Add goal</button>`)}
+
+  ${card("Quarterly reviews and annual summary", "Reviews are tasks inside months 3, 6, 9 and 12.", `
+    <div class="tbl-wrap"><table><thead><tr><th>Quarter</th><th>Review month</th><th>Status</th></tr></thead><tbody>
+    ${[2, 5, 8, 11].map((i, q) => { const k = keys[i], t = plMonth(k).tasks.find(x => /^Quarterly review|^Annual summary/.test(x.text)); return `<tr><td>Quarter ${q + 1}</td><td>${esc(plMonthLabel(k))}</td><td>${t ? (t.done ? "Done" : (k < plMonthKey() ? "Missed" : "Open")) : "No review task"}</td></tr>`; }).join("")}
+    </tbody></table></div>
+    <div class="divider"></div>
+    <dl class="kv"><dt>Planned contributions</dt><dd>${money(plannedTotal)}</dd><dt>Contributed</dt><dd>${money(actualTotal)}</dd><dt>Portfolio value now</dt><dd>${money(c.equity)}</dd><dt>Total return</dt><dd>${money(c.totalReturn)}${c.returnPct === null ? "" : " (" + pct(c.returnPct, 1) + " of net deposits, simple)"}</dd><dt>Months completed</dt><dd>${done} of 12</dd><dt>Goals reached</dt><dd>${P.goals.filter(g => { const p = plGoalProgress(g, c); return p !== null && p >= 1; }).length} of ${P.goals.length}</dd></dl>
+    <div class="inline no-print" style="margin-top:10px"><button class="btn sm" data-act="print">Print or save the summary</button><button class="btn sm" data-act="pl-export-goals">Export goals (CSV)</button></div>`)}
+
+  ${card("Reminders", "Sylvia cannot send notifications. Reminders appear on your dashboard when you open the app.", `
+    <label class="check"><input type="checkbox" data-path="planner.reminders" data-rerender ${P.reminders ? "checked" : ""}><span><span class="lbl">Show planner reminders on the dashboard</span><span class="hint">Open tasks for this month and a missing contribution.</span></span></label>
+    <div class="inline" style="margin-top:12px"><button class="btn sm danger" data-act="pl-reset">Delete the plan and start again</button></div>`)}`;
+}
+function plReminders(){
+  const P = S.planner; if (!P.created || !P.reminders) return [];
+  const now = plMonthKey(), keys = plKeys(); if (!keys.includes(now)) return [];
+  const m = plMonth(now), c = pf(), out = [];
+  const open = m.tasks.filter(t => !t.done).length;
+  if (open) out.push(open + " open task" + (open > 1 ? "s" : "") + " for " + plMonthLabel(now) + ".");
+  if (num(m.planned) > 0 && plActual(now, c) < num(m.planned)) out.push("No full contribution recorded yet this month. Planned " + money(num(m.planned)) + ", recorded " + money(plActual(now, c)) + ".");
+  return out;
+}
+function dashboardPortfolio(){
+  const c = pf(), P = S.planner;
+  if (!pfHasData() && !P.created) return `<section class="card empty-card"><div class="txt"><h2>Portfolio and 12-month planner</h2><p>Record what you own, track contributions and plan the year. Everything stays on this device.</p>
+    <div class="inline"><a class="btn primary" href="#portfolio">Start your portfolio</a><a class="btn" href="#planner">Create a 12-month plan</a></div></div></section>`;
+  const now = plMonthKey(), inPlan = P.created && plKeys().includes(now), m = inPlan ? plMonth(now) : null, rem = plReminders();
+  return card("Portfolio", "Calculated from your transactions. Prices are manual.", `
+    ${pfHasData() ? `<div class="grid g4">
+      ${statBox("Portfolio value", money(c.equity), c.unpricedCount ? "Some holdings valued at cost" : "")}
+      ${statBox("Cash", money(c.cash))}
+      ${statBox("Total return", money(c.totalReturn), c.returnPct === null ? "" : pct(c.returnPct, 1) + " of net deposits", c.totalReturn > 0 ? "pos" : c.totalReturn < 0 ? "neg" : "")}
+      ${statBox("Income received", money(c.income))}
+    </div>` : `<p class="small">Nothing recorded yet. <a href="#transactions">Record a transaction</a>.</p>`}
+    ${m ? `<div class="divider"></div><p><strong>${esc(plMonthLabel(now))}:</strong> ${m.tasks.filter(t => t.done).length} of ${m.tasks.length} tasks done. Planned ${money(num(m.planned))}, contributed ${money(plActual(now, c))}. <a href="#planner">Open the planner</a></p>` : (P.created ? `<p class="small">Your plan runs ${esc(plMonthLabel(plKeys()[0]))} to ${esc(plMonthLabel(plKeys()[11]))}. <a href="#planner">Open the planner</a></p>` : `<p class="small"><a href="#planner">Create a 12-month plan</a></p>`)}
+    ${rem.length ? `<div class="notice warn" role="status" style="margin-top:10px"><strong>Reminders</strong><ul class="plain" style="margin:4px 0 0">${rem.map(r => `<li>${esc(r)}</li>`).join("")}</ul></div>` : ""}
+    <p style="margin-top:10px"><a class="btn sm" href="#portfolio">Portfolio</a> <a class="btn sm" href="#transactions">Transactions</a> <a class="btn sm" href="#financial-tools">Financial tools</a></p>`);
+}
+function reportPortfolio(){
+  const c = pf(), P = S.planner;
+  return `<section class="card"><div class="card-head"><div><h2>Portfolio</h2><div class="sub">Calculated from recorded transactions. Prices are entered manually. Simple return, not time-weighted.</div></div></div>
+  ${pfHasData() ? `<dl class="kv"><dt>Portfolio value</dt><dd>${money(c.equity)}</dd><dt>Cash</dt><dd>${money(c.cash)}</dd><dt>Net deposits</dt><dd>${money(c.netDeposits)}</dd><dt>Total return</dt><dd>${money(c.totalReturn)}${c.returnPct === null ? "" : " (" + pct(c.returnPct, 1) + ")"}</dd><dt>Realized</dt><dd>${money(c.realized)}</dd><dt>Income</dt><dd>${money(c.income)}</dd><dt>Fees</dt><dd>${money(c.fees)}</dd></dl>
+  ${c.held.length ? `<div class="tbl-wrap"><table><thead><tr><th>Asset</th><th class="num">Quantity</th><th class="num">Value</th><th>Basis</th></tr></thead><tbody>${c.held.map(r => `<tr><td>${esc(r.asset.name)}</td><td class="num">${qtyText(r.qty)}</td><td class="num">${money(r.value)}</td><td>${r.priced ? "manual price" + (r.asset.priceDate ? ", " + esc(r.asset.priceDate) : "") : "cost"}</td></tr>`).join("")}</tbody></table></div>` : ""}` : `<div class="empty">No portfolio records yet.</div>`}
+  ${P.created ? `<p class="small" style="margin-top:8px">12-month planner: ${plKeys().filter(k => plStatus(k) === "Done").length} of 12 months completed, ${P.goals.length} goal${P.goals.length === 1 ? "" : "s"}.</p>` : ""}</section>`;
+}
+
+/* ============================================================
+   HELP AND LEGAL
+   ============================================================ */
+const FEEDBACK_URL = "https://github.com/olayiwolaabdulwarith740-jpg/musical-octo-succotash/issues/new";
+function viewLegal(){
+  return `
+  ${pageHeader("Help and legal", "Pricing, privacy, terms, the financial disclaimer, help and feedback.")}
+  <div class="notice warn"><strong>Not financial advice.</strong> Sylvia is an educational planner. It does not recommend any investment, and it is not a regulated financial service.</div>
+  ${card("Pricing", "", `<p>Sylvia is free. There are no paid plans and no payments are taken. If paid features are added later, what you can do today will not be locked away, and you will be told here first.</p>`)}
+  ${card("Privacy policy", "", `
+    <ul class="plain">
+      <li><strong>Your data stays on your device.</strong> Plans, transactions, notes and settings are saved in your browser's local storage. Sylvia has no server and no accounts, so nothing you enter is sent to us.</li>
+      <li><strong>One outside request.</strong> The page loads two typefaces from Google Fonts. Google can see that request, as with any website that uses its fonts.</li>
+      <li><strong>No tracking.</strong> Sylvia uses no analytics, advertising or tracking scripts, and sets no cookies.</li>
+      <li><strong>Your control.</strong> Export a backup from Settings at any time. Clearing your browser data, or using Settings to reset, deletes your records. Because the data is only on your device, we cannot recover it for you. Keep a backup.</li>
+      <li><strong>Feedback.</strong> If you send feedback through GitHub, GitHub's own privacy terms apply to what you post there. Do not post account numbers or personal financial details.</li>
+    </ul>`)}
+  ${card("Terms of use", "", `
+    <ul class="plain">
+      <li>Sylvia is provided as is, without warranty. Calculations are illustrations that depend on what you enter.</li>
+      <li>You are responsible for the records you enter and for your own financial decisions.</li>
+      <li>Sylvia is created and owned by Akoo. All rights reserved. You may use it for your own personal learning and record keeping.</li>
+      <li>To the extent the law allows, Akoo is not liable for losses arising from use of Sylvia.</li>
+    </ul>
+    <p class="small">These pages are a plain-language summary written for a free personal tool. Have a qualified lawyer review them before any commercial launch.</p>`)}
+  ${card("Financial disclaimer", "", `
+    <ul class="plain">
+      <li>Nothing in Sylvia is investment, tax, legal or accounting advice, or an offer to buy or sell anything.</li>
+      <li>Sylvia is not a broker, adviser or regulated firm, and is not affiliated with any exchange, fund or company it mentions.</li>
+      <li>Projections are not forecasts. Real returns vary, and you can lose money, including all of it.</li>
+      <li>Prices in the portfolio are entered by you, so values can be out of date. Total return is a simple measure, not a time-weighted or money-weighted return.</li>
+      <li>Talk to a licensed professional about your own situation.</li>
+    </ul>`)}
+  ${card("Help", "Short answers to common questions.", [
+    ["How is my portfolio calculated?", "From the transactions you record. Holdings use the average cost method. Cash is deposits minus withdrawals, minus purchases and fees, plus sale proceeds and dividends."],
+    ["Why does a holding say valued at cost?", "You have not entered a manual price for it. Sylvia does not fetch prices, so it uses what you paid until you enter one."],
+    ["Does Sylvia show live market prices?", "No. It would need a server and a data provider. You enter prices by hand, with a date."],
+    ["Can I use it on my phone and on my computer?", "Yes, but each device keeps its own data. Export a backup from Settings and import it on the other device."],
+    ["I sold more than I owned, why the warning?", "A sale cannot be larger than the quantity held on that date. Check the quantity and the date, or record the missing purchase."],
+    ["How do I back up my data?", "Settings has Export and Import. The backup is a JSON file. Transactions and holdings also export as CSV from their pages."]
+  ].map(f => `<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join(""))}
+  ${card("Feedback and support", "", `<p>Report a bug or suggest a feature on GitHub. A free GitHub account is needed.</p><p><a class="btn primary" href="${FEEDBACK_URL}" target="_blank" rel="noopener">Open feedback page ${ico("external")}</a></p>`)}`;
+}
+
+/* ============================================================
+   STAGE 1 EVENT HANDLERS
+   ============================================================ */
+function showErr(id, msg){ const el = document.getElementById(id); if (!el) return; el.textContent = msg; el.hidden = false; }
+document.addEventListener("click", e => {
+  const btn = e.target.closest("[data-act]"); if (!btn) return;
+  const act = btn.dataset.act, id = btn.dataset.id;
+  if (!/^(pf|pl|fin)-/.test(act)) return;
+  switch (act){
+    case "fin-tab": finTab = id; render(); break;
+    case "fin-fill-alloc": {
+      const c = pf(), lines = c.held.map(r => r.asset.name.replace(/[,\n]/g, " ") + ", " + r.value.toFixed(2));
+      if (c.cash > 0.005) lines.push("Cash, " + c.cash.toFixed(2));
+      if (!lines.length){ alert("Your portfolio has no holdings yet. Add assets and transactions first."); break; }
+      S.fin.allocation = S.fin.allocation || {}; S.fin.allocation.rows = lines.join("\n"); save(); render(); break;
+    }
+    case "pf-snapshot": {
+      const c = pf(), d = todayISO(), snap = { id: uid(), d, v: c.equity.toFixed(2), est: c.unpricedCount > 0 };
+      const i = S.portfolio.snapshots.findIndex(s => s.d === d); if (i >= 0) S.portfolio.snapshots[i] = snap; else S.portfolio.snapshots.push(snap);
+      save(); render(); break;
+    }
+    case "pf-del-snapshot": if (confirm("Delete this snapshot?")){ S.portfolio.snapshots = S.portfolio.snapshots.filter(s => s.id !== id); save(); render(); } break;
+    case "pf-del-asset": {
+      const n = S.portfolio.tx.filter(t => t.assetId === id).length;
+      if (confirm("Remove this asset" + (n ? " and its " + n + " transaction" + (n > 1 ? "s" : "") : "") + "? This cannot be undone. Export a backup first if unsure.")){
+        S.portfolio.assets = S.portfolio.assets.filter(a => a.id !== id); S.portfolio.tx = S.portfolio.tx.filter(t => t.assetId !== id); save(); render();
+      } break;
+    }
+    case "pf-del-tx": if (confirm("Delete this transaction? Holdings and cash will be recalculated.")){ S.portfolio.tx = S.portfolio.tx.filter(t => t.id !== id); save(); render(); } break;
+    case "pf-export-tx": pfExportTx(); break;
+    case "pf-export-holdings": pfExportHoldings(); break;
+    case "pl-select": plSel = id; render(); break;
+    case "pl-task": { const t = plMonth(plSel).tasks.find(x => x.id === id); if (t){ t.done = btn.checked; save(); render(); } break; }
+    case "pl-del-task": if (confirm("Delete this task?")){ const m = plMonth(plSel); m.tasks = m.tasks.filter(x => x.id !== id); save(); render(); } break;
+    case "pl-del-goal": if (confirm("Delete this goal?")){ S.planner.goals = S.planner.goals.filter(g => g.id !== id); save(); render(); } break;
+    case "pl-reset": if (confirm("Delete the 12-month plan, its tasks and goals? Your portfolio and transactions are not affected.")){ const r = S.planner.reminders; S.planner = defaultState().planner; S.planner.reminders = r; plSel = ""; save(); render(); } break;
+    case "pl-export-goals":
+      download("sylvia-goals-" + todayISO() + ".csv", toCSV(["goal", "target", "target_date"], S.planner.goals.map(g => [g.name, g.target, g.date])), "text/csv;charset=utf-8"); break;
+  }
+});
+document.addEventListener("submit", e => {
+  const f = e.target;
+  if (f.id === "asset-form"){
+    const d = Object.fromEntries(new FormData(f).entries()), name = d.name.trim();
+    if (!name) return showErr("asset-error", "Enter a name for the asset.");
+    if (S.portfolio.assets.some(a => a.name.toLowerCase() === name.toLowerCase())) return showErr("asset-error", "You already have an asset with this name.");
+    const price = d.price.trim(); if (price !== "" && !(FIN.parse(price) >= 0)) return showErr("asset-error", "Price must be a number, zero or more.");
+    S.portfolio.assets.push({ id: uid(), name, ticker: d.ticker.trim(), category: d.category.trim(), unit: d.unit.trim(), price, priceDate: price !== "" ? (d.priceDate || todayISO()) : "" });
+    save(); render();
+  } else if (f.id === "tx-form"){
+    const d = Object.fromEntries(new FormData(f).entries());
+    const trade = d.type === "buy" || d.type === "sell", amt = ["dividend", "deposit", "withdrawal", "fee"].includes(d.type);
+    const t = { id: uid(), date: d.date, type: d.type, assetId: (trade || d.type === "dividend") ? d.assetId : "", qty: trade ? d.qty.trim() : "", price: trade ? d.price.trim() : "", fee: trade ? d.fee.trim() : "", amount: amt ? d.amount.trim() : "", note: (d.note || "").trim() };
+    const err = pfCheckTx(t); if (err) return showErr("tx-error", err);
+    S.portfolio.tx.push(t); save(); render();
+  } else if (f.id === "plan-form"){
+    const d = Object.fromEntries(new FormData(f).entries());
+    if (!/^\d{4}-\d{2}$/.test(d.start)) return showErr("plan-error", "Choose the first month.");
+    const m = d.monthly.trim(), tg = d.target.trim();
+    if (m !== "" && !(FIN.parse(m) >= 0)) return showErr("plan-error", "The monthly contribution must be a number, zero or more.");
+    if (tg !== "" && !(FIN.parse(tg) >= 0)) return showErr("plan-error", "The yearly target must be a number, zero or more.");
+    plCreate(d.start, m, tg); save(); render();
+  } else if (f.id === "task-form"){
+    const text = new FormData(f).get("text").trim(); if (!text) return;
+    plMonth(plSel).tasks.push({ id: uid(), text, done: false }); save(); render();
+  } else if (f.id === "goal-form"){
+    const d = Object.fromEntries(new FormData(f).entries());
+    if (!d.name.trim()) return showErr("goal-error", "Name the goal.");
+    if (!(FIN.parse(d.target) > 0)) return showErr("goal-error", "Target must be a number above zero.");
+    S.planner.goals.push({ id: uid(), name: d.name.trim(), target: d.target.trim(), date: d.date || "" }); save(); render();
+  }
+});
+document.addEventListener("input", e => {
+  const t = e.target;
+  if (t.dataset.act !== "tx-filter") return;
+  txFilter[t.dataset.key] = t.value;
+  const main = document.getElementById("main"), id = t.id;
+  main.innerHTML = viewTransactions(); txFormSync();
+  const again = document.getElementById(id);
+  if (again && t.tagName === "INPUT" && t.type === "text"){ again.focus(); again.setSelectionRange(again.value.length, again.value.length); }
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.id === "tx-type") txFormSync();
+  if (t.dataset && t.dataset.rerender !== undefined && t.dataset.path) render();
+});
+
+
 const VIEWS = {
+  portfolio: viewPortfolio,
+  transactions: viewTransactions,
+  planner: viewPlanner,
+  "financial-tools": viewFinTools,
+  legal: viewLegal,
   welcome: viewWelcome,
   dashboard: viewDashboard,
   phase0: viewPhase0,
@@ -4466,6 +5457,7 @@ function render(){
   document.title = (route === "dashboard" || route === "welcome") ? "Sylvia · 12-Month Investor Plan by Akoo" : label + " · Sylvia";
   const md = document.querySelector('meta[name="description"]');
   if (md) md.content = (route === "dashboard" || route === "welcome") ? "Sylvia is Akoo's 12-month plan for learning to invest with discipline." : label + " in Sylvia, Akoo's 12-month investor plan. Educational, not financial advice.";
+  if (route === "transactions") txFormSync();
   snapshotDefensive();
   // live calculators
   calcPositionSize();
