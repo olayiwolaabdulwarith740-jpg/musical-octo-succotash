@@ -24,103 +24,76 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230B5F66'/%3E%3Cpath d='M22 9.5C22 6 10 6 10 12c0 5.8 12 3 12 8.6 0 3.2-5 4.4-9 2.6' fill='none' stroke='white' stroke-width='2.8' stroke-linecap='round'/%3E%3Ccircle cx='12.6' cy='23.3' r='2.5' fill='%23E39B1B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,600&amp;display=swap">
 <style>
-@property --p{syntax:"<percentage>";inherits:true;initial-value:0%}
 :root{
-  --bg:#F3F6F9; --panel:#FFFFFF; --panel2:#F6F8FB; --ink:#0E1A2B; --muted:#566376;
-  --line:#E2E8EF; --line-strong:#CDD6E0; --input-border:#8794A6;
-  --accent:#0B5F66; --accent-2:#0F7C7A; --accent-soft:#E2F0EF; --accent-ink:#084A50; --on-accent:#FFFFFF;
-  --navy:#0E1F33;
-  --amber:#E39B1B; --amber-soft:#FDF3DF;
-  --warn:#7D520A; --warn-soft:#FDF3DF; --danger:#AE352F; --danger-soft:#FBEAE8;
-  --ok:#17704A; --ok-soft:#E2F3EA;
-  --r-lg:20px; --r:16px; --r-sm:10px;
+  --bg:#F6F4EE; --panel:#FFFFFF; --panel2:#F0EEE6; --ink:#15181C; --muted:#575C63;
+  --line:#D8D4C8; --line-strong:#B9B4A6; --input-border:#7D7F78;
+  --accent:#0B5F66; --accent-hover:#084A50; --accent-soft:#E4EDEC; --accent-ink:#0B5F66; --on-accent:#FFFFFF;
+  --amber:#E39B1B; --amber-soft:#FBF1DC;
+  --warn:#8A5A00; --warn-soft:#FBF1DC; --danger:#A32A24; --danger-soft:#F8E7E5;
+  --ok:#17704A; --ok-soft:#E3F0E8;
+  --r:6px; --r-sm:6px; --r-lg:6px;
   --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px; --s6:24px; --s8:32px; --s10:40px;
-  --sh-sm:0 1px 2px rgba(14,26,43,.05);
-  --sh:0 1px 2px rgba(14,26,43,.04),0 10px 28px -12px rgba(14,26,43,.10);
-  --sh-lg:0 2px 4px rgba(14,26,43,.04),0 18px 40px -14px rgba(14,26,43,.18);
-  --ring:0 0 0 4px color-mix(in srgb,var(--accent) 16%,transparent);
-  --ease:cubic-bezier(.4,0,.2,1);
-  --display:"Inter","Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --display:"Source Serif 4",Georgia,"Times New Roman",serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 html[data-theme="dark"]{
-  --bg:#080E14; --panel:#101921; --panel2:#15202A; --ink:#E8EEF3; --muted:#9AA9B7;
-  --line:#1F2B36; --line-strong:#2E3D4A; --input-border:#62768A;
-  --accent:#4FC3B8; --accent-2:#6BD6CB; --accent-soft:#123036; --accent-ink:#8ADCD3; --on-accent:#062024;
-  --amber:#F2B44A; --amber-soft:#2B2314;
-  --warn:#F0B964; --warn-soft:#2B2314; --danger:#F0948D; --danger-soft:#2E1C1B;
+  --bg:#101312; --panel:#181C1B; --panel2:#1F2423; --ink:#ECEAE3; --muted:#A3A8A4;
+  --line:#2B312F; --line-strong:#3B4340; --input-border:#77817D;
+  --accent:#6CC3BE; --accent-hover:#8FD6D2; --accent-soft:#17302F; --accent-ink:#8FD6D2; --on-accent:#0A1514;
+  --amber:#E3B25A; --amber-soft:#2B2314;
+  --warn:#E3B25A; --warn-soft:#2B2314; --danger:#F0948D; --danger-soft:#2E1C1B;
   --ok:#7FD0A2; --ok-soft:#14291D;
-  --sh-sm:0 1px 2px rgba(0,0,0,.4);
-  --sh:0 1px 2px rgba(0,0,0,.35),0 12px 30px -14px rgba(0,0,0,.6);
-  --sh-lg:0 2px 4px rgba(0,0,0,.4),0 20px 44px -16px rgba(0,0,0,.75);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%}
 html,body{margin:0;padding:0}
-body{background-color:var(--bg);
-  background-image:radial-gradient(900px 420px at 88% -8%,color-mix(in srgb,var(--accent) 9%,transparent),transparent 62%),radial-gradient(700px 380px at -6% 4%,color-mix(in srgb,var(--navy) 7%,transparent),transparent 60%);
-  background-repeat:no-repeat;
-  color:var(--ink);font-family:var(--sans);font-size:16px;font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-feature-settings:"cv11","ss03"}
-a{color:var(--accent-ink);text-decoration:none;transition:color .2s var(--ease)}
-a:hover{text-decoration:underline;text-underline-offset:3px}
-:focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:6px}
-h1,h2,h3,h4{font-family:var(--display);line-height:1.2;margin:0 0 .4em;letter-spacing:-.02em;color:var(--ink)}
-h1{font-size:2rem;font-weight:700}
-h2{font-size:1.4rem;font-weight:650;margin-top:1.6em}
-h3{font-size:1.08rem;font-weight:600}
-h4{font-size:.9rem;font-weight:600;color:var(--muted);letter-spacing:0;margin-top:4px}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-ink);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;transition:color .15s}
+a:hover{color:var(--accent-hover)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+h1,h2,h3,h4{font-family:var(--serif);line-height:1.2;margin:0 0 .4em;letter-spacing:-.01em;color:var(--ink)}
+h1{font-size:2.1rem;font-weight:600}
+h2{font-size:1.45rem;font-weight:600;margin-top:1.6em}
+h3{font-size:1.1rem;font-weight:600}
+h4{font-family:var(--sans);font-size:.88rem;font-weight:600;color:var(--muted);letter-spacing:0;margin-top:4px}
 p{margin:0 0 .8em;max-width:75ch}
 b,strong{font-weight:600}
 .skip{position:absolute;left:-999px}
-.skip:focus{left:8px;top:8px;background:var(--panel);padding:8px 12px;border-radius:8px;z-index:99;box-shadow:var(--sh)}
+.skip:focus{left:8px;top:8px;background:var(--panel);padding:8px 12px;border:1px solid var(--ink);border-radius:6px;z-index:99}
+.ic{width:1.05em;height:1.05em;vertical-align:-.15em;margin-right:.3em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
 
-@keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes popCheck{0%{transform:scale(1)}45%{transform:scale(1.22)}100%{transform:scale(1)}}
-@keyframes flagPulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--danger) 30%,transparent)}55%{box-shadow:0 0 0 9px color-mix(in srgb,var(--danger) 0%,transparent)}}
-@keyframes drawLine{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
-@keyframes ringIn{from{stroke-dasharray:0 100}}
-@keyframes donutIn{from{opacity:0;transform:rotate(-40deg) scale(.92)}to{opacity:1;transform:none}}
-main.view-enter{animation:fadeInUp .38s var(--ease) backwards}
-
-.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);padding:10px 20px;
-  background:color-mix(in srgb,var(--panel) 80%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(255,255,255,.4) inset}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:var(--s3);padding:10px 20px;background:var(--panel);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:10px;min-width:0}
-.brand-mark{width:32px;height:32px;flex:0 0 32px;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:.85rem;letter-spacing:-.03em}
-html[data-theme="dark"] .brand-mark{color:#07161a}
-.brand-text{font-family:var(--display);font-weight:650;font-size:1.02rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand-text{font-family:var(--serif);font-weight:600;font-size:1.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .top-actions{margin-left:auto;display:flex;align-items:center;gap:var(--s2)}
-.pill{font-size:.76rem;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);white-space:nowrap;border:1px solid color-mix(in srgb,var(--accent) 14%,transparent)}
-.icon-btn,.menu-btn{background:var(--panel);border:1px solid var(--line-strong);color:var(--ink);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:grid;place-items:center;box-shadow:var(--sh-sm);transition:background .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease)}
-.icon-btn:hover,.menu-btn:hover{background:var(--panel2);transform:translateY(-1px);box-shadow:var(--sh);border-color:var(--input-border)}
-.icon-btn:active,.menu-btn:active{transform:scale(.94)}
+.pill{font-size:.76rem;font-weight:600;padding:4px 10px;border-radius:4px;background:var(--accent-soft);color:var(--accent-ink);white-space:nowrap;border:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+.icon-btn,.menu-btn{background:var(--panel);border:1px solid var(--line-strong);color:var(--ink);width:36px;height:36px;border-radius:6px;cursor:pointer;display:grid;place-items:center;padding:0;transition:background-color .15s,border-color .15s}
+.icon-btn svg,.menu-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon-btn:hover,.menu-btn:hover{background:var(--panel2);border-color:var(--ink)}
 .menu-btn{display:none}
 
 .layout{display:flex;align-items:flex-start;max-width:1400px;margin:0 auto}
-.sidebar{position:sticky;top:57px;width:248px;flex:0 0 248px;height:calc(100vh - 57px);overflow-y:auto;padding:var(--s5) var(--s3) 60px;
-  background:color-mix(in srgb,var(--panel) 55%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-right:1px solid var(--line);scrollbar-width:thin}
+.sidebar{position:sticky;top:57px;width:248px;flex:0 0 248px;height:calc(100vh - 57px);overflow-y:auto;padding:var(--s5) var(--s3) 60px;background:var(--bg);border-right:1px solid var(--line);scrollbar-width:thin}
 .nav-group{margin-bottom:var(--s5)}
-.nav-group-title{font-size:.7rem;font-weight:650;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:0 12px;margin-bottom:var(--s1)}
-.nav-item{position:relative;display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:var(--r-sm);color:var(--ink);font-size:.9rem;line-height:1.4;cursor:pointer;border:none;background:none;width:100%;text-align:left;
-  transition:background .2s var(--ease),color .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease)}
-.nav-item:hover{background:color-mix(in srgb,var(--accent) 7%,transparent);text-decoration:none;transform:translateX(2px)}
-.nav-item.active{background:var(--accent-soft);color:var(--accent-ink);font-weight:600;transform:none;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 12%,transparent)}
-.nav-item.active::before{content:"";position:absolute;left:-12px;top:7px;bottom:7px;width:4px;border-radius:0 4px 4px 0;background:linear-gradient(180deg,var(--accent-2),var(--accent))}
-.nav-dot{width:8px;height:8px;border-radius:50%;background:transparent;box-shadow:inset 0 0 0 2px var(--line-strong);flex:0 0 8px;margin-top:6px;transition:background .2s var(--ease),box-shadow .2s var(--ease)}
-.nav-item:hover .nav-dot{box-shadow:inset 0 0 0 2px var(--accent)}
-.nav-item.active .nav-dot{background:var(--amber);box-shadow:none}
-.nav-item.done .nav-dot{background:var(--ok);box-shadow:none}
+.nav-group-title{font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 12px;margin-bottom:var(--s1)}
+.nav-item{position:relative;display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:4px;color:var(--ink);font-size:.9rem;line-height:1.4;cursor:pointer;border:none;background:none;width:100%;text-align:left;text-decoration:none;transition:background-color .15s,color .15s}
+.nav-item:hover{background:var(--panel2);color:var(--ink)}
+.nav-item.active{background:var(--panel);color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--accent),inset 0 0 0 1px var(--line)}
+.nav-ico{width:18px;height:18px;flex:0 0 18px;margin-top:1px;color:var(--muted)}
+.nav-ico svg{width:18px;height:18px;display:block;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-item:hover .nav-ico{color:var(--ink)}
+.nav-item.active .nav-ico{color:var(--accent-ink)}
+.nav-item.done .nav-ico{color:var(--ok)}
 main{flex:1;min-width:0;padding:var(--s8) var(--s8) 90px;max-width:1000px}
 
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:var(--s6);margin-bottom:var(--s4);box-shadow:var(--sh);
-  transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease)}
-.card:hover:not(:focus-within){transform:translateY(-2px);box-shadow:var(--sh-lg);border-color:var(--line-strong)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:var(--s6);margin-bottom:var(--s4)}
 .card.tight{padding:var(--s4)}
 .card-head{display:flex;align-items:flex-start;gap:var(--s3);margin-bottom:var(--s3)}
-.card-head h2{margin:0;font-size:1.12rem;font-weight:650;letter-spacing:-.015em}
+.card-head h2{margin:0;font-size:1.2rem;font-weight:600}
 .card-head h3{margin:0}
 .card-head .sub{font-size:.84rem;color:var(--muted);margin-top:2px}
 .grid{display:grid;gap:var(--s4)}
@@ -128,78 +101,67 @@ main{flex:1;min-width:0;padding:var(--s8) var(--s8) 90px;max-width:1000px}
 .g3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
 .g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 
-.notice{border-radius:var(--r);padding:var(--s3) var(--s4);font-size:.88rem;margin-bottom:var(--s4);border:1px solid var(--line);background:var(--panel2);box-shadow:var(--sh-sm)}
-.notice strong{font-weight:650}
-.notice.warn{background:var(--warn-soft);border-color:color-mix(in srgb,var(--amber) 28%,transparent)}
-.notice.danger{background:var(--danger-soft);border-color:color-mix(in srgb,var(--danger) 25%,transparent)}
-.notice.ok{background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 22%,transparent)}
-.notice.accent{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 16%,transparent)}
-.notice.pulse{animation:flagPulse 2.8s ease-in-out infinite}
+.notice{border-radius:var(--r);padding:var(--s3) var(--s4);font-size:.88rem;margin-bottom:var(--s4);border:1px solid var(--line);background:var(--panel2)}
+.notice strong{font-weight:600}
+.notice.warn{background:var(--warn-soft);border-color:color-mix(in srgb,var(--amber) 55%,transparent)}
+.notice.danger{background:var(--danger-soft);border-color:color-mix(in srgb,var(--danger) 45%,transparent)}
+.notice.ok{background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}
+.notice.accent{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
 
 label{display:block;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:6px}
-input,select,textarea{width:100%;font:inherit;font-size:.9rem;color:var(--ink);background:var(--panel);border:1px solid var(--input-border);border-radius:var(--r-sm);padding:10px 12px;box-shadow:inset 0 1px 1px rgba(14,26,43,.04);
-  transition:border-color .2s var(--ease),box-shadow .2s var(--ease),background .2s var(--ease)}
-input:hover,select:hover,textarea:hover{border-color:var(--accent)}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:var(--ring)}
-input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
+input,select,textarea{width:100%;font:inherit;font-size:.9rem;color:var(--ink);background:var(--panel);border:1px solid var(--input-border);border-radius:var(--r-sm);padding:9px 11px;transition:border-color .15s,background-color .15s}
+input:hover,select:hover,textarea:hover{border-color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.85}
 textarea{resize:vertical;min-height:76px;line-height:1.5}
 .field{margin-bottom:var(--s3)}
 .row{display:grid;gap:var(--s3);grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 .inline{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;font:inherit;font-size:.88rem;font-weight:600;padding:9px 18px;border-radius:999px;border:1px solid var(--line-strong);background:var(--panel);color:var(--ink);cursor:pointer;box-shadow:var(--sh-sm);
-  transition:background .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease),filter .2s var(--ease)}
-.btn:hover{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,var(--line-strong));text-decoration:none;transform:translateY(-1px);box-shadow:var(--sh)}
-.btn:active{transform:translateY(0) scale(.98);box-shadow:var(--sh-sm)}
-.btn.primary{background:linear-gradient(180deg,var(--accent-2) 0%,var(--accent) 100%);color:var(--on-accent);border-color:transparent;box-shadow:0 1px 2px rgba(8,74,80,.3),0 6px 16px -6px color-mix(in srgb,var(--accent) 55%,transparent)}
-.btn.primary:hover{background:linear-gradient(180deg,var(--accent-2) 0%,var(--accent) 100%);filter:brightness(1.08);box-shadow:0 2px 4px rgba(8,74,80,.3),0 10px 22px -8px color-mix(in srgb,var(--accent) 65%,transparent)}
-.btn.ghost{background:transparent;border-color:transparent;box-shadow:none}
-.btn.ghost:hover{background:var(--accent-soft);box-shadow:none}
-.btn.danger{color:var(--danger)}
-.btn.danger:hover{background:var(--danger-soft);border-color:color-mix(in srgb,var(--danger) 30%,transparent)}
-.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-.btn.sm{padding:6px 13px;font-size:.8rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;font:inherit;font-size:.88rem;font-weight:600;padding:9px 16px;border-radius:6px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none;transition:background-color .15s,color .15s,border-color .15s}
+.btn:hover{background:var(--panel2);color:var(--ink);text-decoration:none}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover);color:var(--on-accent)}
+.btn.ghost{background:transparent;border-color:transparent}
+.btn.ghost:hover{background:var(--panel2);border-color:var(--line-strong)}
+.btn.danger{color:var(--danger);border-color:var(--danger)}
+.btn.danger:hover{background:var(--danger-soft);color:var(--danger)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sm{padding:5px 11px;font-size:.8rem}
+.btn .ic{margin-right:0}
 
-.check{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border-radius:var(--r-sm);border:1px solid transparent;cursor:pointer;margin-bottom:0;color:var(--ink);
-  transition:background .2s var(--ease),border-color .2s var(--ease)}
+.check{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border-radius:4px;border:1px solid transparent;cursor:pointer;margin-bottom:0;color:var(--ink);transition:background-color .15s,border-color .15s}
 .check:hover{background:var(--panel2);border-color:var(--line)}
-.check input{appearance:none;-webkit-appearance:none;width:20px;height:20px;flex:0 0 20px;margin:1px 0 0;padding:0;display:grid;place-content:center;cursor:pointer;
-  background:var(--panel);border:1.5px solid var(--input-border);box-shadow:none;
-  transition:background .2s var(--ease),border-color .2s var(--ease),box-shadow .2s var(--ease),transform .2s var(--ease)}
-.check input[type=checkbox]{border-radius:6px}
+.check input{appearance:none;-webkit-appearance:none;width:20px;height:20px;flex:0 0 20px;margin:1px 0 0;padding:0;display:grid;place-content:center;cursor:pointer;background:var(--panel);border:1.5px solid var(--input-border);border-radius:4px}
 .check input[type=radio]{border-radius:50%}
-.check input::after{content:"";transition:transform .2s var(--ease),opacity .2s var(--ease);opacity:0}
-.check input[type=checkbox]::after{width:10px;height:5px;border:2.4px solid var(--on-accent);border-top:0;border-right:0;transform:rotate(-45deg) scale(.4) translate(1px,-1px)}
-.check input[type=radio]::after{width:8px;height:8px;border-radius:50%;background:var(--on-accent);transform:scale(.4)}
+.check input::after{content:"";opacity:0}
+.check input[type=checkbox]::after{width:10px;height:5px;border:2.4px solid var(--on-accent);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.check input[type=radio]::after{width:8px;height:8px;border-radius:50%;background:var(--on-accent)}
 .check input:checked{background:var(--accent);border-color:var(--accent)}
-.check input[type=checkbox]:checked::after{opacity:1;transform:rotate(-45deg) scale(1) translate(1px,-1px)}
-.check input[type=radio]:checked::after{opacity:1;transform:scale(1)}
-.check input:hover{border-color:var(--accent)}
-.check input:focus-visible{outline:3px solid var(--amber);outline-offset:2px;box-shadow:none}
-.check.pop input{animation:popCheck .32s var(--ease)}
-.check .lbl{font-size:.9rem;font-weight:500;color:var(--ink);text-decoration:line-through;text-decoration-color:transparent;text-decoration-thickness:1.5px;transition:color .25s var(--ease),text-decoration-color .25s var(--ease)}
+.check input:checked::after{opacity:1}
+.check input:hover{border-color:var(--ink)}
+.check input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.check .lbl{font-size:.9rem;font-weight:500;color:var(--ink)}
 .check .hint{display:block;font-size:.8rem;color:var(--muted);margin-top:2px;font-weight:400}
-.check.done .lbl{color:var(--muted);text-decoration-color:var(--muted)}
+.check.done .lbl{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px}
 
-.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(14,26,43,.08)}
-.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-2),var(--accent));border-radius:999px;transition:width 1s cubic-bezier(.4,0,.2,1)}
-.bar.ok>i{background:linear-gradient(90deg,#27956A,var(--ok))}
+.bar{height:8px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);border-radius:0}
+.bar.ok>i{background:var(--ok)}
 
-.stat{border:1px solid var(--line);border-radius:var(--r);padding:var(--s4);background:linear-gradient(180deg,var(--panel) 0%,var(--panel2) 100%);box-shadow:var(--sh-sm);
-  transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease)}
-.stat:hover{transform:translateY(-2px);box-shadow:var(--sh);border-color:var(--line-strong)}
+.stat{border:1px solid var(--line);border-radius:var(--r);padding:var(--s4);background:var(--panel)}
 .stat .k{font-size:.78rem;color:var(--muted);font-weight:600}
-.stat .v{font-family:var(--display);font-variant-numeric:tabular-nums;font-size:1.6rem;font-weight:700;margin-top:3px;letter-spacing:-.025em}
+.stat .v{font-family:var(--sans);font-variant-numeric:tabular-nums;font-size:1.55rem;font-weight:600;margin-top:3px;letter-spacing:-.02em}
 .stat .v.pos{color:var(--ok)}.stat .v.neg{color:var(--danger)}
 .stat .n{font-size:.76rem;color:var(--muted);margin-top:2px}
 
-.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);box-shadow:var(--sh-sm)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
 table{border-collapse:collapse;width:100%;font-size:.85rem}
 th,td{text-align:left;padding:var(--s3) 14px;border-bottom:1px solid var(--line);white-space:nowrap}
-th{font-size:.74rem;color:var(--muted);font-weight:650;letter-spacing:.03em;background:var(--panel2);position:sticky;top:0}
-tbody tr{transition:background .2s var(--ease)}
+th{font-size:.74rem;color:var(--muted);font-weight:600;letter-spacing:.04em;background:var(--panel2);position:sticky;top:0}
+tbody tr{transition:background-color .15s}
 tbody tr:last-child td{border-bottom:none}
-tbody tr:hover{background:color-mix(in srgb,var(--accent) 6%,var(--panel))}
+tbody tr:hover{background:var(--panel2)}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .pos{color:var(--ok)}.neg{color:var(--danger)}
 
@@ -208,50 +170,47 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .kv dd{margin:0}
 .small{font-size:.8rem;color:var(--muted)}
 .mono{font-variant-numeric:tabular-nums}
-.tag{display:inline-block;font-size:.74rem;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);margin-right:5px}
+.tag{display:inline-block;font-size:.74rem;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--accent-soft);color:var(--accent-ink);margin-right:5px;border:1px solid transparent}
 .tag.warn{background:var(--warn-soft);color:var(--warn)}
 .tag.danger{background:var(--danger-soft);color:var(--danger)}
 .tag.ok{background:var(--ok-soft);color:var(--ok)}
 hr{border:none;border-top:1px solid var(--line);margin:var(--s5) 0}
 .divider{height:1px;background:var(--line);margin:var(--s4) 0}
-details{border:1px solid var(--line);border-radius:var(--r);padding:var(--s3) var(--s4);margin-bottom:10px;background:var(--panel);box-shadow:var(--sh-sm);transition:box-shadow .2s var(--ease),border-color .2s var(--ease)}
-details:hover{border-color:var(--line-strong);box-shadow:var(--sh)}
+details{border:1px solid var(--line);border-radius:var(--r);padding:var(--s3) var(--s4);margin-bottom:10px;background:var(--panel)}
+details:hover{border-color:var(--line-strong)}
 details summary{cursor:pointer;font-weight:600;font-size:.9rem}
 details[open] summary{margin-bottom:10px}
-.quote{font-family:var(--display);font-size:1.05rem;font-weight:400;line-height:1.65;border-left:3px solid var(--amber);padding-left:var(--s4);color:var(--ink);margin:0;max-width:70ch}
+.quote{font-family:var(--serif);font-size:1.1rem;font-weight:400;line-height:1.65;border-left:3px solid var(--amber);padding-left:var(--s4);color:var(--ink);margin:0;max-width:70ch}
 .empty{text-align:center;padding:34px 16px;color:var(--muted);font-size:.88rem}
 svg.chart{width:100%;height:auto;display:block;overflow:visible}
-svg.chart .draw{stroke-dasharray:1;animation:drawLine 1.1s var(--ease) backwards}
-svg.chart .fadein{animation:fadeIn .9s var(--ease) .3s backwards}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin-top:var(--s2)}
-.swatch{display:inline-block;width:11px;height:11px;border-radius:4px;vertical-align:-1px;margin-right:6px}
+.swatch{display:inline-block;width:11px;height:11px;border-radius:2px;vertical-align:-1px;margin-right:6px}
 
-.hero{background:linear-gradient(135deg,var(--panel) 0%,color-mix(in srgb,var(--accent-soft) 60%,var(--panel)) 100%);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s8) 36px 30px;margin-bottom:var(--s5);box-shadow:var(--sh)}
-.hero h1{font-size:clamp(2.1rem,6vw,3.3rem);font-weight:750;letter-spacing:-.035em;margin:0 0 4px}
+.hero{background:var(--panel);border:1px solid var(--line-strong);border-radius:var(--r);padding:var(--s8) 36px 30px;margin-bottom:var(--s5)}
+.hero h1{font-size:clamp(2.1rem,6vw,3.2rem);font-weight:600;letter-spacing:-.02em;margin:0 0 4px}
 .hero-sub{color:var(--muted);font-size:.98rem;margin:0}
-.next{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:linear-gradient(90deg,var(--accent-soft),color-mix(in srgb,var(--accent-soft) 40%,var(--panel)));border:1px solid color-mix(in srgb,var(--accent) 14%,transparent);border-radius:var(--r);padding:14px var(--s5);margin:var(--s6) 0 var(--s8)}
-.next b{display:block;font-size:.74rem;font-weight:650;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:1px}
-.next span{font-size:.96rem;font-weight:550;color:var(--ink)}
+.next{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);border-radius:var(--r);padding:14px var(--s5);margin:var(--s6) 0 var(--s8)}
+.next b{display:block;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:1px}
+.next span{font-size:.96rem;font-weight:500;color:var(--ink)}
 .trail{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr)}
 .stop{position:relative;padding-top:38px;padding-right:10px}
-.stop::before{content:"";position:absolute;top:11px;left:22px;right:0;height:4px;border-radius:999px;
-  background:linear-gradient(90deg,var(--accent) var(--p,0%),var(--line) var(--p,0%));transition:--p 1s cubic-bezier(.4,0,.2,1)}
+.stop::before{content:"";position:absolute;top:11px;left:22px;right:0;height:4px;background:linear-gradient(90deg,var(--accent) var(--p,0%),var(--line) var(--p,0%))}
 .stop:last-child::before{display:none}
-.stop .dot{position:absolute;top:2px;left:0;width:22px;height:22px;border-radius:50%;border:3px solid var(--line-strong);background:var(--panel);display:grid;place-items:center;font-size:.7rem;font-weight:800;color:var(--on-accent);transition:background .3s var(--ease),border-color .3s var(--ease)}
+.stop .dot{position:absolute;top:2px;left:0;width:22px;height:22px;border-radius:50%;border:3px solid var(--line-strong);background:var(--panel);display:grid;place-items:center;font-size:.7rem;font-weight:700;color:var(--on-accent)}
 .stop.done .dot{background:var(--accent);border-color:var(--accent)}
-.stop.current .dot{border-color:var(--amber);background:var(--amber-soft);box-shadow:0 0 0 5px var(--amber-soft)}
-.stop-name{font-family:var(--display);font-weight:600;font-size:1rem}
+.stop.current .dot{border-color:var(--amber);background:var(--amber-soft)}
+.stop-name{font-family:var(--serif);font-weight:600;font-size:1.02rem}
 .stop-meta{font-size:.78rem;color:var(--muted);line-height:1.45;margin-top:2px}
-.stop-pct{font-size:.8rem;font-weight:650;color:var(--accent-ink);margin-top:6px;font-variant-numeric:tabular-nums}
+.stop-pct{font-size:.8rem;font-weight:600;color:var(--accent-ink);margin-top:6px;font-variant-numeric:tabular-nums}
 
-.logo{width:34px;height:34px;flex:0 0 34px;display:block;filter:drop-shadow(0 2px 6px color-mix(in srgb,var(--accent) 35%,transparent))}
+.logo{width:34px;height:34px;flex:0 0 34px;display:block}
 .brand-text{display:flex;flex-direction:column;line-height:1.1}
 .brand-text small{font-family:var(--sans);font-weight:500;font-size:.7rem;color:var(--muted);margin-top:2px}
 .print-only{display:none}
 .hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s4)}
 .hero-mark{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;flex:0 0 auto}
 .hero-mark .logo{width:64px;height:64px;flex-basis:64px}
-.hero-mark b{font-family:var(--display);font-size:.95rem;line-height:1}
+.hero-mark b{font-family:var(--serif);font-size:.95rem;line-height:1}
 .hero-mark small{font-size:.72rem;color:var(--muted);margin-top:-4px}
 .cover{display:none}
 fieldset.qset{border:0;padding:0;margin:0 0 var(--s4);min-width:0}
@@ -265,39 +224,31 @@ ul.plain,ol.plain{margin:0 0 10px;padding-left:20px;font-size:.9rem;line-height:
 .gl-score{margin:6px 0 10px}
 .eps-grid{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
 .band{position:relative;height:36px;margin:var(--s4) 0 6px}
-.band .track{position:absolute;left:0;right:0;top:15px;height:6px;border-radius:3px;background:var(--line)}
-.band .rng{position:absolute;top:10px;height:16px;border-radius:6px;background:color-mix(in srgb,var(--ok) 28%,transparent);border:2px solid var(--ok)}
+.band .track{position:absolute;left:0;right:0;top:15px;height:6px;background:var(--line)}
+.band .rng{position:absolute;top:10px;height:16px;border-radius:3px;background:color-mix(in srgb,var(--ok) 28%,transparent);border:2px solid var(--ok)}
 .band .floor{position:absolute;top:6px;width:2px;height:24px;background:var(--muted)}
-.band .mk{position:absolute;top:2px;width:4px;height:32px;margin-left:-2px;border-radius:2px;background:var(--ink)}
+.band .mk{position:absolute;top:2px;width:4px;height:32px;margin-left:-2px;background:var(--ink)}
 .ring{width:54px;height:54px;flex:0 0 54px}
-.ring .ring-fg{animation:ringIn 1s cubic-bezier(.4,0,.2,1) backwards}
 .ring-wrap{display:flex;align-items:center;gap:10px}
 .range-ends{display:flex;justify-content:space-between;gap:var(--s3);font-size:.78rem;color:var(--muted);margin-top:2px}
-input[type=range]{padding:0;accent-color:var(--accent);min-height:28px;border:0;background:transparent;box-shadow:none}
-input[type=range]:focus{box-shadow:none}
-input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+input[type=range]{padding:0;accent-color:var(--accent);min-height:28px;border:0;background:transparent}
+input[type=range]:focus{outline:2px solid var(--accent);outline-offset:3px}
 .sec-row{display:grid;grid-template-columns:minmax(90px,170px) 1fr auto;gap:var(--s3);align-items:center;margin-bottom:var(--s2);font-size:.88rem}
 .bar.split{margin:var(--s2) 0 6px}
-.nav-ico{width:18px;height:18px;flex:0 0 18px;margin-top:1px;color:var(--muted);transition:color .2s var(--ease),transform .2s var(--ease)}
-.nav-ico svg{width:18px;height:18px;display:block}
-.nav-item:hover .nav-ico{color:var(--accent);transform:scale(1.08)}
-.nav-item.active .nav-ico{color:var(--accent-ink)}
-.nav-item.done .nav-ico{color:var(--ok)}
 .nav-item.dim{color:var(--muted)}
 .nav-item .opt{margin-left:auto;font-size:.7rem;color:var(--muted)}
 .heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,14px);grid-auto-columns:14px;gap:3px;overflow-x:auto;padding-bottom:4px}
-.heat i{border-radius:4px;background:var(--line);transition:transform .2s var(--ease)}
-.heat i:hover{transform:scale(1.25)}
+.heat i{border-radius:2px;background:var(--line)}
 .heat i.l1{background:color-mix(in srgb,var(--accent) 35%,var(--line))}
 .heat i.l2{background:color-mix(in srgb,var(--accent) 65%,var(--line))}
 .heat i.l3{background:var(--accent)}
 .heat i.pad{background:transparent}
 .heat-legend{display:flex;gap:4px;align-items:center;font-size:.78rem;color:var(--muted);margin-top:var(--s2)}
-.heat-legend i{width:12px;height:12px;border-radius:4px;background:var(--line);display:inline-block}
+.heat-legend i{width:12px;height:12px;border-radius:2px;background:var(--line);display:inline-block}
 .heat-legend i.l1{background:color-mix(in srgb,var(--accent) 35%,var(--line))}
 .heat-legend i.l2{background:color-mix(in srgb,var(--accent) 65%,var(--line))}
 .heat-legend i.l3{background:var(--accent)}
-.wl{display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--line);margin-top:14px}
+.wl{display:flex;height:10px;overflow:hidden;background:var(--line);margin-top:14px}
 .wl i{display:block;height:100%}
 .wl .w{background:var(--ok)}.wl .l{background:var(--danger)}
 .wl-labels{display:flex;justify-content:space-between;font-size:.82rem;margin-top:6px;font-weight:600}
@@ -309,70 +260,110 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:3p
 .tabbar{display:none}
 .scrim{display:none}
 
+/* landing page */
+.lp{max-width:1120px;margin:0 auto;padding:0 24px}
+.lp-head{display:flex;align-items:center;gap:24px;padding:16px 0;border-bottom:1px solid var(--line-strong)}
+.lp-nav{margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.lp-link{font:inherit;font-size:.9rem;font-weight:500;color:var(--ink);background:none;border:0;padding:8px 10px;border-radius:4px;cursor:pointer;text-decoration:none;transition:background-color .15s}
+.lp-link:hover{background:var(--panel2);color:var(--ink)}
+.lp-hero{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;padding:72px 0 64px;align-items:start}
+.lp-kicker{font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 14px}
+.lp-hero h1{font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.08;font-weight:600;letter-spacing:-.02em;margin:0 0 20px;max-width:20ch}
+.lp-lede{font-size:1.15rem;line-height:1.6;color:var(--muted);max-width:56ch;margin:0}
+.lp-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.lp-cta .btn{padding:12px 20px;font-size:.95rem}
+.lp-facts{border:1px solid var(--line-strong);background:var(--panel);border-radius:6px}
+.lp-fact{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:baseline;padding:16px 20px;border-bottom:1px solid var(--line)}
+.lp-fact:last-child{border-bottom:0}
+.lp-fact b{font-family:var(--serif);font-size:1.9rem;font-weight:600;line-height:1}
+.lp-fact span{font-size:.92rem;color:var(--ink)}
+.lp-sec{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:40px;padding:48px 0;border-top:1px solid var(--ink)}
+.lp-sec h2{font-size:1.6rem;margin:0;line-height:1.2}
+.lp-sec .lp-kicker{margin-bottom:8px}
+.lp-sec p{max-width:68ch}
+.lp-two{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.lp-two h3{font-family:var(--sans);font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.lp-list{list-style:none;margin:0;padding:0}
+.lp-list li{padding:11px 0;border-top:1px solid var(--line);font-size:.96rem}
+.lp-list li:last-child{border-bottom:1px solid var(--line)}
+.lp-table{width:100%;border-collapse:collapse;font-size:.95rem}
+.lp-table th,.lp-table td{white-space:normal;vertical-align:top;padding:14px 16px 14px 0;border-bottom:1px solid var(--line);background:none;position:static}
+.lp-table th{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--ink);padding-top:0}
+.lp-table td:first-child{font-family:var(--serif);font-weight:600;font-size:1.05rem;white-space:nowrap}
+.lp-tools{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line-strong);border-left:1px solid var(--line-strong)}
+.lp-tool{padding:20px 22px;border-right:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);background:var(--panel)}
+.lp-tool svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;display:block;margin-bottom:10px}
+.lp-tool h3{font-family:var(--sans);font-size:.98rem;font-weight:600;margin:0 0 4px}
+.lp-tool p{font-size:.9rem;color:var(--muted);margin:0}
+.lp details{border:0;border-top:1px solid var(--line);border-radius:0;padding:14px 0;margin:0;background:none}
+.lp details:last-of-type{border-bottom:1px solid var(--line)}
+.lp details summary{font-weight:600;font-size:1rem}
+.lp details p{margin:10px 0 0}
+.lp-foot{border-top:1px solid var(--ink);padding:28px 0 56px;font-size:.85rem;color:var(--muted);display:flex;gap:24px;justify-content:space-between;flex-wrap:wrap}
+.lp-foot p{margin:0 0 6px}
+.is-landing .sidebar,.is-landing .tabbar,.is-landing .topbar,.is-landing .app-foot{display:none}
+.is-landing main{max-width:none;padding:0}
+.is-landing .layout{display:block}
+
 @media(max-width:900px){
   .menu-btn{display:grid}
-  .sidebar{position:fixed;top:57px;left:0;z-index:45;background:color-mix(in srgb,var(--panel) 94%,transparent);transform:translateX(-102%);visibility:hidden;
-    transition:transform .32s var(--ease),visibility 0s linear .32s,box-shadow .32s var(--ease);border-right:1px solid var(--line);width:276px;flex-basis:276px;height:calc(100vh - 57px - 60px)}
-  .sidebar.open{transform:none;visibility:visible;transition-delay:0s,0s,0s;box-shadow:var(--sh-lg)}
-  .scrim{display:block;position:fixed;left:0;right:0;top:57px;bottom:0;z-index:44;background:rgba(8,14,20,.45);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .32s var(--ease)}
-  .scrim.show{opacity:1;pointer-events:auto}
+  .sidebar{position:fixed;top:57px;left:0;z-index:45;background:var(--panel);visibility:hidden;border-right:1px solid var(--line-strong);width:276px;flex-basis:276px;height:calc(100vh - 57px - 60px)}
+  .sidebar.open{visibility:visible}
+  .scrim{display:block;position:fixed;left:0;right:0;top:57px;bottom:0;z-index:44;background:rgba(10,14,13,.5);visibility:hidden}
+  .scrim.show{visibility:visible}
   main{padding:var(--s5) var(--s4) 100px}
-  h1{font-size:1.6rem}
+  h1{font-size:1.7rem}
   .hero{padding:var(--s6) var(--s5)}
   .card{padding:var(--s5)}
   .trail{grid-template-columns:1fr}
   .stop{padding:0 0 22px 40px;min-height:56px}
   .stop::before{top:26px;bottom:0;left:10px;right:auto;width:4px;height:auto;background:linear-gradient(180deg,var(--accent) var(--p,0%),var(--line) var(--p,0%))}
   .stop .dot{top:0}
-  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
-  .tabbar a,.tabbar button{flex:1;padding:12px 4px;text-align:center;font:inherit;font-size:.76rem;font-weight:600;color:var(--muted);background:none;border:none;cursor:pointer;transition:color .2s var(--ease),background .2s var(--ease)}
-  .tabbar a:hover,.tabbar button:hover{text-decoration:none;background:var(--panel2)}
-  .tabbar .on{color:var(--accent-ink);box-shadow:inset 0 3px 0 var(--amber);background:var(--accent-soft)}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--panel);border-top:1px solid var(--line-strong);padding-bottom:env(safe-area-inset-bottom)}
+  .tabbar a,.tabbar button{flex:1;padding:12px 4px;text-align:center;font:inherit;font-size:.76rem;font-weight:600;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:none;transition:background-color .15s,color .15s}
+  .tabbar a:hover,.tabbar button:hover{background:var(--panel2);color:var(--ink)}
+  .tabbar .on{color:var(--accent-ink);box-shadow:inset 0 3px 0 var(--accent);background:var(--panel2)}
+  .lp-hero{grid-template-columns:1fr;gap:36px;padding:44px 0 40px}
+  .lp-sec{grid-template-columns:1fr;gap:20px;padding:36px 0}
+  .lp-two{grid-template-columns:1fr}
+  .lp-tools{grid-template-columns:1fr}
 }
-@media(max-width:520px){.pill{display:none}.hero-mark{display:none}}
+@media(max-width:520px){.pill{display:none}.hero-mark{display:none}.lp{padding:0 16px}.lp-nav .lp-link{display:none}.lp-nav .lp-link.keep{display:inline-block}}
 @media(pointer:coarse){
   .btn,.nav-item,.icon-btn,.menu-btn,.tabbar a,.tabbar button,select,input:not([type=checkbox]):not([type=radio]){min-height:44px}
   .icon-btn,.menu-btn{width:44px}
   .check{min-height:44px;align-items:center}
   .check input{width:22px;height:22px;flex-basis:22px}
 }
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
-}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
 @media print{
-  *,*::before,*::after{animation:none!important;transition:none!important;box-shadow:none!important;text-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-  html{scroll-behavior:auto}
-  body{background:#fff!important;background-image:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .card,.hero,.stat,.notice,.next,details,.tbl-wrap{background:#fff!important;background-image:none!important;transform:none!important}
+  *,*::before,*::after{transition:none!important}
+  body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .cover{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:90vh;page-break-after:always;break-after:page}
-  .cover .logo{width:130px;height:130px;flex:none;filter:none}
-  .cover .cover-title{font-family:var(--display);font-size:3.6rem;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin:22px 0 4px;color:#0F1A24}
+  .cover .logo{width:130px;height:130px;flex:none}
+  .cover .cover-title{font-family:var(--serif);font-size:3.6rem;font-weight:600;letter-spacing:-.02em;line-height:1.1;margin:22px 0 4px;color:#15181C}
   .cover p{font-size:1.15rem;color:#333;margin:0 0 6px}
   .cover .owner{margin-top:34px;padding-top:14px;border-top:2px solid #E39B1B;font-weight:600;min-width:260px}
-  .print-only{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid #0B5F66;font-family:var(--display);font-weight:700;font-size:1.2rem}
+  .print-only{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid #0B5F66;font-family:var(--serif);font-weight:600;font-size:1.2rem}
   .print-only small{font-weight:500;font-size:.8rem;color:#555;margin-left:6px}
-  .logo{filter:none}
-  .topbar,.sidebar,.tabbar,.scrim,.no-print{display:none!important}
+  .topbar,.sidebar,.tabbar,.scrim,.no-print,.lp-head,.lp-cta{display:none!important}
   main{padding:0;max-width:none}
   .card{break-inside:avoid;border-color:#ccc}
-  svg.chart .draw{stroke-dasharray:none}
 }
-.donut{animation:donutIn .8s var(--ease) backwards;transform-origin:center}
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main" data-act="skip-main">Skip to content</a>
 
 <header class="topbar">
-  <button class="menu-btn" data-act="toggle-nav" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <button class="menu-btn" data-act="toggle-nav" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   <div class="brand">
     <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="currentColor" style="color:var(--accent)"/><path d="M22 9.5C22 6 10 6 10 12c0 5.8 12 3 12 8.6 0 3.2-5 4.4-9 2.6" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="12.6" cy="23.3" r="2.5" fill="#E39B1B"/></svg>
     <span class="brand-text">Sylvia<small>by Akoo</small></span>
   </div>
   <div class="top-actions">
     <span class="pill" id="phase-pill">Phase 0 · Setup</span>
-    <button class="icon-btn" data-act="toggle-theme" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+    <button class="icon-btn" data-act="toggle-theme" aria-label="Toggle dark mode" title="Toggle dark mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
   </div>
 </header>
 <div class="scrim" id="scrim" data-act="toggle-nav" aria-hidden="true"></div>
@@ -385,7 +376,7 @@ input[type=range]:focus-visible{outline:3px solid var(--amber);outline-offset:3p
 
 <nav class="tabbar" id="tabbar" aria-label="Quick navigation"></nav>
 
-<footer style="border-top:1px solid var(--line); padding:22px 32px 40px; max-width:1000px; margin:0 auto">
+<footer class="app-foot" style="border-top:1px solid var(--line); padding:22px 32px 40px; max-width:1000px; margin:0 auto">
   <p class="quote" style="margin-bottom:12px">
     Judge the year by the quality of your decisions, the consistency of your risk controls,
     your understanding of what you own, and your honesty about the evidence. A profitable trade
@@ -410,10 +401,10 @@ const STORE_KEY = "t12mip_v1";
 
 const PHASES = [
   { n:0, name:"Setup",           when:"Week 0",       focus:"Accounts, tools, written rules",              real:"No" },
-  { n:1, name:"Foundation",      when:"Months 1–3",   focus:"How markets and orders work",                 real:"No — paper only" },
-  { n:2, name:"Analysis",        when:"Months 4–6",   focus:"Reading companies, charts, your own biases",  real:"No — paper only" },
-  { n:3, name:"Risk",            when:"Months 7–9",   focus:"Position sizing, loss limits, portfolios",    real:"No — paper only" },
-  { n:4, name:"Small live test", when:"Months 10–12", focus:"Follow your rules with up to $500",           real:"Yes — small" }
+  { n:1, name:"Foundation",      when:"Months 1–3",   focus:"How markets and orders work",                 real:"No, paper only" },
+  { n:2, name:"Analysis",        when:"Months 4–6",   focus:"Reading companies, charts, your own biases",  real:"No, paper only" },
+  { n:3, name:"Risk",            when:"Months 7–9",   focus:"Position sizing, loss limits, portfolios",    real:"No, paper only" },
+  { n:4, name:"Small live test", when:"Months 10–12", focus:"Follow your rules with up to $500",           real:"Yes, small" }
 ];
 
 const PRINCIPLES = [
@@ -521,11 +512,11 @@ const RED_FLAGS = [
 
 const RESOURCES = {
   "Books": [
-    ["The Psychology of Money — Morgan Housel", "Behavior and long-term thinking (a good first read)"],
-    ["The Intelligent Investor — Benjamin Graham", "Valuation, margin of safety, discipline"],
-    ["One Up On Wall Street — Peter Lynch", "Finding and researching ideas"],
-    ["Trade Your Way to Financial Freedom — Van K. Tharp", "Trading systems, sizing, risk"],
-    ["The Richest Man in Babylon — George S. Clason", "Saving and money habits"],
+    ["The Psychology of Money by Morgan Housel", "Behavior and long-term thinking (a good first read)"],
+    ["The Intelligent Investor by Benjamin Graham", "Valuation, margin of safety, discipline"],
+    ["One Up On Wall Street by Peter Lynch", "Finding and researching ideas"],
+    ["Trade Your Way to Financial Freedom by Van K. Tharp", "Trading systems, sizing, risk"],
+    ["The Richest Man in Babylon by George S. Clason", "Saving and money habits"],
     ["Same as Ever (Housel) · Market Wizards (Schwager)", "Bonus: perspective and trader interviews"]
   ],
   "Podcasts": [
@@ -700,7 +691,7 @@ function todayISO(d){
 }
 function num(v){ const n = parseFloat(v); return isNaN(n) ? 0 : n; }
 function money(v, dp){
-  if (v === null || v === undefined || isNaN(v)) return "—";
+  if (v === null || v === undefined || isNaN(v)) return "n/a";
   const d = dp === undefined ? 2 : dp;
   const neg = v < 0;
   const s = Math.abs(v).toLocaleString(undefined,{minimumFractionDigits:d, maximumFractionDigits:d});
@@ -972,6 +963,7 @@ const NAV = [
     { id:"graham-lessons",     label:"Graham lessons" }
   ]},
   { group:"Reference", items:[
+    { id:"welcome",   label:"About Sylvia" },
     { id:"redflags",  label:"Red Flags" },
     { id:"resources", label:"Resources" },
     { id:"glossary",  label:"Glossary" },
@@ -980,12 +972,18 @@ const NAV = [
   ]}
 ];
 
-let route = (location.hash || "#dashboard").slice(1);
+let SEEN = false; try { SEEN = !!localStorage.getItem("t12mip_seen"); } catch(e){}
+let route = (location.hash || (SEEN ? "#dashboard" : "#welcome")).slice(1);
 const VALID = NAV.flatMap(g => g.items.map(i => i.id));
 if (!VALID.includes(route)) route = "dashboard";
 
 const NAV_ICON = {"dashboard": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"9\" rx=\"1.5\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"5\" rx=\"1.5\"/><rect x=\"14\" y=\"12\" width=\"7\" height=\"9\" rx=\"1.5\"/><rect x=\"3\" y=\"16\" width=\"7\" height=\"5\" rx=\"1.5\"/>", "phase0": "<path d=\"M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0\"/><circle cx=\"16\" cy=\"6\" r=\"2\"/><circle cx=\"10\" cy=\"12\" r=\"2\"/><circle cx=\"18\" cy=\"18\" r=\"2\"/>", "phase1": "<path d=\"M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5z\"/><path d=\"M4 21.5V4.5\"/>", "phase2": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M20 20l-3.5-3.5\"/>", "investor-type": "<circle cx=\"12\" cy=\"8\" r=\"4\"/><path d=\"M4 21c0-4 4-6 8-6s8 2 8 6\"/>", "phase3": "<path d=\"M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z\"/>", "phase4": "<path d=\"M5 21V4M5 4h11l-2 4 2 4H5\"/>", "journal": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M9 8h6M9 12h6M9 16h3\"/>", "metrics": "<path d=\"M4 20V11M10 20V4M16 20v-7M2 20h20\"/>", "thesis": "<path d=\"M4 20l1-4L16 5l3 3L8 19z\"/><path d=\"M14 7l3 3\"/>", "calculator": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01\"/>", "watchlist": "<path d=\"M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>", "review": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4\"/>", "graham-investor": "<path d=\"M12 4v16M7 20h10M5 8h14\"/><path d=\"M5 8l-2.5 6a3 3 0 0 0 5 0zM19 8l-2.5 6a3 3 0 0 0 5 0z\"/>", "graham-mos": "<path d=\"M4 7h16M4 17h16\"/><path d=\"M12 7v10M9 14l3 3 3-3\"/>", "defensive-screener": "<path d=\"M3 5h18l-7 8v6l-4 2v-8z\"/>", "mr-market": "<path d=\"M3 12h4l3-8 4 16 3-8h4\"/>", "allocation": "<path d=\"M12 3v9h9\"/><path d=\"M21 12A9 9 0 1 1 12 3\"/>", "graham-lessons": "<path d=\"M2 9l10-5 10 5-10 5z\"/><path d=\"M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5\"/>", "redflags": "<path d=\"M12 3l10 18H2z\"/><path d=\"M12 10v5M12 18h.01\"/>", "resources": "<path d=\"M5 4h4v16H5zM11 4h4v16h-4z\"/><path d=\"M17 5l3 1-3.5 14-3-1z\"/>", "glossary": "<path d=\"M4 19l5-14 5 14M6 14h6\"/><path d=\"M16 11h4M16 15h4\"/>", "report": "<path d=\"M6 3h8l5 5v13H6z\"/><path d=\"M14 3v5h5M9 13h7M9 17h7\"/>", "settings": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1\"/>"};
 const navIcon = id => `<span class="nav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${NAV_ICON[id] || '<circle cx="12" cy="12" r="4"/>'}</svg></span>`;
+
+const ICONS = {"up": "<path d=\"M12 19V5M5 12l7-7 7 7\"/>", "down": "<path d=\"M12 5v14M19 12l-7 7-7-7\"/>", "x": "<path d=\"M18 6L6 18M6 6l12 12\"/>", "check": "<path d=\"M20 6L9 17l-5-5\"/>", "minus": "<path d=\"M5 12h14\"/>", "alert": "<path d=\"M12 3l10 18H2z\"/><path d=\"M12 10v5M12 18h.01\"/>", "external": "<path d=\"M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"/>"};
+const ico = (n, c) => `<svg class="ic${c ? " " + c : ""}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]}</svg>`;
+NAV_ICON.welcome = '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>';
+const iconSvg = id => `<svg viewBox="0 0 24 24" aria-hidden="true">${NAV_ICON[id] || ""}</svg>`;
 
 function renderNav(){
   const nav = document.getElementById("sidebar");
@@ -1043,18 +1041,18 @@ function statBox(k, v, note, cls){
 }
 function gateBox(passed, label, msg){
   return `<div class="notice ${passed?"ok":"warn"}">
-    <strong>${passed ? "Gate passed — " : "Gate not yet passed — "}${esc(label)}</strong><br>
+    <strong>${passed ? "Gate passed: " : "Gate not yet passed: "}${esc(label)}</strong><br>
     ${msg}
   </div>`;
 }
 
 /* ============================================================
-   7. VIEWS — DASHBOARD
+   7. VIEWS: DASHBOARD
    ============================================================ */
 
 function plText(v){
-  if (v === null || v === undefined || isNaN(v)) return "—";
-  return (v > 0 ? "▲ " : v < 0 ? "▼ " : "") + money(v);
+  if (v === null || v === undefined || isNaN(v)) return "n/a";
+  return (v > 0 ? ico("up") : v < 0 ? ico("down") : "") + money(v);
 }
 
 function activityMap(){
@@ -1087,7 +1085,7 @@ function winLossBar(m){
   if (!total) return "";
   return `<div class="wl" role="img" aria-label="${m.wins.length} winning trades and ${m.losses.length} losing trades">
       <i class="w" style="width:${(m.wins.length/total*100).toFixed(1)}%"></i><i class="l" style="width:${(m.losses.length/total*100).toFixed(1)}%"></i></div>
-    <div class="wl-labels"><span class="pos">▲ ${m.wins.length} ${m.wins.length===1?"win":"wins"}</span><span class="neg">▼ ${m.losses.length} ${m.losses.length===1?"loss":"losses"}</span></div>`;
+    <div class="wl-labels"><span class="pos">${ico("up")}${m.wins.length} ${m.wins.length===1?"win":"wins"}</span><span class="neg">${ico("down")}${m.losses.length} ${m.losses.length===1?"loss":"losses"}</span></div>`;
 }
 
 let labelSeq = 0;
@@ -1177,12 +1175,12 @@ function viewDashboard(){
 
   <div class="notice accent">
     <strong>This is an educational plan, not a promise of returns.</strong>
-    You can finish all 12 months without being profitable and still have succeeded — if you learned,
+    You can finish all 12 months without being profitable and still have succeeded, if you learned,
     protected your capital and followed your rules.
   </div>
 
-  ${openFlags.length ? `<div class="notice danger pulse">
-    <strong>⚠ ${openFlags.length} red flag${openFlags.length>1?"s":""} active.</strong>
+  ${openFlags.length ? `<div class="notice danger">
+    <strong>${ico("alert")}${openFlags.length} red flag${openFlags.length>1?"s":""} active.</strong>
     Stop trading, write down what happened, review the evidence, and return to simulation if needed.
     <a href="#redflags">Open Red Flags</a>
   </div>` : ""}
@@ -1260,7 +1258,7 @@ function viewDashboard(){
 }
 
 /* ============================================================
-   8. VIEW — PHASE 0
+   8. VIEW: PHASE 0
    ============================================================ */
 
 function viewPhase0(){
@@ -1272,7 +1270,7 @@ function viewPhase0(){
   const warnActive = a.debtFlag || a.emergencyFlag || a.shortHorizonFlag;
 
   return `
-  ${pageHeader("Phase 0 · Setup", "Week 0. By the end of this week you have accounts, tools and written rules in place — and $4,500 of your $5,000 stays out of trading entirely.")}
+  ${pageHeader("Phase 0 · Setup", "Week 0. By the end of this week you have accounts, tools and written rules in place, and $4,500 of your $5,000 stays out of trading entirely.")}
 
   <section class="card">
     <div class="card-head"><div><h2>Checklist</h2><div class="sub">${done} of ${P0_ITEMS.length} complete</div></div></div>
@@ -1372,7 +1370,7 @@ function viewPhase0(){
 }
 
 /* ============================================================
-   9. VIEW — PHASE 1
+   9. VIEW: PHASE 1
    ============================================================ */
 
 function viewPhase1(){
@@ -1411,7 +1409,7 @@ function viewPhase1(){
       <div class="field"><label>How much time can you genuinely give this each day?</label>
         <input data-path="phase1.styleTime" value="${esc(getPath("phase1.styleTime")||"")}" placeholder="e.g. 45 minutes on weekdays, more at weekends"></div>
       <div class="field"><label>How do you react to watching a position fall 20%?</label>
-        <textarea data-path="phase1.styleReact" placeholder="Be honest — this is the most useful answer you will write.">${esc(getPath("phase1.styleReact")||"")}</textarea></div>
+        <textarea data-path="phase1.styleReact" placeholder="Be honest: this is the most useful answer you will write.">${esc(getPath("phase1.styleReact")||"")}</textarea></div>
       <div class="field"><label>Which style do you think fits you, and why?</label>
         <textarea data-path="phase1.styleChoice" placeholder="Your reasoning">${esc(getPath("phase1.styleChoice")||"")}</textarea></div>
       <p class="small" style="margin:0">For most beginners, a low-cost, broadly diversified index ETF is a simpler long-term foundation than picking stocks.</p>
@@ -1448,7 +1446,7 @@ function viewPhase1(){
 
   <section class="card">
     <div class="card-head"><div><h2>Simulated order log</h2>
-      <div class="sub">Practise each order type. Record fills, slippage and costs — and every execution mistake with its fix.</div></div></div>
+      <div class="sub">Practise each order type. Record fills, slippage and costs, and every execution mistake with its fix.</div></div></div>
     <div class="grid g3" style="margin-bottom:14px">
       ${statBox("Orders logged", stats.total, "Need 20 for Phase 1, 40 for Phase 2")}
       ${statBox("Mistakes logged", stats.mistakesLogged, "Each with a fix")}
@@ -1459,7 +1457,7 @@ function viewPhase1(){
   </section>
 
   <section class="card">
-    <div class="card-head"><div><h2>Milestones — end of Month 3</h2></div></div>
+    <div class="card-head"><div><h2>Milestones: end of Month 3</h2></div></div>
     ${P1_MILESTONES.map(m => {
       const autoOk = m.auto === "paper20" ? S.paperOrders.length >= 20 : true;
       return `
@@ -1480,7 +1478,7 @@ function viewPhase1(){
   </section>
 
   ${gateBox(gate, "Gate to Phase 2", gate
-    ? "You can demonstrate the milestones. Finishing the calendar is not enough — but you have."
+    ? "You can demonstrate the milestones. Finishing the calendar is not enough, but you have."
     : "You must be able to demonstrate every milestone above, including written explanations and 20+ simulated orders. Finishing the calendar is not enough.")}
 
   ${gate ? (S.profile.currentPhase < 2
@@ -1519,7 +1517,7 @@ function paperOrderTable(){
   if (!S.paperOrders.length) return `<div class="empty">No simulated orders logged yet.</div>`;
   return `<div class="tbl-wrap" style="margin-top:6px"><table>
     <thead><tr><th>#</th><th>Date</th><th>Ticker</th><th>Type</th><th class="num">Expected</th><th class="num">Fill</th>
-    <th class="num">Slippage</th><th class="num">Costs</th><th>Mistake → fix</th><th>Violation</th><th></th></tr></thead>
+    <th class="num">Slippage</th><th class="num">Costs</th><th>Mistake and fix</th><th>Violation</th><th></th></tr></thead>
     <tbody>
     ${S.paperOrders.slice().reverse().map((o,i)=>{
       const slip = (num(o.fill) && num(o.expected)) ? num(o.fill) - num(o.expected) : null;
@@ -1528,13 +1526,13 @@ function paperOrderTable(){
         <td class="mono">${esc(o.date||"")}</td>
         <td><strong>${esc(o.ticker||"")}</strong></td>
         <td>${esc(o.type||"")}</td>
-        <td class="num">${o.expected?money(num(o.expected)):"—"}</td>
-        <td class="num">${o.fill?money(num(o.fill)):"—"}</td>
-        <td class="num ${slip>0?"neg":slip<0?"pos":""}">${slip===null?"—":money(slip)}</td>
-        <td class="num">${o.cost?money(num(o.cost)):"—"}</td>
-        <td style="white-space:normal;max-width:280px">${esc(o.mistake||"")}${o.fix?` → <em>${esc(o.fix)}</em>`:""}</td>
+        <td class="num">${o.expected?money(num(o.expected)):"n/a"}</td>
+        <td class="num">${o.fill?money(num(o.fill)):"n/a"}</td>
+        <td class="num ${slip>0?"neg":slip<0?"pos":""}">${slip===null?"n/a":money(slip)}</td>
+        <td class="num">${o.cost?money(num(o.cost)):"n/a"}</td>
+        <td style="white-space:normal;max-width:280px">${esc(o.mistake||"")}${o.fix?` Fix: <em>${esc(o.fix)}</em>`:""}</td>
         <td>${o.violation?`<span class="tag danger">${esc(o.violation)}</span>`:`<span class="tag ok">none</span>`}</td>
-        <td><button class="btn sm ghost" data-act="del-paper-order" data-id="${o.id}" title="Delete">✕</button></td>
+        <td><button class="btn sm ghost" data-act="del-paper-order" data-id="${o.id}" aria-label="Delete" title="Delete">${ico("x")}</button></td>
       </tr>`;
     }).join("")}
     </tbody>
@@ -1542,7 +1540,7 @@ function paperOrderTable(){
 }
 
 /* ============================================================
-   10. VIEW — PHASE 2
+   10. VIEW: PHASE 2
    ============================================================ */
 
 function viewPhase2(){
@@ -1552,11 +1550,11 @@ function viewPhase2(){
   const topBias = Object.entries(biasCounts).sort((a,b)=>b[1]-a[1])[0];
 
   return `
-  ${pageHeader("Phase 2 · Analysis and Strategy", "Months 4–6. You learn to judge a business, read a chart without trusting it blindly, and spot your own biases — then write a thesis for every decision.")}
+  ${pageHeader("Phase 2 · Analysis and Strategy", "Months 4–6. You learn to judge a business, read a chart without trusting it blindly, and spot your own biases, then write a thesis for every decision.")}
 
   <section class="card">
     <div class="card-head"><div><h2>A · Reading a company (US annual report, Form 10-K)</h2>
-      <div class="sub">Read these sections in order, and compare several years — not one.</div></div></div>
+      <div class="sub">Read these sections in order, and compare several years, not one.</div></div></div>
     <ol style="margin:0 0 14px;padding-left:22px;font-size:.87rem;line-height:1.8">
       <li><strong>Business overview:</strong> how does it make money?</li>
       <li><strong>Risk factors:</strong> what could seriously hurt it?</li>
@@ -1569,7 +1567,7 @@ function viewPhase2(){
     <div class="inline no-print">
       <button class="btn primary" data-act="add-company">+ New company analysis</button>
       ${lensToggle()}
-      <a class="btn" href="https://www.sec.gov/edgar/searchedgar/companysearch" target="_blank" rel="noopener">Open SEC EDGAR ↗</a>
+      <a class="btn" href="https://www.sec.gov/edgar/searchedgar/companysearch" target="_blank" rel="noopener">Open SEC EDGAR ${ico("external")}</a>
     </div>
   </section>
 
@@ -1580,20 +1578,20 @@ function viewPhase2(){
     <div class="card-head"><div><h2>Compare two companies in the same industry</h2>
       <div class="sub">Pick two from your analyses above.</div></div></div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Metric</th>${S.companies.map(c=>`<th>${esc(c.ticker||c.name||"—")}</th>`).join("")}</tr></thead>
+      <thead><tr><th>Metric</th>${S.companies.map(c=>`<th>${esc(c.ticker||c.name||"n/a")}</th>`).join("")}</tr></thead>
       <tbody>
-        <tr><td>Industry</td>${S.companies.map(c=>`<td>${esc(c.industry||"—")}</td>`).join("")}</tr>
+        <tr><td>Industry</td>${S.companies.map(c=>`<td>${esc(c.industry||"n/a")}</td>`).join("")}</tr>
         <tr><td>How it makes money</td>${S.companies.map(c=>`<td style="white-space:normal;max-width:220px">${esc((c.s1||"").slice(0,120))}</td>`).join("")}</tr>
         <tr><td>Main risk</td>${S.companies.map(c=>`<td style="white-space:normal;max-width:220px">${esc((c.s2||"").slice(0,120))}</td>`).join("")}</tr>
-        <tr><td>Revenue trend</td>${S.companies.map(c=>`<td>${esc(c.revTrend||"—")}</td>`).join("")}</tr>
-        <tr><td>Debt level</td>${S.companies.map(c=>`<td>${esc(c.debtLevel||"—")}</td>`).join("")}</tr>
-        <tr><td>Generates cash?</td>${S.companies.map(c=>`<td>${esc(c.cashGen||"—")}</td>`).join("")}</tr>
-        <tr><td>Valuation paid</td>${S.companies.map(c=>`<td>${esc(c.valuation||"—")}</td>`).join("")}</tr>
+        <tr><td>Revenue trend</td>${S.companies.map(c=>`<td>${esc(c.revTrend||"n/a")}</td>`).join("")}</tr>
+        <tr><td>Debt level</td>${S.companies.map(c=>`<td>${esc(c.debtLevel||"n/a")}</td>`).join("")}</tr>
+        <tr><td>Generates cash?</td>${S.companies.map(c=>`<td>${esc(c.cashGen||"n/a")}</td>`).join("")}</tr>
+        <tr><td>Valuation paid</td>${S.companies.map(c=>`<td>${esc(c.valuation||"n/a")}</td>`).join("")}</tr>
         ${defCriteria({ g:{} }).list.map((x, k) => `<tr><td>${esc(x.label)}</td>${S.companies.map(c => `<td>${statusTag(defCriteria(c).list[k].status)}</td>`).join("")}</tr>`).join("")}
         <tr><td><strong>Defensive score</strong></td>${S.companies.map(c=>`<td><strong>${defCriteria(c).passN} of 8</strong></td>`).join("")}</tr>
         <tr><td>Balance sheet strength</td>${S.companies.map(c=>`<td>${esc(balanceStrength(c).label)}</td>`).join("")}</tr>
-        <tr><td>Graham Number (a ceiling)</td>${S.companies.map(c=>{ const m = compMos(c); return `<td>${m.gn === null ? "—" : money(m.gn)}</td>`; }).join("")}</tr>
-        <tr><td>Margin of safety vs low end</td>${S.companies.map(c=>{ const m = compMos(c); return `<td>${m.mosLow === null ? "—" : (m.mosLow >= 0 ? "▲ " : "▼ ") + pct(Math.abs(m.mosLow), 0)}</td>`; }).join("")}</tr>
+        <tr><td>Graham Number (a ceiling)</td>${S.companies.map(c=>{ const m = compMos(c); return `<td>${m.gn === null ? "n/a" : money(m.gn)}</td>`; }).join("")}</tr>
+        <tr><td>Margin of safety vs low end</td>${S.companies.map(c=>{ const m = compMos(c); return `<td>${m.mosLow === null ? "n/a" : (m.mosLow >= 0 ? ico("up") : ico("down")) + pct(Math.abs(m.mosLow), 0)}</td>`; }).join("")}</tr>
       </tbody>
     </table></div>
     <label class="check" style="margin-top:12px">
@@ -1612,7 +1610,7 @@ function viewPhase2(){
       <div class="stat"><div class="k">P/S ratio</div><div class="v" style="font-size:.95rem">Price ÷ sales per share</div></div>
       <div class="stat"><div class="k">FCF yield</div><div class="v" style="font-size:.95rem">Free cash flow ÷ market cap</div></div>
     </div>
-    <p class="small" style="margin-top:12px">Study historical valuation ranges, P/E and price-to-sales, free-cash-flow yield, debt and interest coverage, earnings quality, competitive advantages and industry risks. Write a pessimistic, reasonable and optimistic scenario for each company — the scenario fields are in each company card above.</p>
+    <p class="small" style="margin-top:12px">Study historical valuation ranges, P/E and price-to-sales, free-cash-flow yield, debt and interest coverage, earnings quality, competitive advantages and industry risks. Write a pessimistic, reasonable and optimistic scenario for each company: the scenario fields are in each company card above.</p>
   </section>
 
   <section class="card">
@@ -1625,17 +1623,17 @@ function viewPhase2(){
         ["Trend","The direction of the larger move. Fighting it is expensive."],
         ["Volume","Confirms or contradicts a move. Thin volume = unreliable."],
         ["Volatility (ATR)","How much it typically moves in a day. Sizes your stop."],
-        ["Breakout / failed breakout","A move beyond a level — and one that immediately reverses."]
+        ["Breakout / failed breakout","A move beyond a level, and one that immediately reverses."]
       ].map(([t,d])=>`<div class="stat"><div class="k">${esc(t)}</div><div style="font-size:.82rem;margin-top:6px;color:var(--muted)">${esc(d)}</div></div>`).join("")}
     </div>
     <div class="divider"></div>
-    <div class="field"><label>"Where is this trade idea proven wrong?" — pick a chart you are studying and write the invalidation level</label>
+    <div class="field"><label>"Where is this trade idea proven wrong?" Pick a chart you are studying and write the invalidation level</label>
       <textarea data-path="phase2.chartPractice" placeholder="Ticker, level, and why that level means the idea is dead.">${esc(getPath("phase2.chartPractice")||"")}</textarea></div>
   </section>
 
   <section class="card">
     <div class="card-head"><div><h2>D · Five biases to track</h2>
-      <div class="sub">Name one bias and how it affected a decision — every week.</div></div></div>
+      <div class="sub">Name one bias and how it affected a decision, every week.</div></div></div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>Bias</th><th>What it looks like</th><th class="num">Logged</th></tr></thead>
       <tbody>
@@ -1664,14 +1662,14 @@ function viewPhase2(){
         <td class="mono">${esc(b.date)}</td>
         <td>${esc(BIASES.find(x=>x.id===b.bias)?.name || b.bias)}</td>
         <td style="white-space:normal;max-width:420px">${esc(b.note)}</td>
-        <td><button class="btn sm ghost" data-act="del-bias" data-id="${b.id}">✕</button></td>
+        <td><button class="btn sm ghost" data-act="del-bias" data-id="${b.id}" aria-label="Delete" title="Delete">${ico("x")}</button></td>
       </tr>`).join("")}</tbody></table></div>` : ""}
   </section>
 
   <section class="card">
     <div class="card-head"><div><h2>Weekly assignments</h2></div></div>
     <ul style="margin:0;padding-left:20px;font-size:.87rem;line-height:1.9">
-      <li>Write one one-page thesis — use the <a href="#thesis">Thesis Builder</a>.</li>
+      <li>Write one one-page thesis. Use the <a href="#thesis">Thesis Builder</a>.</li>
       <li>Review one company's financial statements.</li>
       <li>Paper trade only when your written criteria are met, and record why you entered and exited.</li>
       <li>Name one bias and how it affected a decision.</li>
@@ -1684,7 +1682,7 @@ function viewPhase2(){
   </section>
 
   <section class="card">
-    <div class="card-head"><div><h2>Milestones — end of Month 6</h2></div></div>
+    <div class="card-head"><div><h2>Milestones: end of Month 6</h2></div></div>
     ${P2_MILESTONES.map(m => {
       let autoOk = true, autoNote = "";
       if (m.auto === "companies3"){ autoOk = S.companies.length >= 3; autoNote = `Currently ${S.companies.length} of 3.`; }
@@ -1726,27 +1724,27 @@ function companyCard(c, i){
       <div class="field"><label>Company name</label><input data-path="${p}.name" value="${esc(c.name)}" placeholder="e.g. Coca-Cola"></div>
       <div class="field"><label>Industry</label><input data-path="${p}.industry" value="${esc(c.industry)}" placeholder="e.g. Consumer staples"></div>
     </div>
-    <div class="field"><label>1 · Business overview — how does it make money?</label>
+    <div class="field"><label>1 · Business overview: how does it make money?</label>
       <textarea data-path="${p}.s1">${esc(c.s1||"")}</textarea></div>
-    <div class="field"><label>2 · Risk factors — what could seriously hurt it?</label>
+    <div class="field"><label>2 · Risk factors: what could seriously hurt it?</label>
       <textarea data-path="${p}.s2">${esc(c.s2||"")}</textarea></div>
-    <div class="field"><label>3 · MD&amp;A — what does management say about results and challenges?</label>
+    <div class="field"><label>3 · MD&amp;A: what does management say about results and challenges?</label>
       <textarea data-path="${p}.s3">${esc(c.s3||"")}</textarea></div>
     <div class="row">
       <div class="field"><label>4 · Income statement</label>
         <select data-path="${p}.revTrend">
           ${["","Revenue growing","Revenue flat","Revenue declining"].map(o=>`<option ${c.revTrend===o?"selected":""}>${o}</option>`).join("")}
         </select></div>
-      <div class="field"><label>5 · Balance sheet — debt level</label>
+      <div class="field"><label>5 · Balance sheet: debt level</label>
         <select data-path="${p}.debtLevel">
           ${["","Low / manageable","Moderate","High / concerning"].map(o=>`<option ${c.debtLevel===o?"selected":""}>${o}</option>`).join("")}
         </select></div>
-      <div class="field"><label>6 · Cash flow — does it generate cash?</label>
+      <div class="field"><label>6 · Cash flow: does it generate cash?</label>
         <select data-path="${p}.cashGen">
           ${["","Yes, consistently","Sometimes","No, burns cash"].map(o=>`<option ${c.cashGen===o?"selected":""}>${o}</option>`).join("")}
         </select></div>
     </div>
-    <div class="field"><label>7 · Notes — obligations, accounting choices or risks worth a closer look</label>
+    <div class="field"><label>7 · Notes: obligations, accounting choices or risks worth a closer look</label>
       <textarea data-path="${p}.s7">${esc(c.s7||"")}</textarea></div>
     <div class="divider"></div>
     <h4>Valuation &amp; scenarios</h4>
@@ -1766,7 +1764,7 @@ function companyCard(c, i){
 }
 
 /* ============================================================
-   11. VIEW — PHASE 3
+   11. VIEW: PHASE 3
    ============================================================ */
 
 function viewPhase3(){
@@ -1777,19 +1775,19 @@ function viewPhase3(){
   const eff = effectiveType();
   const allocBlock = allocTool();
   const stopNote = `<section class="card"><div class="card-head"><div><h2>Stops are for trading, not for long-term holdings</h2></div></div>
-    <div class="notice accent">This plan teaches stops for short-term trading. Graham's advice for the long-term investor is different — sell because the thesis is broken or the valuation is no longer supported, not because a price was touched. See the <a href="#allocation">allocation policy</a> so the two worlds stay apart.</div></section>`;
+    <div class="notice accent">This plan teaches stops for short-term trading. Graham's advice for the long-term investor is different: sell because the thesis is broken or the valuation is no longer supported, not because a price was touched. See the <a href="#allocation">allocation policy</a> so the two worlds stay apart.</div></section>`;
 
   return `
-  ${pageHeader("Phase 3 · Risk and Portfolio", "Months 7–9. Risk control matters more than a perfect entry. This phase teaches you to size every position by how much you could lose — not by how much you want to make.")}
+  ${pageHeader("Phase 3 · Risk and Portfolio", "Months 7–9. Risk control matters more than a perfect entry. This phase teaches you to size every position by how much you could lose, not by how much you want to make.")}
 
   ${eff === "defensive" ? '<div class="notice accent">Your investor type is Defensive. Start with the allocation policy. Position sizing below is for the optional trading sandbox.</div>' + allocBlock : ""}
 
   <section class="card">
     <div class="card-head"><div><h2>A · Position sizing</h2>
-      <div class="sub">For a trade with a set entry price and stop price — the price where you admit you were wrong.</div></div></div>
+      <div class="sub">For a trade with a set entry price and stop price, the price where you admit you were wrong.</div></div></div>
     <div class="notice accent mono" style="font-size:.82rem">
       Risk budget = Trading capital × Risk %<br>
-      Shares = ⌊ Risk budget ÷ (Entry price − Stop price) ⌋
+      Shares = Risk budget ÷ (Entry price − Stop price), rounded down
     </div>
     <p class="small">Round down to whole shares unless your broker offers fractional shares. Also allow for slippage, costs and price gaps.</p>
     <div class="inline no-print"><a class="btn primary" href="#calculator">Open the full calculator</a></div>
@@ -1871,12 +1869,12 @@ function viewPhase3(){
   <section class="card">
     <div class="card-head"><div><h2>D · Trading plan contract</h2>
       <div class="sub">Write this before any trade. It must be signed before Phase 4.</div></div></div>
-    <div class="field"><label>Entry — written thesis or tested setup</label><textarea data-path="phase3.plan.entryThesis">${esc(plan.entryThesis||"")}</textarea></div>
-    <div class="field"><label>Entry — defined trigger and reason</label><textarea data-path="phase3.plan.entryTrigger" style="min-height:60px">${esc(plan.entryTrigger||"")}</textarea></div>
-    <div class="field"><label>Entry — position size and loss budget</label><textarea data-path="phase3.plan.entrySize" style="min-height:60px">${esc(plan.entrySize||"")}</textarea></div>
-    <div class="field"><label>Exit — what proves the thesis wrong</label><textarea data-path="phase3.plan.exitWrong" style="min-height:60px">${esc(plan.exitWrong||"")}</textarea></div>
-    <div class="field"><label>Exit — profit-taking or rebalancing rule</label><textarea data-path="phase3.plan.exitProfit" style="min-height:60px">${esc(plan.exitProfit||"")}</textarea></div>
-    <div class="field"><label>Exit — plan for surprise news</label><textarea data-path="phase3.plan.exitNews" style="min-height:60px">${esc(plan.exitNews||"")}</textarea></div>
+    <div class="field"><label>Entry: written thesis or tested setup</label><textarea data-path="phase3.plan.entryThesis">${esc(plan.entryThesis||"")}</textarea></div>
+    <div class="field"><label>Entry: defined trigger and reason</label><textarea data-path="phase3.plan.entryTrigger" style="min-height:60px">${esc(plan.entryTrigger||"")}</textarea></div>
+    <div class="field"><label>Entry: position size and loss budget</label><textarea data-path="phase3.plan.entrySize" style="min-height:60px">${esc(plan.entrySize||"")}</textarea></div>
+    <div class="field"><label>Exit: what proves the thesis wrong</label><textarea data-path="phase3.plan.exitWrong" style="min-height:60px">${esc(plan.exitWrong||"")}</textarea></div>
+    <div class="field"><label>Exit: profit-taking or rebalancing rule</label><textarea data-path="phase3.plan.exitProfit" style="min-height:60px">${esc(plan.exitProfit||"")}</textarea></div>
+    <div class="field"><label>Exit: plan for surprise news</label><textarea data-path="phase3.plan.exitNews" style="min-height:60px">${esc(plan.exitNews||"")}</textarea></div>
 
     <div class="divider"></div>
     <h4>Drawdown controls</h4>
@@ -1926,7 +1924,7 @@ function viewPhase3(){
   </section>
 
   ${gateBox(gate, "Gate to Phase 4", gate
-    ? "Plan signed, risk controls demonstrated. Live trading is optional — simulation can continue."
+    ? "Plan signed, risk controls demonstrated. Live trading is optional. Simulation can continue."
     : "All milestones complete, the trading plan signed, and a clean 20-trade simulation streak. Live trading is optional; simulation can continue.")}
 
   ${gate ? (S.profile.currentPhase < 4
@@ -1937,7 +1935,7 @@ function viewPhase3(){
 }
 
 /* ============================================================
-   12. VIEW — PHASE 4
+   12. VIEW: PHASE 4
    ============================================================ */
 
 function viewPhase4(){
@@ -1946,7 +1944,7 @@ function viewPhase4(){
   const choice = S.phase4.choice;
 
   return `
-  ${pageHeader("Phase 4 · Small Live Test", "Months 10–12. You test whether you can follow your own rules with real money, using at most $500 — and you stay in simulation if your results or discipline are not ready.")}
+  ${pageHeader("Phase 4 · Small Live Test", "Months 10–12. You test whether you can follow your own rules with real money, using at most $500, and you stay in simulation if your results or discipline are not ready.")}
 
   <div class="notice danger">
     <strong>Hard limit: no more than $500 for individual stocks.</strong>
@@ -1956,12 +1954,12 @@ function viewPhase4(){
 
   <section class="card">
     <div class="card-head"><div><h2>What Graham would call this</h2></div></div>
-    <p>Graham would call what follows speculation. That is precisely why it is capped at $500, separated from your savings, and optional. If the honest answer to the Month 12 check is that you would rather invest defensively, that is the better outcome — not the lesser one.</p>
+    <p>Graham would call what follows speculation. That is precisely why it is capped at $500, separated from your savings, and optional. If the honest answer to the Month 12 check is that you would rather invest defensively, that is the better outcome, not the lesser one.</p>
     <p class="small">See <a href="#graham-investor">Investment or speculation</a> and the <a href="#graham-lessons">Graham lessons</a>.</p>
   </section>
 
   <section class="card">
-    <div class="card-head"><div><h2>Small-account note — decide in writing, now</h2></div></div>
+    <div class="card-head"><div><h2>Small-account note: decide in writing, now</h2></div></div>
     <p style="font-size:.88rem">
       0.5% of $500 is only <strong>$2.50</strong> of risk per trade, which often cannot be sized properly.
       Choose one of two options <em>in advance</em>, in writing:
@@ -1990,8 +1988,8 @@ function viewPhase4(){
     <div class="divider"></div>
     <div class="grid g3">
       ${statBox("Live trades logged", liveCount, "Including open positions")}
-      ${statBox("Live expectancy", m.count ? money(m.expectancy) : "—", m.count + " closed live trades")}
-      ${statBox("Live net result", m.count ? money(m.totalNet) : "—", "After recorded costs")}
+      ${statBox("Live expectancy", m.count ? money(m.expectancy) : "n/a", m.count + " closed live trades")}
+      ${statBox("Live net result", m.count ? money(m.totalNet) : "n/a", "After recorded costs")}
     </div>
     <div class="inline no-print" style="margin-top:14px">
       <a class="btn primary" href="#journal">Record a live trade</a>
@@ -2000,7 +1998,7 @@ function viewPhase4(){
 
   <section class="card" id="honesty">
     <div class="card-head"><div><h2>Month 12 honesty check</h2>
-      <div class="sub">Answer these in writing. There are no wrong answers — only dishonest ones.</div></div></div>
+      <div class="sub">Answer these in writing. There are no wrong answers, only dishonest ones.</div></div></div>
     ${[
       ["h1","Do I understand every investment I use?"],
       ["h2","Can I explain why I entered each position?"],
@@ -2038,7 +2036,7 @@ function viewPhase4(){
 }
 
 /* ============================================================
-   13. VIEW — JOURNAL
+   13. VIEW: JOURNAL
    ============================================================ */
 
 let journalFilter = { mode:"", status:"", ticker:"", result:"" };
@@ -2111,17 +2109,17 @@ function viewJournal(){
           <td>${esc(t.strategy||"")}</td>
           <td>${t.mode==="live"?'<span class="tag warn">live</span>':'<span class="tag">paper</span>'}</td>
           <td>${t.status==="open"?'<span class="tag">open</span>':'<span class="tag ok">closed</span>'}</td>
-          <td class="num">${t.entry?money(num(t.entry)):"—"}</td>
-          <td class="num">${t.stop?money(num(t.stop)):"—"}</td>
-          <td class="num">${t.size||"—"}</td>
-          <td class="num">${risk?money(risk):"—"}</td>
-          <td class="num">${t.exitPrice?money(num(t.exitPrice)):"—"}</td>
+          <td class="num">${t.entry?money(num(t.entry)):"n/a"}</td>
+          <td class="num">${t.stop?money(num(t.stop)):"n/a"}</td>
+          <td class="num">${t.size||"n/a"}</td>
+          <td class="num">${risk?money(risk):"n/a"}</td>
+          <td class="num">${t.exitPrice?money(num(t.exitPrice)):"n/a"}</td>
           <td class="num ${net>0?"pos":net<0?"neg":""}">${plText(net)}</td>
-          <td class="num ${r>0?"pos":r<0?"neg":""}">${r===null?"—":(r>0?"+":"")+r.toFixed(2)+"R"}</td>
+          <td class="num ${r>0?"pos":r<0?"neg":""}">${r===null?"n/a":(r>0?"+":"")+r.toFixed(2)+"R"}</td>
           <td>${classOf(t) === "investment" ? '<span class="tag ok">investment</span>' : classOf(t) === "speculation" ? '<span class="tag warn">speculation</span>' : '<span class="tag">unclear</span>'}</td>
-          <td class="num">${has(t.marginOfSafetyAtEntry) ? fx(num(t.marginOfSafetyAtEntry), 1) + "%" : "—"}</td>
-          <td style="white-space:normal;max-width:240px">${t.violations?`<span class="tag danger">${esc(t.violations)}</span>`:""}${tradeFlags(t).map(x => `<span class="tag warn">${esc(x)}</span>`).join("")}${!t.violations && !tradeFlags(t).length ? "—" : ""}</td>
-          <td><button class="btn sm ghost" data-act="del-trade" data-id="${t.id}" title="Delete">✕</button></td>
+          <td class="num">${has(t.marginOfSafetyAtEntry) ? fx(num(t.marginOfSafetyAtEntry), 1) + "%" : "n/a"}</td>
+          <td style="white-space:normal;max-width:240px">${t.violations?`<span class="tag danger">${esc(t.violations)}</span>`:""}${tradeFlags(t).map(x => `<span class="tag warn">${esc(x)}</span>`).join("")}${!t.violations && !tradeFlags(t).length ? "n/a" : ""}</td>
+          <td><button class="btn sm ghost" data-act="del-trade" data-id="${t.id}" aria-label="Delete" title="Delete">${ico("x")}</button></td>
         </tr>`;
       }).join("")}
       </tbody>
@@ -2172,9 +2170,9 @@ function tradeForm(){
           <select name="classification" required><option value="">Choose…</option><option value="investment">Investment</option><option value="speculation">Speculation</option><option value="unclear">Unclear (counts as speculation)</option></select></div>
         <div class="field"><label>Margin of safety at entry (%)</label><input type="number" step="any" name="marginOfSafetyAtEntry" placeholder="blank = from company analysis"></div>
         <div class="field"><label>Was this driven by price movement or by the thesis?</label>
-          <select name="priceInfluencedDecision"><option value="">—</option><option value="thesis">The thesis</option><option value="price">Price movement</option><option value="both">Both, honestly</option></select></div>
+          <select name="priceInfluencedDecision"><option value="">Select</option><option value="thesis">The thesis</option><option value="price">Price movement</option><option value="both">Both, honestly</option></select></div>
         <div class="field"><label>Where did the idea come from?</label>
-          <select name="ideaSource"><option value="">—</option><option value="own">My own research</option><option value="tip">An unsolicited tip or recommendation</option><option value="ipo">A new issue or IPO</option></select></div>
+          <select name="ideaSource"><option value="">Select</option><option value="own">My own research</option><option value="tip">An unsolicited tip or recommendation</option><option value="ipo">A new issue or IPO</option></select></div>
         <div class="field"><label>Sector</label><input name="sector" placeholder="e.g. Consumer staples"></div>
       </div>
       <div class="field"><label>How does this trade meet my minimum return and maximum permanent-loss limits? (required for live trades)</label><textarea name="satisfiesLimits" style="min-height:56px"></textarea></div>
@@ -2190,7 +2188,7 @@ function tradeForm(){
       <div class="row">
         <div class="field"><label>Market conditions</label>
           <select name="marketConditions">
-            <option value="">—</option><option>Uptrend</option><option>Downtrend</option>
+            <option value="">Select</option><option>Uptrend</option><option>Downtrend</option>
             <option>Range-bound</option><option>High volatility</option><option>Low volatility</option>
           </select></div>
         <div class="field"><label>Emotional state before</label><input name="emotionBefore" placeholder="e.g. calm, impatient"></div>
@@ -2205,7 +2203,7 @@ function tradeForm(){
 }
 
 /* ============================================================
-   14. VIEW — METRICS
+   14. VIEW: METRICS
    ============================================================ */
 
 function viewMetrics(){
@@ -2240,7 +2238,7 @@ function viewMetrics(){
   </div>
 
   <div class="grid g4" style="margin-bottom:16px">
-    ${statBox("Avg R-multiple", m.avgR===null?"—":(m.avgR>0?"+":"")+m.avgR.toFixed(2)+"R", "Result ÷ planned risk")}
+    ${statBox("Avg R-multiple", m.avgR===null?"n/a":(m.avgR>0?"+":"")+m.avgR.toFixed(2)+"R", "Result ÷ planned risk")}
     ${statBox("Max drawdown", money(m.maxDD), `${pct(m.maxDDPct)} from peak`)}
     ${statBox("Largest single loss", money(m.largestLoss), "", "neg")}
     ${statBox("Profit factor", m.profitFactor===Infinity?"∞":m.profitFactor.toFixed(2), "Gross wins ÷ gross losses")}
@@ -2250,7 +2248,7 @@ function viewMetrics(){
     ${statBox("Total trading costs", money(m.costs), "Commissions, spread, slippage")}
     ${statBox("Rule-adherence rate", pct(m.adherence), "Trades with no violation")}
     ${statBox("Net result", plText(m.totalNet), `${m.count} closed trades`, m.totalNet>0?"pos":m.totalNet<0?"neg":"")}
-    ${statBox("Portfolio heat", money(heat.total), `${pct(heat.pctOf)} of ${money(heat.capital,0)} — 2% ceiling`, heat.pctOf>0.02?"neg":"")}
+    ${statBox("Portfolio heat", money(heat.total), `${pct(heat.pctOf)} of ${money(heat.capital,0)}, 2% ceiling`, heat.pctOf>0.02?"neg":"")}
   </div>
 
   <section class="card">
@@ -2310,18 +2308,18 @@ function viewMetrics(){
     <div class="tbl-wrap"><table>
       <thead><tr><th>Mode</th><th class="num">Closed</th><th class="num">Win rate</th><th class="num">Expectancy</th><th class="num">Net</th></tr></thead>
       <tbody>
-        <tr><td>Paper</td><td class="num">${mPaper.count}</td><td class="num">${mPaper.count?pct(mPaper.winRate):"—"}</td>
-          <td class="num">${mPaper.count?money(mPaper.expectancy):"—"}</td>
-          <td class="num ${mPaper.totalNet>0?"pos":mPaper.totalNet<0?"neg":""}">${mPaper.count?money(mPaper.totalNet):"—"}</td></tr>
-        <tr><td>Live</td><td class="num">${mLive.count}</td><td class="num">${mLive.count?pct(mLive.winRate):"—"}</td>
-          <td class="num">${mLive.count?money(mLive.expectancy):"—"}</td>
-          <td class="num ${mLive.totalNet>0?"pos":mLive.totalNet<0?"neg":""}">${mLive.count?money(mLive.totalNet):"—"}</td></tr>
+        <tr><td>Paper</td><td class="num">${mPaper.count}</td><td class="num">${mPaper.count?pct(mPaper.winRate):"n/a"}</td>
+          <td class="num">${mPaper.count?money(mPaper.expectancy):"n/a"}</td>
+          <td class="num ${mPaper.totalNet>0?"pos":mPaper.totalNet<0?"neg":""}">${mPaper.count?money(mPaper.totalNet):"n/a"}</td></tr>
+        <tr><td>Live</td><td class="num">${mLive.count}</td><td class="num">${mLive.count?pct(mLive.winRate):"n/a"}</td>
+          <td class="num">${mLive.count?money(mLive.expectancy):"n/a"}</td>
+          <td class="num ${mLive.totalNet>0?"pos":mLive.totalNet<0?"neg":""}">${mLive.count?money(mLive.totalNet):"n/a"}</td></tr>
       </tbody>
     </table></div>
   </section>
 
   <section class="card">
-    <div class="card-head"><div><h2>Expectancy — worked example</h2></div></div>
+    <div class="card-head"><div><h2>Expectancy: worked example</h2></div></div>
     <div class="tbl-wrap"><table>
       <tbody>
         <tr><td>45% of trades win an average of $40</td><td class="num">0.45 × $40 = $18.00</td></tr>
@@ -2337,7 +2335,6 @@ function viewMetrics(){
   `;
 }
 
-let chartSeq = 0;
 function smoothPath(pts, lo, hi){
   if (pts.length < 2) return "";
   const cl = v => Math.min(hi, Math.max(lo, v));
@@ -2368,18 +2365,15 @@ function lineChart(curve){
   const zeroY = py(0);
   const last = curve[curve.length-1].v;
   const stroke = last >= 0 ? "var(--ok)" : "var(--danger)";
-  const gid = "cg" + (++chartSeq);
   const lp = pts[pts.length-1];
   const dots = curve.length <= 30 ? pts.slice(0, -1).map(q => `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="3" style="fill:var(--panel);stroke:${stroke}" stroke-width="1.8"/>`).join("") : "";
   const mono = 'style="fill:var(--muted);font-family:var(--sans);font-variant-numeric:tabular-nums"';
 
   return `
   <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Equity curve">
-    <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" style="stop-color:${stroke}" stop-opacity=".22"/><stop offset="100%" style="stop-color:${stroke}" stop-opacity="0"/></linearGradient></defs>
     <line x1="${pad}" y1="${zeroY}" x2="${W-pad}" y2="${zeroY}" style="stroke:var(--line-strong)" stroke-dasharray="3 4" stroke-linecap="round"/>
     <text x="${pad}" y="${zeroY-6}" font-size="10" ${mono}>$0</text>
-    <path d="${d} L${lp[0].toFixed(1)},${zeroY.toFixed(1)} L${pts[0][0].toFixed(1)},${zeroY.toFixed(1)} Z" fill="url(#${gid})" class="fadein"/>
-    <path d="${d}" pathLength="1" class="draw" fill="none" style="stroke:${stroke}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="${d}" fill="none" style="stroke:${stroke}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
     ${dots}
     <circle cx="${lp[0].toFixed(1)}" cy="${lp[1].toFixed(1)}" r="9" style="fill:${stroke}" opacity=".16"/>
     <circle cx="${lp[0].toFixed(1)}" cy="${lp[1].toFixed(1)}" r="4.5" style="fill:${stroke};stroke:var(--panel)" stroke-width="2"/>
@@ -2405,7 +2399,7 @@ function pieChart(slices){
   });
   return `
   <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-    <svg class="donut" width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="Allocation chart">
+    <svg width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="Allocation chart">
       <circle cx="80" cy="80" r="${r}" fill="none" style="stroke:var(--line)" stroke-width="${sw}" opacity=".5"/>${arcs}
       <text x="80" y="78" text-anchor="middle" font-size="15" font-weight="700" style="fill:var(--ink);font-family:var(--sans);font-variant-numeric:tabular-nums">${money(total,0)}</text>
       <text x="80" y="95" text-anchor="middle" font-size="10" style="fill:var(--muted);font-family:var(--sans)">Total</text>
@@ -2422,12 +2416,12 @@ function pieChart(slices){
 }
 
 /* ============================================================
-   15. VIEW — POSITION CALCULATOR
+   15. VIEW: POSITION CALCULATOR
    ============================================================ */
 
 function viewCalculator(){
   return `
-  ${pageHeader("Position Calculator", "Size every position by how much you could lose — not by how much you want to make.")}
+  ${pageHeader("Position Calculator", "Size every position by how much you could lose, not by how much you want to make.")}
 
   <div class="notice warn">
     A stop is not a guarantee. If the stock opens below your stop, you could lose more than the planned amount.
@@ -2461,7 +2455,7 @@ function viewCalculator(){
   </section>
 
   <section class="card">
-    <div class="card-head"><div><h2>Quick reference — risk per trade</h2></div></div>
+    <div class="card-head"><div><h2>Quick reference: risk per trade</h2></div></div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>Capital</th><th class="num">0.5% risk</th><th class="num">1% risk (only after review)</th></tr></thead>
       <tbody>
@@ -2472,7 +2466,7 @@ function viewCalculator(){
       </tbody>
     </table></div>
     <p class="small" style="margin-top:12px">
-      0.5% of a $500 sandbox is only $2.50 — often too small to size properly.
+      0.5% of a $500 sandbox is only $2.50, often too small to size properly.
       That is why Phase 4 asks you to choose, in writing, between fractional shares at up to 1% ($5) or staying in simulation.
     </p>
   </section>
@@ -2519,7 +2513,7 @@ function calcPositionSize(){
     </div>` : ""}
     ${tooBig ? `<div class="notice warn" style="margin-top:14px">
       This position would be <strong>${pct(posPctOfCapital)}</strong> of your capital.
-      Position value and planned loss are different numbers — but a position that large is still a concentration risk.
+      Position value and planned loss are different numbers, but a position that large is still a concentration risk.
     </div>` : ""}
     ${shares > 0 && posValue > capital ? `<div class="notice danger" style="margin-top:14px">
       The position value exceeds your capital. You cannot fund this trade. Reduce size or skip it.
@@ -2547,7 +2541,7 @@ function renderHeat(elId){
 }
 
 /* ============================================================
-   16. VIEW — THESIS BUILDER
+   16. VIEW: THESIS BUILDER
    ============================================================ */
 
 function viewThesis(){
@@ -2622,20 +2616,20 @@ function viewThesis(){
     ${S.theses.length ? S.theses.slice().reverse().map(t=>`
       <details>
         <summary>
-          <strong>${esc(t.ticker||"—")}</strong> · ${esc(t.company||"")}
+          <strong>${esc(t.ticker||"n/a")}</strong> · ${esc(t.company||"")}
           <span class="tag ${t.decision==="Buy"?"ok":t.decision==="Reject"?"danger":""}">${esc(t.decision||"Watch")}</span>
           <span class="small">${esc(t.dateReviewed||"")}</span>
         </summary>
         <div class="kv" style="margin-bottom:10px">
-          <dt>Type</dt><dd>${esc(t.type||"—")}</dd>
-          <dt>Horizon</dt><dd>${esc(t.horizon||"—")}</dd>
-          <dt>Industry</dt><dd>${esc(t.industry||"—")}</dd>
+          <dt>Type</dt><dd>${esc(t.type||"n/a")}</dd>
+          <dt>Horizon</dt><dd>${esc(t.horizon||"n/a")}</dd>
+          <dt>Industry</dt><dd>${esc(t.industry||"n/a")}</dd>
         </div>
         ${t.threeSentences ? `<p style="font-size:.9rem"><strong>In three sentences:</strong> ${esc(t.threeSentences)}</p>` : ""}
         ${t.wrong ? `<p style="font-size:.87rem"><strong>Proven wrong if:</strong> ${esc(t.wrong)}</p>` : ""}
         ${t.classification ? `<p style="font-size:.87rem"><span class="tag ${t.classification === "investment" ? "ok" : "warn"}">${esc(t.classification)}</span> ${t.growthStory === "yes" ? '<span class="tag warn">relies on a growth story</span>' : ""}</p>` : ""}
         ${S.graham.lens ? `${t.skeptCheck ? `<p style="font-size:.87rem"><strong>Checked against me:</strong> ${esc(t.skeptCheck)}</p>` : ""}${t.skeptHostile ? `<p style="font-size:.87rem"><strong>A hostile analyst would say:</strong> ${esc(t.skeptHostile)}</p>` : ""}${thesisGrowthWarning(t) ? `<div class="notice danger">${thesisGrowthWarning(t)}</div>` : ""}` : ""}
-        ${t.entryTrigger ? `<p style="font-size:.87rem"><strong>Entry:</strong> ${esc(t.entryTrigger)} · <strong>Stop:</strong> ${esc(t.stopLevel||"—")} · <strong>Target:</strong> ${esc(t.target||"—")}</p>` : ""}
+        ${t.entryTrigger ? `<p style="font-size:.87rem"><strong>Entry:</strong> ${esc(t.entryTrigger)} · <strong>Stop:</strong> ${esc(t.stopLevel||"n/a")} · <strong>Target:</strong> ${esc(t.target||"n/a")}</p>` : ""}
         <details style="background:transparent;border:none;padding:0;margin-top:8px">
           <summary style="font-size:.8rem;color:var(--muted)">Show full thesis</summary>
           <div class="kv" style="grid-template-columns:140px 1fr;font-size:.83rem;margin-top:8px">
@@ -2657,7 +2651,7 @@ function viewThesis(){
 }
 
 /* ============================================================
-   17. VIEW — WATCHLIST
+   17. VIEW: WATCHLIST
    ============================================================ */
 
 function viewWatchlist(){
@@ -2674,7 +2668,7 @@ function viewWatchlist(){
         <select id="wl-cat">${cats.map(c=>`<option>${c}</option>`).join("")}</select></div>
       <div class="field"><label>Price alert level</label><input type="number" step="0.01" id="wl-alert" placeholder="optional"></div>
     </div>
-    <div class="field"><label>Why am I watching this?</label><input id="wl-note" placeholder="One line. If you cannot write it, you are not watching — you are hoping."></div>
+    <div class="field"><label>Why am I watching this?</label><input id="wl-note" placeholder="One line. If you cannot write it, you are not watching. You are hoping."></div>
     <button class="btn primary" data-act="add-watch">Add to watchlist</button>
   </section>
 
@@ -2697,13 +2691,13 @@ function viewWatchlist(){
               <td><strong>${esc(w.ticker)}</strong></td>
               <td>${esc(w.name||"")}</td>
               <td style="white-space:normal;max-width:340px">${esc(w.note||"")}</td>
-              <td class="num">${w.alert?money(num(w.alert)):"—"}</td>
+              <td class="num">${w.alert?money(num(w.alert)):"n/a"}</td>
               <td>${hasThesis?'<span class="tag ok">yes</span>':'<span class="tag">no</span>'}</td>
               <td>
                 <select data-act="watch-cat" data-id="${w.id}" style="width:auto;padding:3px 6px;font-size:.75rem">
                   ${cats.map(c=>`<option ${w.category===c?"selected":""}>${c}</option>`).join("")}
                 </select>
-                <button class="btn sm ghost" data-act="del-watch" data-id="${w.id}">✕</button>
+                <button class="btn sm ghost" data-act="del-watch" data-id="${w.id}" aria-label="Delete" title="Delete">${ico("x")}</button>
               </td>
             </tr>`;
           }).join("")}</tbody>
@@ -2714,7 +2708,7 @@ function viewWatchlist(){
 }
 
 /* ============================================================
-   18. VIEW — RED FLAGS
+   18. VIEW: RED FLAGS
    ============================================================ */
 
 function viewRedFlags(){
@@ -2728,7 +2722,7 @@ function viewRedFlags(){
     Follow the action steps below before your next trade.
   </div>
   <section class="card">
-    <div class="card-head"><div><h2>Action steps — do these now</h2></div></div>
+    <div class="card-head"><div><h2>Action steps: do these now</h2></div></div>
     <ol style="margin:0;padding-left:22px;font-size:.9rem;line-height:2">
       <li>Stop trading.</li>
       <li>Write down what happened.</li>
@@ -2736,7 +2730,7 @@ function viewRedFlags(){
       <li>Return to simulation if needed.</li>
       <li><strong>Never fix a trading problem by making positions bigger.</strong></li>
     </ol>
-  </section>` : `<div class="notice ok">No red flags active. Keep the journal current — it is your early-warning system.</div>`}
+  </section>` : `<div class="notice ok">No red flags active. Keep the journal current: it is your early-warning system.</div>`}
 
   <section class="card">
     <div class="card-head"><div><h2>Detected from your data</h2><div class="sub">Not ticked by you. Found by the app.</div></div></div>
@@ -2781,7 +2775,7 @@ function viewRedFlags(){
 }
 
 /* ============================================================
-   19. VIEW — RESOURCES & GLOSSARY
+   19. VIEW: RESOURCES & GLOSSARY
    ============================================================ */
 
 function viewResources(){
@@ -2799,7 +2793,7 @@ function viewResources(){
 
   <section class="card">
     <div class="card-head"><div><h2>Weekly routine</h2>
-      <div class="sub">The full routine takes about 45–60 minutes a day. If that is too much, keep the Saturday and Sunday sessions and trim the daily news time — consistency beats volume.</div></div></div>
+      <div class="sub">The full routine takes about 45–60 minutes a day. If that is too much, keep the Saturday and Sunday sessions and trim the daily news time. Consistency beats volume.</div></div></div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>When</th><th>Time</th><th>What to do</th></tr></thead>
       <tbody>
@@ -2849,14 +2843,14 @@ function viewGlossary(){
     ${S.customGlossary.length ? `<div class="divider"></div>
       <h4>Your terms</h4>
       ${S.customGlossary.map((c,i)=>`<div class="inline" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)">
-        <span><strong>${esc(c.term)}</strong> — <span class="small">${esc(c.def)}</span></span>
-        <button class="btn sm ghost" data-act="del-gloss" data-id="${i}">✕</button></div>`).join("")}` : ""}
+        <span><strong>${esc(c.term)}</strong>: <span class="small">${esc(c.def)}</span></span>
+        <button class="btn sm ghost" data-act="del-gloss" data-id="${i}" aria-label="Delete" title="Delete">${ico("x")}</button></div>`).join("")}` : ""}
   </section>
   `;
 }
 
 /* ============================================================
-   20. VIEW — SETTINGS
+   20. VIEW: SETTINGS
    ============================================================ */
 
 function viewSettings(){
@@ -2926,7 +2920,7 @@ function viewSettings(){
     <div class="card-head"><div><h2>About this tool</h2></div></div>
     <p style="font-size:.87rem">
       This site is <em>Sylvia</em>, created by Akoo. It is an educational plan,
-      not a promise of returns and not financial advice. Nothing here connects to a broker — you enter
+      not a promise of returns and not financial advice. Nothing here connects to a broker. You enter
       your own trades. Success is measured by the quality of your decisions, the consistency of your risk
       controls, your understanding of what you own, and your honesty about the evidence.
     </p>
@@ -2935,7 +2929,7 @@ function viewSettings(){
 }
 
 /* ============================================================
-   VIEWS — WEEKLY REVIEW & PLAN REPORT
+   VIEWS: WEEKLY REVIEW & PLAN REPORT
    ============================================================ */
 
 function addDays(iso, n){
@@ -2986,7 +2980,7 @@ function viewReview(){
     ${statBox("Routine days", routineDays + " of 7", "Marked complete")}
     ${statBox("Simulated orders", orders.length, "Logged this week")}
     ${statBox("Trades closed", closed.length, closed.length ? wins + " winners" : "None closed")}
-    ${statBox("Net result", closed.length ? plText(net) : "—", "After recorded costs", net > 0 ? "pos" : net < 0 ? "neg" : "")}
+    ${statBox("Net result", closed.length ? plText(net) : "n/a", "After recorded costs", net > 0 ? "pos" : net < 0 ? "neg" : "")}
   </div>
 
   ${violTotal ? `<div class="notice danger"><strong>${violTotal} rule violation${violTotal>1?"s":""} this week.</strong>
@@ -3000,7 +2994,7 @@ function viewReview(){
       <tbody>${trades.map(t => { const n = tradeNet(t); return `<tr>
         <td class="mono">${esc(t.date)}</td><td><strong>${esc(t.ticker)}</strong></td><td>${esc(t.mode)}</td><td>${esc(t.status)}</td>
         <td class="num ${n>0?"pos":n<0?"neg":""}">${plText(n)}</td>
-        <td style="white-space:normal">${esc(t.violations || "—")}</td></tr>`; }).join("")}</tbody></table></div>`
+        <td style="white-space:normal">${esc(t.violations || "n/a")}</td></tr>`; }).join("")}</tbody></table></div>`
       : `<div class="empty">No trades dated in this week. <a href="#journal">Add one in the journal</a>.</div>`}
   </section>
 
@@ -3047,7 +3041,7 @@ function viewReport(){
 
   <section class="card">
     <div class="card-head"><div><h2>${p.name ? esc(p.name) + "'s" : "My"} investing plan</h2>
-      <div class="sub">Report date ${esc(today)} · started ${esc(p.startDate || "—")} · currently Phase ${p.currentPhase}: ${esc(PHASES[p.currentPhase].name)}</div></div></div>
+      <div class="sub">Report date ${esc(today)} · started ${esc(p.startDate || "n/a")} · currently Phase ${p.currentPhase}: ${esc(PHASES[p.currentPhase].name)}</div></div></div>
     <dl class="kv">
       <dt>Goal</dt><dd style="font-family:var(--sans)">${esc(p.goal || "Not set")}</dd>
       <dt>Time horizon</dt><dd style="font-family:var(--sans)">${esc(p.horizon || "Not set")}</dd>
@@ -3082,7 +3076,7 @@ function viewReport(){
       <thead><tr><th>Date</th><th>Ticker</th><th>Setup</th><th>Mode</th><th class="num">Net P/L</th><th class="num">R</th></tr></thead>
       <tbody>${closed.slice(0, 40).map(t => { const n = tradeNet(t), r = tradeR(t); return `<tr>
         <td class="mono">${esc(t.date)}</td><td><strong>${esc(t.ticker)}</strong></td><td>${esc(t.strategy || "")}</td><td>${esc(t.mode)}</td>
-        <td class="num ${n>0?"pos":"neg"}">${plText(n)}</td><td class="num">${r===null?"—":(r>0?"+":"")+r.toFixed(2)+"R"}</td></tr>`; }).join("")}</tbody></table></div>
+        <td class="num ${n>0?"pos":"neg"}">${plText(n)}</td><td class="num">${r===null?"n/a":(r>0?"+":"")+r.toFixed(2)+"R"}</td></tr>`; }).join("")}</tbody></table></div>
     ${closed.length > 40 ? `<p class="small" style="margin-top:8px">Showing the latest 40 of ${closed.length}. Export the CSV from Settings for the full list.</p>` : ""}`
     : `<div class="empty">No closed trades yet.</div>`}
   </section>
@@ -3118,7 +3112,7 @@ const LIVE = {};
 
 function has(v){ return v !== "" && v != null && !isNaN(parseFloat(v)); }
 function avgOf(a){ return a.reduce((x, y) => x + y, 0) / a.length; }
-function fx(v, dp){ return (v === null || v === undefined || isNaN(v)) ? "—" : v.toFixed(dp === undefined ? 2 : dp); }
+function fx(v, dp){ return (v === null || v === undefined || isNaN(v)) ? "n/a" : v.toFixed(dp === undefined ? 2 : dp); }
 function sandboxCap(){
   const v = parseFloat(S.graham.sandboxCap);
   return (isNaN(v) || v <= 0) ? 500 : Math.min(v, 500);
@@ -3322,8 +3316,8 @@ function mosResultHTML(){
   const r = mosCalc(mosInputs());
   const v = mosVerdict(r);
   const anchor = (name, val, note) => `<tr><td><strong>${name}</strong><div class="small">${note}</div></td>
-    <td class="num">${val === null ? "—" : money(val)}</td>
-    <td class="num">${val === null || !r.price ? "—" : (val >= r.price ? "▲ " : "▼ ") + pct(Math.abs(val - r.price) / val, 0) + (val >= r.price ? " above price" : " below price")}</td></tr>`;
+    <td class="num">${val === null ? "n/a" : money(val)}</td>
+    <td class="num">${val === null || !r.price ? "n/a" : (val >= r.price ? ico("up") : ico("down")) + pct(Math.abs(val - r.price) / val, 0) + (val >= r.price ? " above price" : " below price")}</td></tr>`;
   return `<div class="notice ${v.cls}"><strong>${esc(v.title)}</strong><br>${esc(v.text)}</div>
     ${r.single ? `<p class="small">Only one earnings anchor could be computed, so the range is a single point. Fill in the missing input for a real range.</p>` : ""}
     ${mosBandHTML(r)}
@@ -3334,7 +3328,7 @@ function mosResultHTML(){
         ${anchor("Earnings power", r.power, `Normalized earnings ÷ required return (${r.req ? pct(r.req, 1) : "not set"}). Value if earnings never grow.`)}
         ${anchor("Graham Number, a ceiling", r.gn, "√(22.5 × earnings × book value). The most a defensive investor would pay. It is a limit, not a target.")}
       </tbody></table></div>
-    <p class="small" style="margin-top:10px">Value range: ${r.low === null ? "—" : money(r.low) + " to " + money(r.high)}. Margin of safety against the low end: <strong>${r.mosLow === null ? "—" : (r.mosLow >= 0 ? "▲ " : "▼ ") + pct(r.mosLow, 1)}</strong>.</p>`;
+    <p class="small" style="margin-top:10px">Value range: ${r.low === null ? "n/a" : money(r.low) + " to " + money(r.high)}. Margin of safety against the low end: <strong>${r.mosLow === null ? "n/a" : (r.mosLow >= 0 ? ico("up") : ico("down")) + pct(r.mosLow, 1)}</strong>.</p>`;
 }
 LIVE.mos = host => { host.querySelector(".live-out").innerHTML = mosResultHTML(); };
 
@@ -3436,7 +3430,7 @@ function defCriteria(c){
   const gc = growthCalc(c);
   if (gc.start !== null && gc.end !== null) {
     if (gc.start <= 0) add("grow", "Earnings up at least 33% over 10 years", "fail", `Start average ${fx(gc.start)} is not positive`, "The starting average is zero or negative, so a percentage change is meaningless. Treat the record as unproven.");
-    else add("grow", "Earnings up at least 33% over 10 years", gc.change >= 0.33 ? "pass" : "fail", `${gc.change >= 0 ? "▲" : "▼"} ${pct(Math.abs(gc.change), 0)} (${fx(gc.start)} to ${fx(gc.end)})`,
+    else add("grow", "Earnings up at least 33% over 10 years", gc.change >= 0.33 ? "pass" : "fail", `${gc.change >= 0 ? "Up" : "Down"} ${pct(Math.abs(gc.change), 0)} (${fx(gc.start)} to ${fx(gc.end)})`,
       "Earnings grew less than a third across the decade, measured on three-year averages. Slow growth is fine if the price is low enough. Check the price tests below.");
   } else add("grow", "Earnings up at least 33% over 10 years", "none", "Enter the ten yearly figures, or the two three-year averages.", "");
 
@@ -3542,12 +3536,12 @@ function ringSVG(years, goal){
   const f = clamp(years / goal, 0, 1), r = 26, C = 2 * Math.PI * r;
   return `<svg class="ring" viewBox="0 0 64 64" role="img" aria-label="${years} of ${goal} years of uninterrupted dividends">
     <circle cx="32" cy="32" r="${r}" fill="none" style="stroke:var(--line)" stroke-width="7"/>
-    ${f > 0 ? `<circle class="ring-fg" cx="32" cy="32" r="${r}" fill="none" style="stroke:${f >= 1 ? "var(--ok)" : "var(--accent)"}" stroke-width="7" stroke-linecap="round" pathLength="100"
+    ${f > 0 ? `<circle cx="32" cy="32" r="${r}" fill="none" style="stroke:${f >= 1 ? "var(--ok)" : "var(--accent)"}" stroke-width="7" stroke-linecap="round" pathLength="100"
       stroke-dasharray="${(f * 100).toFixed(1)} 100" transform="rotate(-90 32 32)"/>` : ""}
     <text x="32" y="36" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--ink)">${years}</text></svg>`;
 }
 
-const STAT = { pass:["✓", "ok", "Pass"], fail:["✗", "danger", "Fail"], none:["–", "", "No data"] };
+const STAT = { pass:[ico("check"), "ok", "Pass"], fail:[ico("x"), "danger", "Fail"], none:[ico("minus"), "", "No data"] };
 function statusTag(s){ const x = STAT[s]; return `<span class="tag ${x[1]}">${x[0]} ${x[2]}</span>`; }
 
 function companyResults(c){
@@ -3562,20 +3556,20 @@ function companyResults(c){
       ${progressBar(d.passN / 8, d.allPass)}</div>
     ${fails.length ? `<h4>What failed, and what to do</h4><ul class="plain">${fails.map(x => `<li>${statusTag("fail")} <strong>${esc(x.label)}</strong> (${esc(x.detail)}). ${esc(x.why)}</li>`).join("")}</ul>` : ""}
     ${none.length ? `<h4>Still missing</h4><ul class="plain">${none.map(x => `<li>${statusTag("none")} ${esc(x.label)}. <span class="small">${esc(x.detail)}</span></li>`).join("")}</ul>` : ""}
-    ${d.passN ? `<h4>Passed</h4><p>${d.list.filter(x => x.status === "pass").map(x => `<span class="tag ok">✓ ${esc(x.label.split(" (")[0])}</span>`).join(" ")}</p>` : ""}
+    ${d.passN ? `<h4>Passed</h4><p>${d.list.filter(x => x.status === "pass").map(x => `<span class="tag ok">${ico("check")}${esc(x.label.split(" (")[0])}</span>`).join(" ")}</p>` : ""}
     <div class="grid g3" style="margin-top:12px">
       <div class="stat"><div class="k">Balance sheet strength</div><div class="v">${bs.label}</div>
         <div class="n">Current ratio, debt vs working capital, interest cover ${bs.cov === null ? "(not entered)" : bs.cov === Infinity ? "(no interest)" : "(" + fx(bs.cov, 1) + "×)"}</div></div>
-      <div class="stat"><div class="k">Ten-year earnings record</div><div class="v">${losses.length ? "▼ " + losses.length + " loss yr" + (losses.length > 1 ? "s" : "") : (e.filter(x => x !== null).length === 10 ? "No losses" : "—")}</div>
+      <div class="stat"><div class="k">Ten-year earnings record</div><div class="v">${losses.length ? ico("down") + losses.length + " loss yr" + (losses.length > 1 ? "s" : "") : (e.filter(x => x !== null).length === 10 ? "No losses" : "n/a")}</div>
         <div class="n">${losses.length ? "Loss in: " + esc(losses.join(", ")) : "Enter all ten years to confirm"}</div></div>
       <div class="stat"><div class="k">Dividend record</div><div class="v ring-wrap">${ringSVG(yrs, 20)}<span class="small">of 20 years</span></div></div>
     </div>
-    <p class="small" style="margin-top:10px">Growth over the decade: <strong>${gc.change === null ? "—" : (gc.change >= 0 ? "▲ " : "▼ ") + pct(Math.abs(gc.change), 0)}</strong>
+    <p class="small" style="margin-top:10px">Growth over the decade: <strong>${gc.change === null ? "n/a" : (gc.change >= 0 ? ico("up") : ico("down")) + pct(Math.abs(gc.change), 0)}</strong>
       ${gc.start !== null && gc.end !== null ? `(three-year average ${fx(gc.start)} at the start, ${fx(gc.end)} at the end)` : ""}.</p>
     <h4>Value against price</h4>
     <div class="notice ${v.cls}"><strong>${esc(v.title)}</strong><br>${esc(v.text)}</div>
     ${mosBandHTML(m)}
-    <p class="small">Graham Number ${m.gn === null ? "—" : money(m.gn)} is a ceiling, not a target.</p>
+    <p class="small">Graham Number ${m.gn === null ? "n/a" : money(m.gn)} is a ceiling, not a target.</p>
     ${warns.length ? `<h4>Warnings</h4>${warns.map(x => `<div class="notice danger" style="margin-bottom:8px">${esc(x)}</div>`).join("")}` : ""}`;
 }
 LIVE.company = host => {
@@ -3657,7 +3651,7 @@ function rollupHTML(){
   const r = defRollup();
   return `${statBox("Companies screened", r.assessed, `of ${r.total} saved`)}
     ${statBox("Pass all eight", `${r.allPass} of ${r.assessed}`, "Holdings that pass every test")}
-    ${statBox("Average score", r.assessed ? fx(r.avgRate * 8, 1) + " of 8" : "—", "Across screened companies")}`;
+    ${statBox("Average score", r.assessed ? fx(r.avgRate * 8, 1) + " of 8" : "n/a", "Across screened companies")}`;
 }
 function viewDefensiveScreener(){
   const r = defRollup(), thr = sizeThreshold();
@@ -3679,7 +3673,7 @@ function viewDefensiveScreener(){
     <div class="tbl-wrap"><table>
       <thead><tr><th>Company</th>${crit.map((x, k) => `<th class="num" title="${esc(x.label)}">Test ${k + 1}</th>`).join("")}<th class="num">Score</th></tr></thead>
       <tbody>${rows.map(({ c, d }) => `<tr><td><strong>${esc(tickerOf(c))}</strong></td>${d.list.map(x => `<td class="num" title="${esc(x.label)}">${STAT[x.status][0]}</td>`).join("")}<td class="num"><strong>${d.passN}/8</strong></td></tr>`).join("")}</tbody></table></div>
-    <p class="small" style="margin-top:8px">✓ pass, ✗ fail, – not enough data. Hover or tap a column for the test.</p></section>` : ""}
+    <p class="small" style="margin-top:8px">${ico("check")} pass, ${ico("x")} fail, ${ico("minus")} not enough data. Hover or tap a column for the test.</p></section>` : ""}
   <section class="card">
     <div class="card-head"><div><h2>Screen a company</h2><div class="sub">Everything you need is on this page. Financial statements are on the company's annual report.</div></div>
       <button class="btn primary sm no-print" style="margin-left:auto" data-act="add-company">+ Add a company</button></div>
@@ -3763,7 +3757,7 @@ function viewInvestorType(){
   </section>
   <section class="card">
     <div class="card-head"><div><h2>For most people</h2></div></div>
-    <div class="notice accent" style="font-size:1rem"><strong>For most people, the most Intelligent-Investor-compatible action is a low-cost, broadly diversified portfolio and a mechanical allocation — not active trading.</strong></div>
+    <div class="notice accent" style="font-size:1rem"><strong>For most people, the most Intelligent-Investor-compatible action is a low-cost, broadly diversified portfolio and a mechanical allocation, not active trading.</strong></div>
     <p>If that describes you, the best use of this app is the <a href="#allocation">allocation policy</a>, the <a href="#defensive-screener">defensive screener</a> and the weekly review. The trading pages are practice, and Phase 4 is optional.</p>
     <p><button class="btn" data-act="goto-honesty">Read the Month 12 honesty check</button></p>
   </section>
@@ -3798,8 +3792,8 @@ function twoLineChart(points){
     <line x1="${pad}" y1="${py(50)}" x2="${W - pad}" y2="${py(50)}" style="stroke:var(--line-strong)" stroke-dasharray="3 4" stroke-linecap="round"/>
     <text x="${pad - 6}" y="${py(100) + 4}" font-size="10" text-anchor="end" ${mono}>100</text>
     <text x="${pad - 6}" y="${py(0) + 4}" font-size="10" text-anchor="end" ${mono}>0</text>
-    <path d="${path("market")}" pathLength="1" class="draw" fill="none" style="stroke:var(--amber)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="${path("mood")}" class="fadein" fill="none" style="stroke:var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
+    <path d="${path("market")}" fill="none" style="stroke:var(--amber)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="${path("mood")}" fill="none" style="stroke:var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/>
     <circle cx="${em[0].toFixed(1)}" cy="${em[1].toFixed(1)}" r="4.5" style="fill:var(--amber);stroke:var(--panel)" stroke-width="2"/>
     <circle cx="${eu[0].toFixed(1)}" cy="${eu[1].toFixed(1)}" r="4.5" style="fill:var(--accent);stroke:var(--panel)" stroke-width="2"/>
   </svg>
@@ -3848,7 +3842,7 @@ function viewMrMarket(){
   </section>
   ${entries.length ? `<section class="card"><div class="card-head"><div><h2>Recent check-ins</h2></div></div>
     <div class="tbl-wrap"><table><thead><tr><th>Date</th><th class="num">Market</th><th class="num">Me</th><th class="num">Gap</th><th>Price action swayed me</th></tr></thead>
-    <tbody>${entries.slice(-14).reverse().map(([d, e]) => `<tr><td class="mono">${esc(d)}</td><td class="num">${esc(e.market)}</td><td class="num">${esc(e.mood)}</td><td class="num">${Math.abs(num(e.market) - num(e.mood))}</td><td>${e.influenced === "yes" ? '<span class="tag warn">yes</span>' : e.influenced === "no" ? "no" : "—"}</td></tr>`).join("")}</tbody></table></div></section>` : ""}`;
+    <tbody>${entries.slice(-14).reverse().map(([d, e]) => `<tr><td class="mono">${esc(d)}</td><td class="num">${esc(e.market)}</td><td class="num">${esc(e.mood)}</td><td class="num">${Math.abs(num(e.market) - num(e.mood))}</td><td>${e.influenced === "yes" ? '<span class="tag warn">yes</span>' : e.influenced === "no" ? "no" : "n/a"}</td></tr>`).join("")}</tbody></table></div></section>` : ""}`;
 }
 
 /* ---------- 23, 24. Allocation policy, rebalancing, DCA ---------- */
@@ -3891,7 +3885,7 @@ function allocCalc(){
 }
 function tradeLine(name, v){
   if (Math.abs(v) < 0.005) return `<tr><td>${name}</td><td class="num">No trade</td></tr>`;
-  return `<tr><td>${name}</td><td class="num"><strong>${v > 0 ? "▲ Buy " : "▼ Sell "}${money(Math.abs(v), 0)}</strong></td></tr>`;
+  return `<tr><td>${name}</td><td class="num"><strong>${v > 0 ? "Buy " : "Sell "}${money(Math.abs(v), 0)}</strong></td></tr>`;
 }
 function allocResultHTML(){
   const r = allocCalc();
@@ -3899,7 +3893,7 @@ function allocResultHTML(){
   if (r.outOfBounds) h += `<div class="notice danger"><strong>Your policy of ${fx(r.raw, 0)}% in stocks is outside the 25 to 75% bounds.</strong> The calculator is using ${r.pol}% until you change it. Set a policy inside the bounds.</div>`;
   if (!r.ready) return h + `<div class="notice">Enter the current value of your stocks and your defensive assets (bonds and cash) to see the trades.</div>`;
   h += `<div class="notice ${r.trig.fire ? "warn" : "ok"}"><strong>${r.trig.fire ? "Rebalance." : "Do nothing."}</strong> ${esc(r.trig.text)}</div>`;
-  h += `<div class="grid g3">${statBox("Stocks now", fx(r.curPct, 1) + "%", `target ${r.pol}%`)}${statBox("Drift", (r.drift >= 0 ? "▲ " : "▼ ") + fx(Math.abs(r.drift), 1) + " pts", "From target")}${statBox("Total after new money", money(r.total, 0))}</div>`;
+  h += `<div class="grid g3">${statBox("Stocks now", fx(r.curPct, 1) + "%", `target ${r.pol}%`)}${statBox("Drift", (r.drift >= 0 ? ico("up") : ico("down")) + fx(Math.abs(r.drift), 1) + " pts", "From target")}${statBox("Total after new money", money(r.total, 0))}</div>`;
   h += `<h4>Trades to reach ${r.pol}% stocks, ${100 - r.pol}% defensive</h4><div class="tbl-wrap"><table><tbody>${tradeLine("Stocks", r.tStocks)}${tradeLine("Defensive assets (bonds and cash)", r.tDef)}</tbody></table></div>`;
   if (r.newMoneyOnly) h += `<p class="small">New money alone is enough. You can rebalance without selling.</p>`;
   h += `<p style="margin-top:10px"><strong>Rebalance by rule, not by feeling.</strong> If the trigger says do nothing, do nothing, even when the news is exciting.</p>`;
@@ -3952,7 +3946,7 @@ function dcaResultHTML(){
     <div class="grid g3">${statBox("Total you put in", money(r.contributed, 0), `${r.n} contributions`)}</div>
     <div class="tbl-wrap" style="margin-top:12px"><table><thead><tr><th>If the portfolio earned, per year</th><th class="num">It would be worth</th><th class="num">Against what you put in</th></tr></thead>
     <tbody>${r.rows.map(x => `<tr><td>${x.r > 0 ? "+" : x.r < 0 ? "−" : ""}${Math.abs(x.r)}%</td><td class="num">${money(x.fv, 0)}</td>
-      <td class="num ${x.fv >= r.contributed ? "pos" : "neg"}">${x.fv >= r.contributed ? "▲ " : "▼ "}${money(Math.abs(x.fv - r.contributed), 0)}</td></tr>`).join("")}</tbody></table></div>
+      <td class="num ${x.fv >= r.contributed ? "pos" : "neg"}">${x.fv >= r.contributed ? ico("up") : ico("down")}${money(Math.abs(x.fv - r.contributed), 0)}</td></tr>`).join("")}</tbody></table></div>
     <div class="notice warn" style="margin-top:12px"><strong>These are illustrations, not forecasts.</strong> No formula removes the risk of loss, and Graham warned that formulas can fail at extremes. A steady schedule only removes timing decisions. It does not remove losses. Keep a cash reserve so you never have to sell at a bad moment.</div>`;
 }
 LIVE.dca = host => { host.querySelector(".live-out").innerHTML = dcaResultHTML(); };
@@ -4052,7 +4046,7 @@ function portfolioMoS(){
 function pmosBlock(){
   const p = portfolioMoS();
   return `<div class="stat" style="margin-top:12px"><div class="k">Portfolio margin of safety</div>
-    <div class="v ${p.value !== null && p.value <= 0 ? "neg" : ""}">${p.value === null ? "—" : fx(p.value, 1) + "%"}</div>
+    <div class="v ${p.value !== null && p.value <= 0 ? "neg" : ""}">${p.value === null ? "n/a" : fx(p.value, 1) + "%"}</div>
     <div class="n">${p.value === null ? "Record the margin of safety in the journal when you enter." : `Weighted by position size across ${p.n} of ${p.total} open position${p.total === 1 ? "" : "s"}. ${p.n < p.total ? "Positions without a recorded margin are left out. That is a gap, not a pass." : ""}`}</div></div>`;
 }
 function concentration(){
@@ -4143,7 +4137,7 @@ function dashboardGraham(){
         <div class="v">${ex.counts.investment} / ${ex.counts.speculation + ex.counts.unclear}</div>
         <div class="bar split" role="img" aria-label="${tot ? Math.round(invPct) + "% of open positions are investment" : "No open positions"}"><i style="width:${invPct.toFixed(0)}%"></i></div>
         <div class="n">Open positions. Live speculation ${money(ex.liveSpec, 0)} of ${money(ex.cap, 0)}. Unclear counts as speculation.</div></div>
-      ${statBox("Portfolio margin of safety", pm.value === null ? "—" : fx(pm.value, 1) + "%", pm.value === null ? '<a href="#graham-mos">Check a price</a>' : `${pm.n} of ${pm.total} open positions`, pm.value !== null && pm.value <= 0 ? "neg" : "")}
+      ${statBox("Portfolio margin of safety", pm.value === null ? "n/a" : fx(pm.value, 1) + "%", pm.value === null ? '<a href="#graham-mos">Check a price</a>' : `${pm.n} of ${pm.total} open positions`, pm.value !== null && pm.value <= 0 ? "neg" : "")}
       ${statBox("Defensive criteria", `${r.allPass} of ${r.assessed}`, r.assessed ? "companies pass all eight" : '<a href="#defensive-screener">Screen a company</a>')}
       ${statBox("Forecasting caught", mm.timingCount, `${timingLast7()} in the last 7 days`)}
     </div>
@@ -4171,9 +4165,9 @@ function grahamMetricsHTML(){
   <h2 class="lesson-group">Graham lens</h2>
   <div class="grid g4" style="margin-bottom:16px">
     ${statBox("Portfolio heat", money(heat.total), `${pct(heat.pctOf)} of ${money(heat.capital, 0)}. 2% ceiling.`, heat.pctOf > 0.02 ? "neg" : "")}
-    ${statBox("Portfolio margin of safety", pm.value === null ? "—" : fx(pm.value, 1) + "%", pm.value === null ? "Record it in the journal" : `${pm.n} of ${pm.total} open positions`, pm.value !== null && pm.value <= 0 ? "neg" : "")}
+    ${statBox("Portfolio margin of safety", pm.value === null ? "n/a" : fx(pm.value, 1) + "%", pm.value === null ? "Record it in the journal" : `${pm.n} of ${pm.total} open positions`, pm.value !== null && pm.value <= 0 ? "neg" : "")}
     ${statBox("Holdings", con.n, "Distinct open tickers")}
-    ${statBox("Businesslike decisions", bl.rate === null ? "—" : pct(bl.rate, 0), bl.rate === null ? "From the weekly review" : `${bl.yes} of ${bl.tot} answers`)}
+    ${statBox("Businesslike decisions", bl.rate === null ? "n/a" : pct(bl.rate, 0), bl.rate === null ? "From the weekly review" : `${bl.yes} of ${bl.tot} answers`)}
   </div>
   <section class="card">
     <div class="card-head"><div><h2>Concentration monitor</h2></div></div>
@@ -4183,7 +4177,7 @@ function grahamMetricsHTML(){
   <section class="card">
     <div class="card-head"><div><h2>Results by classification</h2></div></div>
     <div class="tbl-wrap"><table><thead><tr><th>Class</th><th class="num">Open</th><th class="num">Closed</th><th class="num">Win rate</th><th class="num">Net</th></tr></thead>
-    <tbody>${byClass.map(x => `<tr><td>${x.k === "unclear" ? "Unclear (counts as speculation)" : x.k[0].toUpperCase() + x.k.slice(1)}</td><td class="num">${x.open}</td><td class="num">${x.n}</td><td class="num">${x.win === null ? "—" : pct(x.win, 0)}</td><td class="num ${x.net > 0 ? "pos" : x.net < 0 ? "neg" : ""}">${x.n ? plText(x.net) : "—"}</td></tr>`).join("")}</tbody></table></div>
+    <tbody>${byClass.map(x => `<tr><td>${x.k === "unclear" ? "Unclear (counts as speculation)" : x.k[0].toUpperCase() + x.k.slice(1)}</td><td class="num">${x.open}</td><td class="num">${x.n}</td><td class="num">${x.win === null ? "n/a" : pct(x.win, 0)}</td><td class="num ${x.net > 0 ? "pos" : x.net < 0 ? "neg" : ""}">${x.n ? plText(x.net) : "n/a"}</td></tr>`).join("")}</tbody></table></div>
     <p class="small" style="margin-top:8px">Judge the classes by how well the process held, not by which one made more.</p>
   </section>
   <section class="card">
@@ -4193,9 +4187,9 @@ function grahamMetricsHTML(){
   <section class="card">
     <div class="card-head"><div><h2>Behaviour</h2></div></div>
     <div class="grid g3">
-      ${statBox("Driven by the thesis", b.n ? pct(b.thesis / b.n, 0) : "—", `${b.thesis} of ${b.n} recorded decisions`)}
-      ${statBox("Driven by price movement", b.n ? pct(b.price / b.n, 0) : "—", `${b.price} of ${b.n}. Both: ${b.both}`, b.n && b.price / b.n > 0.25 ? "neg" : "")}
-      ${statBox("Leaning on growth stories", gr.totalTh ? `${gr.th} of ${gr.totalTh}` : "—", `theses. ${gr.over} company case${gr.over === 1 ? "" : "s"} assume growth above the record`)}
+      ${statBox("Driven by the thesis", b.n ? pct(b.thesis / b.n, 0) : "n/a", `${b.thesis} of ${b.n} recorded decisions`)}
+      ${statBox("Driven by price movement", b.n ? pct(b.price / b.n, 0) : "n/a", `${b.price} of ${b.n}. Both: ${b.both}`, b.n && b.price / b.n > 0.25 ? "neg" : "")}
+      ${statBox("Leaning on growth stories", gr.totalTh ? `${gr.th} of ${gr.totalTh}` : "n/a", `theses. ${gr.over} company case${gr.over === 1 ? "" : "s"} assume growth above the record`)}
     </div>
   </section>
   <section class="card">
@@ -4280,7 +4274,156 @@ function thesisLensPanel(){
     <a href="#graham-mos">Check the margin of safety</a> · <a href="#graham-investor">Classify it</a></div>`;
 }
 
+function viewWelcome(){
+  const tools = [
+    ["journal", "Trade journal", "Record every trade, paper or live, with the reason, the plan and the result."],
+    ["thesis", "Thesis builder", "Write down why you would own a business before you buy it. A thesis cannot be marked Buy until its checks are done."],
+    ["graham-mos", "Margin of safety calculator", "Compare a price with three estimates of value. It shows a gap. It does not predict a return."],
+    ["defensive-screener", "Defensive screener", "Eight tests from Graham's book for a cautious investor, scored for each company you research."],
+    ["mr-market", "Mr. Market log", "Record the market's mood and your own each day, and count the times you tried to forecast."],
+    ["allocation", "Allocation planner", "Set a stock and bond split between 25% and 75%, then see what to buy or sell to get back to it."],
+    ["calculator", "Position calculator", "Work out how many shares to buy from the amount you can afford to lose."],
+    ["review", "Weekly review", "A short check on whether your decisions were businesslike, whatever the outcome."],
+    ["redflags", "Red flags", "Warnings drawn from your own entries. Each one says what to do next."],
+    ["report", "Plan report", "Print or save a summary of your plan and progress as a PDF."]
+  ];
+  const phases = [
+    ["0. Setup", "Week 0", "Read the restrictions, sign a written agreement with yourself, and set up your tools."],
+    ["1. Foundation", "Months 1 to 3", "Learn how markets and orders work. Keep a short daily routine."],
+    ["2. Analysis", "Months 4 to 6", "Read company reports and charts, log your own biases, and write a thesis for each idea."],
+    ["3. Risk", "Months 7 to 9", "Size positions by what you can lose, set an allocation, and sign a written trading plan."],
+    ["4. Small live test", "Months 10 to 12", "Optional. Follow your rules with up to $500 of real money."]
+  ];
+  const faq = [
+    ["Is it free?", "Yes. There is no payment, no sign-up and no advertising."],
+    ["Is this financial advice?", "No. Sylvia is an educational plan. It does not recommend any security and it does not predict returns. Speak to a licensed professional before you put real money at risk."],
+    ["Do I need a brokerage account?", "Not for phases 0 to 3, which use paper trades. You only need one for the optional live test in phase 4."],
+    ["What happens if I clear my browser data?", "Your entries are deleted, because they are stored in the browser. Export a JSON backup from Settings now and then, and import it to restore your work."],
+    ["Can I use it on my phone and my laptop?", "Yes, but each device keeps its own data. To move your work, export a backup on one device and import it on the other."],
+    ["Who made it?", "Akoo. Sylvia is an independent project and is not affiliated with the author or publisher of The Intelligent Investor."]
+  ];
+  return `
+  <div class="lp">
+    <header class="lp-head">
+      <div class="brand">
+        <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="currentColor" style="color:var(--accent)"/><path d="M22 9.5C22 6 10 6 10 12c0 5.8 12 3 12 8.6 0 3.2-5 4.4-9 2.6" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="12.6" cy="23.3" r="2.5" fill="#E39B1B"/></svg>
+        <span class="brand-text">Sylvia<small>by Akoo</small></span>
+      </div>
+      <nav class="lp-nav" aria-label="Page sections">
+        <button class="lp-link" data-act="scroll-to" data-target="how">How it works</button>
+        <button class="lp-link" data-act="scroll-to" data-target="tools">Tools</button>
+        <button class="lp-link" data-act="scroll-to" data-target="faq">Questions</button>
+        <button class="icon-btn" data-act="toggle-theme" aria-label="Toggle dark mode" title="Toggle dark mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+        <a class="btn primary keep lp-link" href="#dashboard" style="margin-left:6px">Open the planner</a>
+      </nav>
+    </header>
+
+    <section class="lp-hero" aria-labelledby="lp-title">
+      <div>
+        <p class="lp-kicker">A free planner for beginner investors</p>
+        <h1 id="lp-title">A 12-month plan for learning to invest without paying for your own mistakes.</h1>
+        <p class="lp-lede">Sylvia gives you a month-by-month course, a trade journal and calculators that stop you before you break your own rules. You practise on paper first. It follows the ideas in Benjamin Graham's The Intelligent Investor, and it runs entirely in your browser.</p>
+        <div class="lp-cta">
+          <a class="btn primary" href="#dashboard">Open the planner</a>
+          <a class="btn" href="Sylvia-User-Guide.pdf" target="_blank" rel="noopener">Read the user guide (PDF)</a>
+        </div>
+      </div>
+      <div class="lp-facts" role="list" aria-label="Facts about Sylvia">
+        <div class="lp-fact" role="listitem"><b>12</b><span>months, in 5 phases</span></div>
+        <div class="lp-fact" role="listitem"><b>28</b><span>short lessons from The Intelligent Investor, each tied to a feature</span></div>
+        <div class="lp-fact" role="listitem"><b>$500</b><span>the most the optional live test allows</span></div>
+        <div class="lp-fact" role="listitem"><b>0</b><span>accounts to create. Your entries stay in your browser.</span></div>
+      </div>
+    </section>
+
+    <section class="lp-sec" aria-labelledby="lp-who">
+      <div><p class="lp-kicker">Audience</p><h2 id="lp-who">Who it is for, and who it is not</h2></div>
+      <div class="lp-two">
+        <div>
+          <h3>It is for</h3>
+          <ul class="lp-list">
+            <li>People new to investing who want a structured course instead of scattered videos.</li>
+            <li>People who prefer a cautious, rules-based approach to money.</li>
+            <li>People willing to write down why they buy and review it later.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>It is not for</h3>
+          <ul class="lp-list">
+            <li>Anyone looking for stock tips or trading signals.</li>
+            <li>Anyone who wants to day trade for quick profit.</li>
+            <li>Anyone who wants advice about their own finances.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-sec" id="how" aria-labelledby="lp-how">
+      <div><p class="lp-kicker">The course</p><h2 id="lp-how">How the 12 months work</h2></div>
+      <div>
+        <table class="lp-table">
+          <thead><tr><th scope="col">Phase</th><th scope="col">When</th><th scope="col">What you do</th></tr></thead>
+          <tbody>${phases.map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}</tbody>
+        </table>
+        <p style="margin-top:18px">You finish the plan by learning and following your rules, not by making a profit. A month with no trades can be a good month.</p>
+      </div>
+    </section>
+
+    <section class="lp-sec" id="tools" aria-labelledby="lp-tools">
+      <div><p class="lp-kicker">Inside</p><h2 id="lp-tools">What is in the planner</h2></div>
+      <div class="lp-tools">${tools.map(x => `<div class="lp-tool">${iconSvg(x[0])}<h3>${esc(x[1])}</h3><p>${esc(x[2])}</p></div>`).join("")}</div>
+    </section>
+
+    <section class="lp-sec" aria-labelledby="lp-rules">
+      <div><p class="lp-kicker">Discipline</p><h2 id="lp-rules">Rules the planner enforces</h2></div>
+      <div>
+        <ul class="lp-list">
+          <li>Before any live trade, you set two limits: the lowest return you would accept and the largest permanent loss you could bear.</li>
+          <li>Money for speculation has its own cap, never above $500. Warnings tell you what to do when you pass it.</li>
+          <li>Every idea is labelled investment, speculation or unclear. Unclear counts as speculation.</li>
+          <li>Paper trades do not count against the cap, so you can practise as much as you like.</li>
+          <li>No calculator predicts a return, and each one says so.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="lp-sec" aria-labelledby="lp-graham">
+      <div><p class="lp-kicker">Source</p><h2 id="lp-graham">Where the ideas come from</h2></div>
+      <div>
+        <p>Sylvia puts the ideas of Benjamin Graham's The Intelligent Investor into 28 short lessons, written in plain words. Each lesson names the feature that puts it into practice, so you use an idea instead of only reading it.</p>
+        <p><a class="btn" href="#graham-lessons">Read the 28 lessons</a></p>
+      </div>
+    </section>
+
+    <section class="lp-sec" aria-labelledby="lp-data">
+      <div><p class="lp-kicker">Privacy</p><h2 id="lp-data">Where your data lives</h2></div>
+      <div>
+        <p>Sylvia has no accounts and no server. Everything you enter is saved in this browser on this device. It does not use analytics or tracking. The only outside request is the font file loaded from Google Fonts.</p>
+        <p>To move to another device, export a JSON backup in Settings and import it there.</p>
+      </div>
+    </section>
+
+    <section class="lp-sec" id="faq" aria-labelledby="lp-faq">
+      <div><p class="lp-kicker">Questions</p><h2 id="lp-faq">Common questions</h2></div>
+      <div>${faq.map(f => `<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join("")}</div>
+    </section>
+
+    <footer class="lp-foot">
+      <div>
+        <p>Sylvia is created and owned by Akoo. &copy; 2026 Akoo. All rights reserved.</p>
+        <p>This is an educational plan, not a promise of returns. Nothing here is financial advice.</p>
+      </div>
+      <div>
+        <p><a href="#dashboard">Open the planner</a></p>
+        <p><a href="Sylvia-User-Guide.pdf" target="_blank" rel="noopener">User guide (PDF)</a></p>
+        <p><a href="#glossary">Glossary</a></p>
+      </div>
+    </footer>
+  </div>`;
+}
+
 const VIEWS = {
+  welcome: viewWelcome,
   dashboard: viewDashboard,
   phase0: viewPhase0,
   phase1: viewPhase1,
@@ -4312,24 +4455,23 @@ function render(){
   const changed = lastRoute !== route;
   const keepY = changed ? 0 : window.scrollY;
   lastRoute = route;
+  document.body.classList.toggle("is-landing", route === "welcome");
+  if (route !== "welcome") { try { localStorage.setItem("t12mip_seen", "1"); } catch(e){} }
   const main = document.getElementById("main");
   main.innerHTML = (VIEWS[route] || viewDashboard)();
   renderNav();
   closeNav();
   const navItem = NAV.flatMap(g => g.items).find(i => i.id === route);
   const label = navItem ? navItem.label.replace(/^\d · /, "") : "";
-  document.title = route === "dashboard" ? "Sylvia · 12-Month Investor Plan by Akoo" : label + " · Sylvia";
+  document.title = (route === "dashboard" || route === "welcome") ? "Sylvia · 12-Month Investor Plan by Akoo" : label + " · Sylvia";
   const md = document.querySelector('meta[name="description"]');
-  if (md) md.content = route === "dashboard" ? "Sylvia is Akoo's 12-month plan for learning to invest with discipline." : label + " in Sylvia, Akoo's 12-month investor plan. Educational, not financial advice.";
+  if (md) md.content = (route === "dashboard" || route === "welcome") ? "Sylvia is Akoo's 12-month plan for learning to invest with discipline." : label + " in Sylvia, Akoo's 12-month investor plan. Educational, not financial advice.";
   snapshotDefensive();
   // live calculators
   calcPositionSize();
   renderHeat("heat-result");
   renderHeat("heat-result2");
   window.scrollTo({ top: keepY, left: 0, behavior: "instant" });
-  if (changed) enterView(main);
-  animateFills(main, changed);
-  applyPop();
 }
 
 function closeNav(){
@@ -4337,40 +4479,6 @@ function closeNav(){
   const sc = document.getElementById("scrim"); if (sc) sc.classList.remove("show");
   document.querySelectorAll(".menu-btn").forEach(b => b.setAttribute("aria-expanded", "false"));
 }
-function enterView(el){ el.classList.remove("view-enter"); void el.offsetWidth; el.classList.add("view-enter"); }
-const reduceMotion = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-function animateFills(root, changed){
-  if (!changed || reduceMotion()) return;
-  const bars = [...root.querySelectorAll(".bar:not(.split)>i")].filter(b => b.style.width);
-  const stops = [...root.querySelectorAll(".stop")];
-  const bw = bars.map(b => b.style.width), sp = stops.map(s => s.style.getPropertyValue("--p"));
-  bars.forEach(b => { b.style.transition = "none"; b.style.width = "0%"; });
-  stops.forEach(s => { s.style.transition = "none"; s.style.setProperty("--p", "0%"); });
-  void root.offsetWidth;
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    bars.forEach((b, i) => { b.style.transition = ""; b.style.width = bw[i]; });
-    stops.forEach((s, i) => { s.style.transition = ""; if (sp[i]) s.style.setProperty("--p", sp[i]); else s.style.removeProperty("--p"); });
-  }));
-}
-let popKey = null;
-const lblKey = l => ((l.querySelector(".lbl") || l).textContent || "").trim().slice(0, 80);
-function applyPop(){
-  if (!popKey) return;
-  const l = [...document.querySelectorAll("#main .check")].find(x => lblKey(x) === popKey);
-  popKey = null;
-  if (!l || reduceMotion()) return;
-  l.classList.add("pop");
-  if (l.classList.contains("done")){
-    l.classList.remove("done"); void l.offsetWidth;
-    requestAnimationFrame(() => l.classList.add("done"));
-  }
-}
-document.addEventListener("change", e => {
-  const t = e.target, l = t.closest && t.closest(".check");
-  if (!l || t.type !== "checkbox") return;
-  l.classList.remove("pop"); void l.offsetWidth;
-  if (t.checked){ l.classList.add("pop"); popKey = lblKey(l); setTimeout(() => { popKey = null; }, 0); }
-}, true);
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && document.getElementById("sidebar").classList.contains("open")){ closeNav(); const mb = document.querySelector(".menu-btn"); if (mb) mb.focus(); }
 });
@@ -4388,7 +4496,7 @@ window.addEventListener("hashchange", () => {
 document.addEventListener("input", e => {
   const t = e.target;
 
-  // glossary search — re-render only that view
+  // glossary search: re-render only that view
   if (t.dataset.act === "gloss-search"){
     glossaryQuery = t.value;
     const main = document.getElementById("main");
@@ -4458,6 +4566,9 @@ document.addEventListener("click", e => {
   if (btn.tagName === "INPUT" && btn.type !== "checkbox" && btn.type !== "radio") return;
 
   switch(act){
+
+    case "skip-main": e.preventDefault(); document.getElementById("main").focus(); break;
+    case "scroll-to": { const el = document.getElementById(btn.dataset.target); if (el) el.scrollIntoView({ block:"start" }); break; }
 
     case "toggle-theme": {
       const cur = document.documentElement.getAttribute("data-theme");
@@ -4742,7 +4853,7 @@ document.addEventListener("click", e => {
     case "advance": {
       const target = parseInt(btn.dataset.phase, 10);
       if (!gatePassed(target - 1)){
-        alert("That gate is not passed yet. Complete the milestones first — calendar time is not the requirement.");
+        alert("That gate is not passed yet. Complete the milestones first: calendar time is not the requirement.");
         return;
       }
       if (!confirm(`Advance to Phase ${target}? You can change this manually in Settings at any time.`)) return;
