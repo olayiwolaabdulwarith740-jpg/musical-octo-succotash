@@ -1219,6 +1219,8 @@ function viewDashboard(){
 
 
 
+  ${dashboardPractice()}
+
   ${dashboardPortfolio()}
 
   ${effectiveType() === "defensive" ? dashboardGraham() : ""}
@@ -2091,6 +2093,7 @@ function viewJournal(){
   <section class="card">
     <div class="card-head"><div><h2>New entry</h2>
       <div class="sub">Fill in the plan group before you enter. Fill in the result group after you exit.</div></div></div>
+    ${quickTradeForm()}
     ${tradeForm()}
   </section>
 
@@ -2162,6 +2165,26 @@ function viewJournal(){
   `;
 }
 
+function quickTradeForm(){
+  return `
+  <details style="background:var(--panel);border-color:var(--line)" open>
+    <summary>+ Quick paper trade (short form)</summary>
+    <form id="quick-trade-form" novalidate>
+      <p class="small" style="margin:10px 0">Six fields. It saves a paper trade. Use the full form below for live trades or more detail.</p>
+      <div class="row">
+        <div class="field"><label for="q-ticker">Ticker or name</label><input id="q-ticker" name="ticker" required></div>
+        <div class="field"><label for="q-entry">Entry price</label><input id="q-entry" type="number" step="0.01" min="0" name="entry" required></div>
+        <div class="field"><label for="q-stop">Stop price (where you get out if wrong)</label><input id="q-stop" type="number" step="0.01" min="0" name="stop"></div>
+        <div class="field"><label for="q-size">Shares</label><input id="q-size" type="number" step="0.0001" min="0" name="size" required></div>
+        <div class="field"><label for="q-exit">Exit price (leave blank if still open)</label><input id="q-exit" type="number" step="0.01" min="0" name="exitPrice"></div>
+        <div class="field"><label for="q-class">Investment or speculation?</label><select id="q-class" name="classification"><option value="">Choose</option><option value="investment">Investment</option><option value="speculation">Speculation</option><option value="unclear">Unclear</option></select></div>
+      </div>
+      <div class="field"><label for="q-why">Why this trade? One sentence.</label><input id="q-why" name="rationale" maxlength="200"></div>
+      <div id="quick-error" class="notice danger" role="alert" hidden></div>
+      <button class="btn primary" type="submit">Save paper trade</button>
+    </form>
+  </details>`;
+}
 function tradeForm(){
   const nextNum = S.journal.length + 1;
   const ex = specExposure();
@@ -5253,6 +5276,18 @@ function plReminders(){
   if (num(m.planned) > 0 && plActual(now, c) < num(m.planned)) out.push("No full contribution recorded yet this month. Planned " + money(num(m.planned)) + ", recorded " + money(plActual(now, c)) + ".");
   return out;
 }
+function dashboardPractice(){
+  const paper = S.journal.filter(t => t.mode === "paper"), m = computeMetrics("paper");
+  if (!S.journal.length) return `<section class="card empty-card"><div class="txt"><h2>Practice trades</h2><p>Log a paper trade in under a minute. Each one is saved with your reason, so you can learn from it later.</p>
+    <a class="btn primary" href="#journal">Log your first paper trade</a></div></section>`;
+  const open = paper.filter(t => t.status === "open").length, spec = S.journal.filter(t => classOf(t) !== "investment").length;
+  return card("Practice trades", "From your trade journal.", `<div class="grid g4">
+    ${statBox("Paper trades logged", String(paper.length), open + " still open")}
+    ${statBox("Closed", String(m.count), m.count ? "Win rate " + pct(m.winRate, 0) : "Close a trade to see results")}
+    ${statBox("Rule adherence", m.count ? pct(m.adherence, 0) : "n/a", "Closed trades with no rule broken")}
+    ${statBox("Speculation or unclear", String(spec), "of " + S.journal.length + " logged")}
+  </div><p style="margin-top:10px"><a class="btn sm" href="#journal">Open the journal</a> <a class="btn sm" href="#metrics">Metrics</a></p>`);
+}
 function dashboardPortfolio(){
   const c = pf(), P = S.planner;
   if (!pfHasData() && !P.created) return `<section class="card empty-card"><div class="txt"><h2>Portfolio and 12-month planner</h2><p>Record what you own, track contributions and plan the year. Everything stays on this device.</p>
@@ -5885,6 +5920,22 @@ document.addEventListener("keydown", e => {
 document.addEventListener("submit", e => {
   e.preventDefault();
   const f = e.target;
+
+  if (f.id === "quick-trade-form"){
+    const q = Object.fromEntries(new FormData(f).entries()), bad = m => { const el = document.getElementById("quick-error"); el.textContent = m; el.hidden = false; };
+    if (!q.ticker.trim()) return bad("Enter a ticker or name.");
+    if (!(parseFloat(q.entry) > 0)) return bad("Entry price must be above zero.");
+    if (!(parseFloat(q.size) > 0)) return bad("Shares must be above zero.");
+    if (q.stop !== "" && !(parseFloat(q.stop) > 0)) return bad("Stop price must be above zero, or leave it blank.");
+    if (q.exitPrice !== "" && !(parseFloat(q.exitPrice) > 0)) return bad("Exit price must be above zero, or leave it blank.");
+    if (!q.classification) return bad("Choose investment, speculation or unclear. If you cannot decide, choose unclear.");
+    const data = { id: uid(), num: String(S.journal.length + 1), date: todayISO(), ticker: q.ticker.trim(), secType: "Stock", strategy: "", mode: "paper",
+      status: q.exitPrice !== "" ? "closed" : "open", entry: q.entry, stop: q.stop, size: q.size, plannedRisk: "", rationale: q.rationale.trim(), evidence: "", target: "", exitPlan: "",
+      classification: q.classification, marginOfSafetyAtEntry: "", priceInfluencedDecision: "", ideaSource: "", sector: "", satisfiesLimits: "",
+      exitPrice: q.exitPrice, costs: "", marketConditions: "", emotionBefore: "", emotionAfter: "", violations: q.stop === "" ? "No stop set" : "", lessons: "" };
+    S.journal.push(data); save(); render();
+    return;
+  }
 
   if (f.id === "trade-form"){
     const data = Object.fromEntries(new FormData(f).entries());
