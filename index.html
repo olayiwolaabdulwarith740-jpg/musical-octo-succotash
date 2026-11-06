@@ -791,13 +791,14 @@ function computeMetrics(scope){
   const avgR = rs.length ? rs.reduce((a,b)=>a+b,0) / rs.length : null;
 
   // equity curve + max drawdown
+  const startCapital = num(S.phase3.heat.capital) || 500;
   let equity = 0, peak = 0, maxDD = 0, maxDDPct = 0;
   const curve = [{ i:0, v:0 }];
   closed.forEach((t,i)=>{
     equity += tradeNet(t);
     peak = Math.max(peak, equity);
     const dd = peak - equity;
-    if (dd > maxDD) { maxDD = dd; maxDDPct = peak > 0 ? dd / peak : 0; }
+    if (dd > maxDD) { maxDD = dd; maxDDPct = dd / (startCapital + peak); }
     curve.push({ i:i+1, v:equity });
   });
 
@@ -1226,7 +1227,7 @@ function viewDashboard(){
     ${statBox("Net result", plText(m.totalNet), `${m.count} closed trades, after costs`, m.totalNet>0?"pos":m.totalNet<0?"neg":"")}
     ${statBox("Win rate", pct(m.winRate), `${m.wins.length} wins, ${m.losses.length} losses`)}
     ${statBox("Profit factor", m.profitFactor===Infinity?"∞":m.profitFactor.toFixed(2), "Gross wins ÷ gross losses")}
-    ${statBox("Max drawdown", money(m.maxDD), pct(m.maxDDPct) + " from peak")}
+    ${statBox("Max drawdown", money(m.maxDD), pct(m.maxDDPct) + " of account value at peak")}
   </div>` : `<section class="card empty-card">
     <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="6" y="30" width="10" height="20" rx="3" style="fill:var(--line)"/><rect x="23" y="18" width="10" height="32" rx="3" style="fill:var(--accent)"/><rect x="40" y="8" width="10" height="42" rx="3" style="fill:var(--amber)"/></svg>
     <div class="txt"><h2>Your results will appear here</h2>
@@ -2272,7 +2273,7 @@ function viewMetrics(){
 
   <div class="grid g4" style="margin-bottom:16px">
     ${statBox("Avg R-multiple", m.avgR===null?"n/a":(m.avgR>0?"+":"")+m.avgR.toFixed(2)+"R", "Result ÷ planned risk")}
-    ${statBox("Max drawdown", money(m.maxDD), `${pct(m.maxDDPct)} from peak`)}
+    ${statBox("Max drawdown", money(m.maxDD), `${pct(m.maxDDPct)} of account value at peak`)}
     ${statBox("Largest single loss", money(m.largestLoss), "", "neg")}
     ${statBox("Profit factor", m.profitFactor===Infinity?"∞":m.profitFactor.toFixed(2), "Gross wins ÷ gross losses")}
   </div>
@@ -2289,7 +2290,7 @@ function viewMetrics(){
       <div class="sub">Cumulative net result across closed trades, in the order they closed.</div></div></div>
     ${lineChart(m.curve)}
     ${m.maxDD > 0 ? `<div class="notice warn" style="margin-top:14px">
-      Maximum drawdown: <strong>${money(m.maxDD)}</strong> (${pct(m.maxDDPct)} from peak).
+      Maximum drawdown: <strong>${money(m.maxDD)}</strong> (${pct(m.maxDDPct)} of account value at the peak).
       Review thresholds: 5% review · 10% pause new discretionary trades · 20% stop live trading and reassess.
     </div>` : ""}
   </section>
@@ -2763,7 +2764,7 @@ function viewRedFlags(){
       <li>Return to simulation if needed.</li>
       <li><strong>Never fix a trading problem by making positions bigger.</strong></li>
     </ol>
-  </section>` : `<div class="notice ok">No red flags active. Keep the journal current: it is your early-warning system.</div>`}
+  </section>` : `<div class="notice ok">You have ticked no red flags. Warnings found by the app, if any, are listed below. Keep the journal current: it is your early-warning system.</div>`}
 
   <section class="card">
     <div class="card-head"><div><h2>Detected from your data</h2><div class="sub">Not ticked by you. Found by the app.</div></div></div>
@@ -2796,7 +2797,7 @@ function viewRedFlags(){
     ${(()=>{
       const m = computeMetrics();
       return m.maxDD > 0 ? `<div class="notice warn" style="margin-top:12px">
-        Your maximum recorded drawdown is <strong>${money(m.maxDD)}</strong> (${pct(m.maxDDPct)} from peak).
+        Your maximum recorded drawdown is <strong>${money(m.maxDD)}</strong> (${pct(m.maxDDPct)} of account value at the peak).
         ${m.maxDDPct >= 0.20 ? "This is past the 20% threshold: stop live trading and reassess." :
           m.maxDDPct >= 0.10 ? "This is past the 10% threshold: pause new discretionary trades." :
           m.maxDDPct >= 0.05 ? "This is past the 5% threshold: review your risk and execution." :
