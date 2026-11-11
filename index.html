@@ -354,6 +354,7 @@ input[type=range]:focus{outline:2px solid var(--accent);outline-offset:3px}
 </style>
 </head>
 <body>
+<noscript><div style="padding:16px;margin:16px;border:2px solid #A32A24;background:#fff;color:#15181C;font-family:sans-serif"><strong>Sylvia needs JavaScript to run.</strong> Turn it on for this site, or try another browser. Nothing you enter is sent from your device.</div></noscript>
 <a class="skip" href="#main" data-act="skip-main">Skip to content</a>
 
 <header class="topbar">
@@ -453,7 +454,7 @@ const P1_MILESTONES = [
   { id:"m2", label:"Explain the difference between market cap and valuation ratios such as P/E", input:true },
   { id:"m3", label:"Explain why diversification reduces some risks but never removes the chance of loss", input:true },
   { id:"m4", label:"Compare an individual stock with a diversified ETF", input:true },
-  { id:"m5", label:"Complete at least 20 simulated orders and log each execution mistake and its fix", auto:"paper20" },
+  { id:"m5", label:"Complete at least 20 simulated trades (practice orders or complete paper trades in the journal) and log each execution mistake and its fix", auto:"paper20" },
   { id:"m6", label:"Pass a self-quiz on at least 20 key terms", auto:"quiz" }
 ];
 
@@ -614,6 +615,7 @@ const GLOSSARY = [
 function defaultState(){
   return {
     version:3,
+    meta:{ lastBackup:"", dismissed:"" },
     fin:{},
     portfolio:{ assets:[], tx:[], snapshots:[], concLimit:"25" },
     planner:{ created:false, startMonth:"", defaultMonthly:"", annualTarget:"", reminders:false, months:{}, goals:[] },
@@ -887,9 +889,9 @@ function phase0Gate(){
 
 function autoDone(key){
   switch(key){
-    case "paper20":    return S.paperOrders.length >= 20;
+    case "paper20":    return paperCount().total >= 20;
     case "companies3": return S.companies.length >= 3;
-    case "paper40":    return S.paperOrders.length >= 40;
+    case "paper40":    return paperCount().total >= 40;
     case "plan":       return !!S.phase3.planSigned.name;
     case "clean20":    return paperOrderStats().cleanStreak >= 20;
     case "quiz":       return !!S.phase1.quizDone;
@@ -904,16 +906,20 @@ function milestoneProgress(list, store){
   const done = list.filter(m => msDone(m, store)).length;
   return ratio(done, list.length);
 }
+function paperCount(){
+  const journal = S.journal.filter(t => t.mode === "paper" && !planMissing(t).length).length;
+  return { orders: S.paperOrders.length, journal, total: S.paperOrders.length + journal };
+}
 function phase1Gate(){
   const ms = S.phase1.milestones;
   const textOk = ["m1","m2","m3","m4"].every(k => (S.phase1.milestoneText[k]||"").trim().length > 20);
-  const paperOk = S.paperOrders.length >= 20;
+  const paperOk = paperCount().total >= 20;
   return P1_MILESTONES.every(m => msDone(m, ms)) && textOk && paperOk;
 }
 function phase2Gate(){
   const ms = S.phase2.milestones;
   const textOk = ["a2","a3","a5"].every(k => (S.phase2.milestoneText[k]||"").trim().length > 20);
-  return P2_MILESTONES.every(m => msDone(m, ms)) && textOk && S.companies.length >= 3 && S.paperOrders.length >= 40;
+  return P2_MILESTONES.every(m => msDone(m, ms)) && textOk && S.companies.length >= 3 && paperCount().total >= 40;
 }
 function phase3Gate(){
   const ms = S.phase3.milestones;
@@ -1219,6 +1225,8 @@ function viewDashboard(){
 
 
 
+  ${dashboardFirstSteps()}
+
   ${dashboardPractice()}
 
   ${dashboardPortfolio()}
@@ -1495,14 +1503,14 @@ function viewPhase1(){
   <section class="card">
     <div class="card-head"><div><h2>Milestones: end of Month 3</h2></div></div>
     ${P1_MILESTONES.map(m => {
-      const autoOk = m.auto === "paper20" ? S.paperOrders.length >= 20 : true;
+      const autoOk = m.auto === "paper20" ? paperCount().total >= 20 : true;
       return `
       <div style="margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--line)">
         <label class="check ${msDone(m,S.phase1.milestones)?"done":""}" style="padding-left:0">
           <input type="checkbox" data-act="toggle-p1m" data-id="${m.id}" ${msDone(m,S.phase1.milestones)?"checked":""} ${m.auto?"disabled":""}>
           <span class="lbl">${esc(m.label)}</span>
         </label>
-        ${m.auto === "paper20" ? `<div class="small" style="margin-left:28px">Auto-checked when you have 20 simulated orders. Currently: <strong>${S.paperOrders.length}</strong>.</div>` : ""}
+        ${m.auto === "paper20" ? `<div class="small" style="margin-left:28px">Auto-checked at 20 simulated trades. Currently: <strong>${paperCount().total}</strong> (${paperCount().orders} practice orders and ${paperCount().journal} complete paper trades in the journal).</div>` : ""}
         ${m.input ? `<textarea style="margin-left:28px;width:calc(100% - 28px);margin-top:8px;min-height:70px"
             data-path="phase1.milestoneText.${m.id}" aria-label="Your notes for: ${esc(m.label)}"
             placeholder="Write your explanation here. Saved automatically. (Minimum ~20 characters to count.)">${esc(S.phase1.milestoneText[m.id]||"")}</textarea>` : ""}
@@ -1713,7 +1721,7 @@ function viewPhase2(){
     <div class="grid g3" style="margin-top:14px">
       ${statBox("Theses written", S.theses.length, "Target: one per week")}
       ${statBox("Company analyses", S.companies.length, "Need 3 for the gate")}
-      ${statBox("Simulated orders", S.paperOrders.length, "Need 40 for the gate")}
+      ${statBox("Simulated trades", paperCount().total, paperCount().orders + " orders and " + paperCount().journal + " journal trades. Need 40 for the gate")}
     </div>
   </section>
 
@@ -1722,7 +1730,7 @@ function viewPhase2(){
     ${P2_MILESTONES.map(m => {
       let autoOk = true, autoNote = "";
       if (m.auto === "companies3"){ autoOk = S.companies.length >= 3; autoNote = `Currently ${S.companies.length} of 3.`; }
-      if (m.auto === "paper40"){ autoOk = S.paperOrders.length >= 40; autoNote = `Currently ${S.paperOrders.length} of 40.`; }
+      if (m.auto === "paper40"){ autoOk = paperCount().total >= 40; autoNote = `Currently ${paperCount().total} of 40.`; }
       return `
       <div style="margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--line)">
         <label class="check ${msDone(m,S.phase2.milestones)?"done":""}" style="padding-left:0">
@@ -3033,7 +3041,7 @@ function viewSettings(){
 
   <section class="card">
     <div class="card-head"><div><h2>Data</h2>
-      <div class="sub">Your data lives in this browser's local storage. Export it before clearing your browser.</div></div></div>
+      <div class="sub">Your data lives in this browser's local storage. Export it before clearing your browser. <strong>Last backup: ${S.meta.lastBackup ? esc(S.meta.lastBackup) + " (" + daysSince(S.meta.lastBackup) + " days ago)" : "never"}.</strong></div></div></div>
     <div class="inline">
       <button class="btn" data-act="export-json">Export all data (JSON)</button>
       <button class="btn" data-act="export-csv">Export trades (CSV)</button>
@@ -4465,7 +4473,7 @@ function viewWelcome(){
         <button class="lp-link" data-act="scroll-to" data-target="tools">Tools</button>
         <button class="lp-link" data-act="scroll-to" data-target="faq">Questions</button>
         <button class="icon-btn" data-act="toggle-theme" aria-label="Toggle dark mode" title="Toggle dark mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
-        <a class="btn primary keep lp-link" href="#dashboard" style="margin-left:6px">Open the planner</a>
+        <a class="btn primary keep lp-link" href="#dashboard" style="margin-left:6px">Start the plan</a>
       </nav>
     </header>
 
@@ -4474,9 +4482,10 @@ function viewWelcome(){
         <p class="lp-kicker">A free planner for beginner investors</p>
         <h1 id="lp-title">A 12-month plan for learning to invest without paying for your own mistakes.</h1>
         <p class="lp-lede">Sylvia gives you a month-by-month course, a trade journal and calculators that stop you before you break your own rules. You practise on paper first. It follows the ideas in Benjamin Graham's The Intelligent Investor, and it runs entirely in your browser.</p>
+        <p style="margin:0 0 16px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--accent-soft)"><strong>For cautious beginners.</strong> Not stock tips, not day trading, and not financial advice.</p>
         <div class="lp-cta">
-          <a class="btn primary" href="#dashboard">Open the planner</a>
-          <a class="btn" href="Sylvia-User-Guide.pdf" target="_blank" rel="noopener">Read the user guide (PDF)</a>
+          <a class="btn primary" href="#dashboard">Start the 12-month plan</a>
+          <a class="btn" href="Sylvia-User-Guide.pdf" target="_blank" rel="noopener">User guide (PDF, earlier version)</a>
         </div>
       </div>
       <div class="lp-facts" role="list" aria-label="Facts about Sylvia">
@@ -5363,6 +5372,16 @@ function plReminders(){
   if (num(m.planned) > 0 && plActual(now, c) < num(m.planned)) out.push("No full contribution recorded yet this month. Planned " + money(num(m.planned)) + ", recorded " + money(plActual(now, c)) + ".");
   return out;
 }
+function dashboardFirstSteps(){
+  const steps = [
+    ["Set your two limits: the least return you accept and the most you can lose", has(S.graham.required.minReturn) && has(S.graham.required.maxLoss), "#settings", "Open Settings"],
+    ["Log one paper trade with a stop and a reason", S.journal.some(t => t.mode === "paper" && !planMissing(t).length), "#journal", "Open the journal"],
+    ["Export a backup of your data", !!S.meta.lastBackup, "#settings", "Open Settings"]
+  ];
+  if (steps.every(x => x[1])) return "";
+  const done = steps.filter(x => x[1]).length;
+  return card("Your first five minutes", done + " of 3 done", `<ol class="plain" style="padding-left:20px;margin:0">${steps.map(x => `<li style="margin-bottom:8px">${x[1] ? "<s>" + esc(x[0]) + "</s> (done)" : esc(x[0]) + `. <a href="${x[2]}">${x[3]}</a>`}</li>`).join("")}</ol>`);
+}
 function dashboardPractice(){
   const paper = S.journal.filter(t => t.mode === "paper"), m = computeMetrics("paper");
   if (!S.journal.length) return `<section class="card empty-card"><div class="txt"><h2>Practice trades</h2><p>Log a paper trade in under a minute. Each one is saved with your reason, so you can learn from it later.</p>
@@ -5574,6 +5593,28 @@ const VIEWS = {
 };
 
 let lastRoute = null;
+const BACKUP_ROUTES = ["dashboard", "journal", "portfolio", "transactions", "planner"];
+function hasUserData(){
+  return S.journal.length || S.portfolio.tx.length || S.portfolio.assets.length || S.planner.created || S.theses.length || S.companies.length || S.paperOrders.length || (S.phase0.contract && S.phase0.contract.name);
+}
+function daysSince(iso){ return Math.floor((Date.parse(todayISO()) - Date.parse(iso)) / 86400000); }
+function backupBanner(){
+  if (!hasUserData()) return "";
+  const lb = S.meta.lastBackup, d = lb ? daysSince(lb) : null;
+  if (lb && d < 7) return "";
+  if (S.meta.dismissed === todayISO()) return "";
+  return `<div class="notice warn no-print" role="status" id="backup-banner"><strong>Back up your data.</strong> ${lb ? "Your last backup was " + d + " day" + (d === 1 ? "" : "s") + " ago." : "You have never exported a backup."} Your records live only in this browser. Clearing the browser's data, or using another device, loses them.
+    <div class="inline" style="margin-top:8px"><button class="btn sm primary" data-act="backup-now">Export backup now</button><button class="btn sm" data-act="backup-dismiss">Remind me tomorrow</button></div></div>`;
+}
+function exportBackup(){
+  S.meta.lastBackup = todayISO(); save();
+  download("sylvia-data-" + todayISO() + ".json", JSON.stringify(S, null, 2), "application/json");
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  if (b.dataset.act === "backup-now"){ exportBackup(); render(); }
+  if (b.dataset.act === "backup-dismiss"){ S.meta.dismissed = todayISO(); save(); render(); }
+});
 function render(){
   const changed = lastRoute !== route;
   const keepY = changed ? 0 : window.scrollY;
@@ -5582,6 +5623,7 @@ function render(){
   if (route !== "welcome") { try { localStorage.setItem("t12mip_seen", "1"); } catch(e){} }
   const main = document.getElementById("main");
   main.innerHTML = (VIEWS[route] || viewDashboard)();
+  if (BACKUP_ROUTES.includes(route)) main.insertAdjacentHTML("afterbegin", backupBanner());
   renderNav();
   closeNav();
   const navItem = NAV.flatMap(g => g.items).find(i => i.id === route);
@@ -5991,10 +6033,10 @@ document.addEventListener("click", e => {
 
     /* ---- data ---- */
     case "export-json":
-      download("sylvia-data.json", JSON.stringify(S, null, 2), "application/json");
+      exportBackup(); render();
       break;
     case "reset-all": {
-      if (!confirm("This erases everything: journal, theses, analyses and progress. Continue?")) return;
+      if (!confirm("This erases everything on this device: " + S.journal.length + " journal entries, " + S.portfolio.tx.length + " portfolio transactions, " + S.theses.length + " theses, " + S.companies.length + " company analyses and all progress. Export a backup first if you have not. Continue?")) return;
       if (!confirm("Last chance. Are you sure?")) return;
       localStorage.removeItem(STORE_KEY);
       S = defaultState();
