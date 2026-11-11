@@ -2075,6 +2075,37 @@ function viewPhase4(){
    13. VIEW: JOURNAL
    ============================================================ */
 
+function journalNoticeHTML(){
+  const n = jrNotice; jrNotice = "";
+  return n ? `<div class="notice ${/Incomplete|Still needed/.test(n) ? "warn" : "ok"}" role="status"><strong>${esc(n)}</strong></div>` : "";
+}
+function journalEditPanel(){
+  const t = S.journal.find(x => x.id === jrEdit); if (!t) return "";
+  const v = k => esc(t[k] === undefined ? "" : t[k]);
+  return `<section class="card" id="update-panel"><div class="card-head"><div><h2>Update ${esc(t.ticker || "trade")} (entry ${esc(t.num)})</h2><div class="sub">Finish the risk plan, or close the trade and review your process.</div></div></div>
+  <form id="trade-update-form" data-id="${esc(t.id)}" novalidate>
+    <h4>Risk plan</h4>
+    <div class="row">
+      <div class="field"><label for="u-entry">Entry price</label><input id="u-entry" type="number" step="0.01" name="entry" value="${v("entry")}"></div>
+      <div class="field"><label for="u-stop">Stop price</label><input id="u-stop" type="number" step="0.01" name="stop" value="${v("stop")}"></div>
+      <div class="field"><label for="u-size">Shares</label><input id="u-size" type="number" step="0.0001" name="size" value="${v("size")}"></div>
+    </div>
+    <div class="notice accent risk-readout" aria-live="polite" style="font-size:.85rem"></div>
+    <div class="field"><label for="u-why">Why this trade?</label><textarea id="u-why" name="rationale" style="min-height:48px">${v("rationale")}</textarea></div>
+    <div class="field"><label for="u-inv">What would prove me wrong?</label><textarea id="u-inv" name="invalidation" style="min-height:48px">${v("invalidation")}</textarea></div>
+    <h4>Exit and process review</h4>
+    <div class="row">
+      <div class="field"><label for="u-exit">Exit price (leave blank if still open)</label><input id="u-exit" type="number" step="0.01" name="exitPrice" value="${v("exitPrice")}"></div>
+      <div class="field"><label for="u-costs">Costs</label><input id="u-costs" type="number" step="0.01" name="costs" value="${v("costs")}"></div>
+      <div class="field"><label for="u-fp">Did I follow my written plan?</label><select id="u-fp" name="followedPlan"><option value="">Not yet reviewed</option><option value="yes" ${t.followedPlan === "yes" ? "selected" : ""}>Yes</option><option value="no" ${t.followedPlan === "no" ? "selected" : ""}>No</option></select></div>
+      <div class="field"><label for="u-br">If no, which rule did I break?</label><input id="u-br" name="brokenRule" maxlength="160" value="${v("brokenRule")}"></div>
+      <div class="field"><label for="u-oc">Was the result due to</label><select id="u-oc" name="outcomeCause"><option value="">Select</option><option value="process" ${t.outcomeCause === "process" ? "selected" : ""}>My process</option><option value="facts" ${t.outcomeCause === "facts" ? "selected" : ""}>New facts</option><option value="luck" ${t.outcomeCause === "luck" ? "selected" : ""}>Luck</option></select></div>
+    </div>
+    <div class="field"><label for="u-less">Lessons learned</label><textarea id="u-less" name="lessons" style="min-height:48px">${v("lessons")}</textarea></div>
+    <div id="update-error" class="notice danger" role="alert" hidden></div>
+    <div class="inline"><button class="btn primary" type="submit">Save update</button><button class="btn" type="button" data-act="jr-cancel">Cancel</button></div>
+  </form></section>`;
+}
 let journalFilter = { mode:"", status:"", ticker:"", result:"" };
 
 function viewJournal(){
@@ -2089,6 +2120,8 @@ function viewJournal(){
 
   return `
   ${pageHeader("Trade Journal", "Record every trade. The journal is the single most valuable artefact this plan produces.")}
+  ${journalNoticeHTML()}
+  ${journalEditPanel()}
 
   <section class="card">
     <div class="card-head"><div><h2>New entry</h2>
@@ -2133,7 +2166,7 @@ function viewJournal(){
       <thead><tr>
         <th>#</th><th>Date</th><th>Ticker</th><th>Setup</th><th>Mode</th><th>Status</th>
         <th class="num">Entry</th><th class="num">Stop</th><th class="num">Size</th>
-        <th class="num">Planned risk</th><th class="num">Exit</th><th class="num">Net P/L</th><th class="num">R</th>
+        <th class="num">Planned risk</th><th class="num">Exit</th><th class="num">Net P/L</th><th class="num">R</th><th>Process</th>
         <th>Class</th><th class="num">MoS</th><th>Violations and flags</th><th></th>
       </tr></thead>
       <tbody>
@@ -2153,10 +2186,11 @@ function viewJournal(){
           <td class="num">${t.exitPrice?money(num(t.exitPrice)):"n/a"}</td>
           <td class="num ${net>0?"pos":net<0?"neg":""}">${plText(net)}</td>
           <td class="num ${r>0?"pos":r<0?"neg":""}">${r===null?"n/a":(r>0?"+":"")+r.toFixed(2)+"R"}</td>
+          <td>${processTag(t)}</td>
           <td>${classOf(t) === "investment" ? '<span class="tag ok">investment</span>' : classOf(t) === "speculation" ? '<span class="tag warn">speculation</span>' : '<span class="tag">unclear</span>'}</td>
           <td class="num">${has(t.marginOfSafetyAtEntry) ? fx(num(t.marginOfSafetyAtEntry), 1) + "%" : "n/a"}</td>
           <td style="white-space:normal;max-width:240px">${t.violations?`<span class="tag danger">${esc(t.violations)}</span>`:""}${tradeFlags(t).map(x => `<span class="tag warn">${esc(x)}</span>`).join("")}${!t.violations && !tradeFlags(t).length ? "n/a" : ""}</td>
-          <td><button class="btn sm ghost" data-act="del-trade" data-id="${t.id}" aria-label="Delete" title="Delete">${ico("x")}</button></td>
+          <td style="white-space:nowrap">${(planMissing(t).length || t.status === "open" || reviewMissing(t)) ? `<button class="btn sm" data-act="jr-edit" data-id="${t.id}">Update</button> ` : ""}<button class="btn sm ghost" data-act="del-trade" data-id="${t.id}" aria-label="Delete" title="Delete">${ico("x")}</button></td>
         </tr>`;
       }).join("")}
       </tbody>
@@ -2165,21 +2199,54 @@ function viewJournal(){
   `;
 }
 
+let jrEdit = "", jrNotice = "";
+function planMissing(t){
+  const m = [];
+  if (!(parseFloat(t.entry) > 0)) m.push("entry price");
+  if (!(parseFloat(t.stop) > 0)) m.push("stop price");
+  if (!(parseFloat(t.size) > 0)) m.push("shares");
+  if (!(t.rationale || "").trim()) m.push("reason");
+  if (typeof t.invalidation === "string" && !t.invalidation.trim()) m.push("what would prove you wrong");
+  return m;
+}
+function reviewMissing(t){ return t.status === "closed" && typeof t.followedPlan === "string" && !t.followedPlan; }
+function applyReview(t){
+  const keep = (t.violations || "").split(";").map(x => x.trim()).filter(x => x && !/^Broke plan/.test(x) && x !== "No stop set");
+  if (t.followedPlan === "no") keep.push("Broke plan" + ((t.brokenRule || "").trim() ? ": " + t.brokenRule.trim() : ""));
+  if (!(parseFloat(t.stop) > 0)) keep.push("No stop set");
+  t.violations = keep.join("; ");
+}
+function riskReadoutHTML(f){
+  const v = n => { const el = f.elements[n]; return el ? el.value : ""; };
+  const entry = parseFloat(v("entry")), stop = parseFloat(v("stop")), size = parseFloat(v("size"));
+  const cap = num(S.phase3.heat.capital) || 500, out = [];
+  if (entry > 0 && stop > 0 && size > 0){
+    const risk = Math.abs(entry - stop) * size, p = risk / cap;
+    out.push(`<strong>If stopped out you lose about ${money(risk)}</strong>, which is ${pct(p, 1)} of your ${money(cap, 0)} trading pot.` + (p > 0.02 ? ` That is above the 2% ceiling. Use fewer shares or a tighter stop.` : ""));
+    if (stop >= entry) out.push("The stop is at or above the entry. For a normal purchase the stop goes below the entry price.");
+    out.push("A stop is not a guarantee. A price gap can cost more.");
+  }
+  const miss = planMissing({ entry: v("entry"), stop: v("stop"), size: v("size"), rationale: v("rationale"), invalidation: f.elements.invalidation ? v("invalidation") : "x" });
+  if (miss.length) out.push("Still needed for a complete entry: " + miss.join(", ") + ". Without them the trade is saved as Incomplete.");
+  return out.map(x => "<p style=\"margin:0 0 4px\">" + x + "</p>").join("") || "<p style=\"margin:0\">Enter the entry, stop and shares to see what this trade could cost you.</p>";
+}
 function quickTradeForm(){
   return `
   <details style="background:var(--panel);border-color:var(--line)" open>
     <summary>+ Quick paper trade (short form)</summary>
     <form id="quick-trade-form" novalidate>
-      <p class="small" style="margin:10px 0">Six fields. It saves a paper trade. Use the full form below for live trades or more detail.</p>
+      <p class="small" style="margin:10px 0">It saves a paper trade. A trade missing its stop, shares, reason or invalidation is saved as Incomplete, so you can finish it later. Live trades need the full form.</p>
       <div class="row">
         <div class="field"><label for="q-ticker">Ticker or name</label><input id="q-ticker" name="ticker" required></div>
         <div class="field"><label for="q-entry">Entry price</label><input id="q-entry" type="number" step="0.01" min="0" name="entry" required></div>
-        <div class="field"><label for="q-stop">Stop price (where you get out if wrong)</label><input id="q-stop" type="number" step="0.01" min="0" name="stop"></div>
+        <div class="field"><label for="q-stop">Stop price (required for a complete entry)</label><input id="q-stop" type="number" step="0.01" min="0" name="stop"></div>
         <div class="field"><label for="q-size">Shares</label><input id="q-size" type="number" step="0.0001" min="0" name="size" required></div>
         <div class="field"><label for="q-exit">Exit price (leave blank if still open)</label><input id="q-exit" type="number" step="0.01" min="0" name="exitPrice"></div>
         <div class="field"><label for="q-class">Investment or speculation?</label><select id="q-class" name="classification"><option value="">Choose</option><option value="investment">Investment</option><option value="speculation">Speculation</option><option value="unclear">Unclear</option></select></div>
       </div>
       <div class="field"><label for="q-why">Why this trade? One sentence.</label><input id="q-why" name="rationale" maxlength="200"></div>
+      <div class="field"><label for="q-inv">What would prove me wrong? (a price or a fact)</label><input id="q-inv" name="invalidation" maxlength="200"></div>
+      <div class="notice accent risk-readout" aria-live="polite" style="font-size:.85rem"></div>
       <div id="quick-error" class="notice danger" role="alert" hidden></div>
       <button class="btn primary" type="submit">Save paper trade</button>
     </form>
@@ -2209,11 +2276,13 @@ function tradeForm(){
       <h4>Plan</h4>
       <div class="row">
         <div class="field"><label>Entry price</label><input type="number" step="0.01" name="entry"></div>
-        <div class="field"><label>Initial stop</label><input type="number" step="0.01" name="stop"></div>
+        <div class="field"><label>Initial stop (required for a complete entry)</label><input type="number" step="0.01" name="stop"></div>
         <div class="field"><label>Position size (shares)</label><input type="number" step="0.0001" name="size"></div>
         <div class="field"><label>Planned dollar risk (blank = auto)</label><input type="number" step="0.01" name="plannedRisk"></div>
       </div>
-      <div class="field"><label>Entry rationale</label><textarea name="rationale" style="min-height:56px"></textarea></div>
+      <div class="notice accent risk-readout" aria-live="polite" style="font-size:.85rem"></div>
+      <div class="field"><label>Entry rationale (required for a complete entry)</label><textarea name="rationale" style="min-height:56px"></textarea></div>
+      <div class="field"><label>What would prove me wrong? (a price or a fact that ends the idea)</label><textarea name="invalidation" style="min-height:48px"></textarea></div>
       <div class="field"><label>Thesis or setup evidence</label><textarea name="evidence" style="min-height:56px"></textarea></div>
       <div class="row">
         <div class="field"><label>Target</label><input name="target" placeholder="price or criteria"></div>
@@ -2240,6 +2309,12 @@ function tradeForm(){
         <div class="field"><label>Costs (commission + spread + slippage)</label><input type="number" step="0.01" name="costs" placeholder="0.00"></div>
       </div>
       <p class="small">Gross and net P/L and the realized R-multiple are calculated automatically from entry, exit, size and costs.</p>
+      <h4>Process review (after exit)</h4>
+      <div class="row">
+        <div class="field"><label>Did I follow my written plan?</label><select name="followedPlan"><option value="">Not yet reviewed</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+        <div class="field"><label>If no, which rule did I break?</label><input name="brokenRule" maxlength="160"></div>
+        <div class="field"><label>Was the result due to</label><select name="outcomeCause"><option value="">Select</option><option value="process">My process</option><option value="facts">New facts</option><option value="luck">Luck</option></select></div>
+      </div>
 
       <h4>Context</h4>
       <div class="row">
@@ -4146,8 +4221,16 @@ function growthReliance(){
   const over = S.companies.filter(c => recordGrowthWarning(c)).length;
   return { th, totalTh:S.theses.length, over };
 }
+function processTag(t){
+  if (t.status !== "closed") return '<span class="small">open</span>';
+  if (t.followedPlan === "yes") return '<span class="tag ok">Followed plan</span>';
+  if (t.followedPlan === "no") return '<span class="tag danger">Broke plan</span>';
+  return typeof t.followedPlan === "string" ? '<span class="tag warn">Not reviewed</span>' : '<span class="small">n/a</span>';
+}
 function tradeFlags(t){
   const f = [];
+  const pm = planMissing(t); if (pm.length) f.push("Incomplete: needs " + pm.join(", "));
+  if (reviewMissing(t)) f.push("Closed without a process review");
   if (t.mode === "live" && !(t.satisfiesLimits || "").trim()) f.push("Live, with no statement of how it meets your return and loss limits");
   if (t.ideaSource === "tip") f.push("Entered on an unsolicited tip");
   if (t.ideaSource === "ipo") f.push("New issue or IPO in the first year");
@@ -4170,6 +4253,10 @@ function autoRedFlags(){
   if (timingLast7() >= 3) out.push({ text:`Forecasting the market: you caught yourself ${timingLast7()} times in the last 7 days.`, action:"Write what you would do if the market rose 30% and what you would do if it fell 30%, then stop forecasting." });
   const pots = S.graham.pots, held = S.phase0.allocation;
   if (num(pots.speculation) > ex.cap || num(held.sandboxHeld) > ex.cap) out.push({ text:"Mingling pots: more is in the speculation pot than the sandbox cap allows.", action:"Move the excess back into your investment pot or savings today." });
+  const inc = S.journal.filter(t => planMissing(t).length);
+  if (inc.length) out.push({ text:`${inc.length} trade${inc.length > 1 ? "s" : ""} without a complete risk plan: ${inc.slice(0, 4).map(t => t.ticker || "trade").join(", ")}${inc.length > 4 ? " and more" : ""}.`, action:"Open each one in the journal, choose Update, and add the missing stop, shares, reason or invalidation. Do not enter new trades the same way." });
+  S.journal.filter(t => t.status === "closed" && t.followedPlan === "no" && tradeNet(t) > 0).forEach(t =>
+    out.push({ text:`Rule-breaking win: ${t.ticker || "a trade"} made money but broke your plan.`, action:"Do not count it as a success. Write what you would do next time." }));
   const cut = addDays(todayISO(), -29);
   if (S.journal.filter(t => (t.date || "") >= cut && t.priceInfluencedDecision === "price").length >= 2)
     out.push({ text:"Buying on optimism: two or more decisions this month were driven by price movement.", action:"Before the next entry, write the thesis and the value estimate. If you cannot, do not enter." });
@@ -5429,6 +5516,15 @@ document.addEventListener("submit", e => {
   }
 });
 document.addEventListener("input", e => {
+  const f = e.target.closest && e.target.closest("#trade-form, #quick-trade-form, #trade-update-form");
+  if (f){ const o = f.querySelector(".risk-readout"); if (o) o.innerHTML = riskReadoutHTML(f); }
+});
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  if (b.dataset.act === "jr-edit"){ jrEdit = b.dataset.id; render(); const pn = document.getElementById("update-panel"); if (pn){ const f = pn.querySelector("form"); pn.querySelector(".risk-readout").innerHTML = riskReadoutHTML(f); pn.scrollIntoView({ block:"start" }); } }
+  if (b.dataset.act === "jr-cancel"){ jrEdit = ""; render(); }
+});
+document.addEventListener("input", e => {
   const t = e.target;
   if (t.dataset.act !== "tx-filter") return;
   txFilter[t.dataset.key] = t.value;
@@ -5494,6 +5590,7 @@ function render(){
   const md = document.querySelector('meta[name="description"]');
   if (md) md.content = (route === "dashboard" || route === "welcome") ? "Sylvia is Akoo's 12-month plan for learning to invest with discipline." : label + " in Sylvia, Akoo's 12-month investor plan. Educational, not financial advice.";
   if (route === "transactions") txFormSync();
+  document.querySelectorAll("#main .risk-readout").forEach(o => { const f = o.closest("form"); if (f) o.innerHTML = riskReadoutHTML(f); });
   snapshotDefensive();
   // live calculators
   calcPositionSize();
@@ -5932,7 +6029,11 @@ document.addEventListener("submit", e => {
     const data = { id: uid(), num: String(S.journal.length + 1), date: todayISO(), ticker: q.ticker.trim(), secType: "Stock", strategy: "", mode: "paper",
       status: q.exitPrice !== "" ? "closed" : "open", entry: q.entry, stop: q.stop, size: q.size, plannedRisk: "", rationale: q.rationale.trim(), evidence: "", target: "", exitPlan: "",
       classification: q.classification, marginOfSafetyAtEntry: "", priceInfluencedDecision: "", ideaSource: "", sector: "", satisfiesLimits: "",
-      exitPrice: q.exitPrice, costs: "", marketConditions: "", emotionBefore: "", emotionAfter: "", violations: q.stop === "" ? "No stop set" : "", lessons: "" };
+      exitPrice: q.exitPrice, costs: "", marketConditions: "", emotionBefore: "", emotionAfter: "", violations: "", lessons: "",
+      invalidation: q.invalidation.trim(), followedPlan: "", brokenRule: "", outcomeCause: "" };
+    applyReview(data);
+    const miss = planMissing(data).concat(reviewMissing(data) ? ["process review"] : []);
+    jrNotice = miss.length ? "Saved as Incomplete. Still needed: " + miss.join(", ") + ". Use Update on the entry to finish it." : "";
     S.journal.push(data); save(); render();
     return;
   }
@@ -5962,7 +6063,39 @@ document.addEventListener("submit", e => {
         }
       }
     }
+    data.invalidation = (data.invalidation || "").trim(); data.followedPlan = data.followedPlan || ""; data.brokenRule = data.brokenRule || ""; data.outcomeCause = data.outcomeCause || "";
+    const miss = planMissing(data);
+    if (data.mode === "live" && miss.length){
+      alert("Stop. A live trade needs a complete risk plan before it is saved. Still needed: " + miss.join(", ") + ".");
+      return;
+    }
+    if (data.mode === "live" && data.status === "closed" && !data.followedPlan){
+      alert("Stop. Before a closed live trade is saved, answer: did you follow your written plan?");
+      return;
+    }
+    applyReview(data);
+    const need = miss.concat(reviewMissing(data) ? ["process review"] : []);
+    jrNotice = need.length ? "Saved as Incomplete. Still needed: " + need.join(", ") + ". Use Update on the entry to finish it." : "";
     S.journal.push(data);
+    save(); render();
+    return;
+  }
+
+  if (f.id === "trade-update-form"){
+    const t = S.journal.find(x => x.id === f.dataset.id); if (!t) return;
+    const q = Object.fromEntries(new FormData(f).entries()), bad = m => { const el = document.getElementById("update-error"); el.textContent = m; el.hidden = false; };
+    for (const [k, label] of [["entry", "Entry price"], ["stop", "Stop price"], ["size", "Shares"], ["exitPrice", "Exit price"]])
+      if (q[k] !== "" && !(parseFloat(q[k]) > 0)) return bad(label + " must be above zero, or left blank.");
+    if (q.exitPrice !== "" && !q.followedPlan) return bad("To close a trade, answer: did you follow your written plan?");
+    if (q.followedPlan === "no" && !q.brokenRule.trim()) return bad("Say which rule you broke.");
+    if (q.followedPlan && q.exitPrice === "" && t.status !== "closed") return bad("Enter an exit price to review a closed trade, or clear the review.");
+    Object.assign(t, { entry: q.entry, stop: q.stop, size: q.size, rationale: q.rationale.trim(), invalidation: q.invalidation.trim(), exitPrice: q.exitPrice, costs: q.costs,
+      followedPlan: q.followedPlan, brokenRule: q.brokenRule.trim(), outcomeCause: q.outcomeCause, lessons: q.lessons.trim() });
+    if (q.exitPrice !== "") t.status = "closed";
+    applyReview(t);
+    jrEdit = "";
+    const left = planMissing(t).concat(reviewMissing(t) ? ["process review"] : []);
+    jrNotice = left.length ? "Updated. Still needed: " + left.join(", ") + "." : "Entry updated.";
     save(); render();
     return;
   }
@@ -6016,7 +6149,8 @@ function exportTradesCSV(){
     "entry","stop","size","plannedRisk","entryRationale","evidence","target","exitPlan",
     "exitPrice","costs","grossPL","netPL","RMultiple",
     "marketConditions","emotionBefore","emotionAfter","violations","lessons",
-    "classification","marginOfSafetyAtEntry","priceInfluencedDecision","ideaSource","sector","satisfiesLimits"
+    "classification","marginOfSafetyAtEntry","priceInfluencedDecision","ideaSource","sector","satisfiesLimits",
+    "invalidation","followedPlan","brokenRule","outcomeCause"
   ];
   const rows = S.journal.map(t => {
     const risk = tradeRisk(t);
@@ -6033,7 +6167,8 @@ function exportTradesCSV(){
       net === null ? "" : net.toFixed(2),
       r === null ? "" : r.toFixed(4),
       t.marketConditions, t.emotionBefore, t.emotionAfter, t.violations, t.lessons,
-      t.classification, t.marginOfSafetyAtEntry, t.priceInfluencedDecision, t.ideaSource, t.sector, t.satisfiesLimits
+      t.classification, t.marginOfSafetyAtEntry, t.priceInfluencedDecision, t.ideaSource, t.sector, t.satisfiesLimits,
+      t.invalidation, t.followedPlan, t.brokenRule, t.outcomeCause
     ];
   });
 
