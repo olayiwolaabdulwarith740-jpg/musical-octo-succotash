@@ -2369,6 +2369,7 @@ function viewMetrics(){
 
   return `
   ${pageHeader("Metrics", "Calculated automatically from your journal. Judge performance over many decisions, not any single outcome.")}
+  ${m.count < 20 ? `<div class="notice" role="status"><strong>Small sample.</strong> You have ${m.count} closed trade${m.count === 1 ? "" : "s"}. With fewer than 20, the win rate, profit factor and expectancy swing sharply with each new trade. Read them as a first look, not a verdict.</div>` : ""}
 
   <div class="grid g4" style="margin-bottom:16px">
     ${statBox("Win rate", pct(m.winRate), `${m.wins.length} of ${m.count} closed`)}
@@ -2567,6 +2568,7 @@ function viewCalculator(){
     A stop is not a guarantee. If the stock opens below your stop, you could lose more than the planned amount.
     Allow for slippage, costs and price gaps.
   </div>
+  ${guideCard("position")}
 
   <section class="card">
     <div class="card-head"><div><h2>Calculator</h2></div></div>
@@ -3479,6 +3481,7 @@ function viewGrahamMos(){
   return `
   ${pageHeader("Margin of safety", "The gap between what you pay and what the business is reasonably worth. It protects you from your own errors.")}
   <div class="notice warn">This calculator shows how far a price sits from three anchors. It does not predict returns, and the answer is only as good as the inputs. Use normalized earnings, not the best year.</div>
+  ${guideCard("mos")}
   <section class="card" data-live="mos">
     <div class="card-head"><div><h2>Inputs</h2><div class="sub">Per-share figures. Use the same currency for all of them.</div></div></div>
     ${S.companies.length ? `<div class="field no-print"><label for="mos-load">Load from a saved company</label>
@@ -4947,6 +4950,39 @@ function finField(def, f){
   if (f.txt) return `<div class="field" style="grid-column:1/-1"><label for="${id}">${esc(f.label)}</label><textarea id="${id}" rows="${f.rows || 3}" data-path="${path}" spellcheck="false">${esc(v)}</textarea></div>`;
   return `<div class="field"><label for="${id}">${esc(f.label)}</label><input id="${id}" type="text" inputmode="decimal" data-path="${path}" value="${esc(v)}" autocomplete="off"></div>`;
 }
+
+const GUIDE_TEXT = {
+  compound: { when: "Use it to see how time and reinvested returns change a lump sum or regular saving. It is most useful in Phase 1, when you learn why starting early matters.", not: "It does not predict what any investment will earn. The rate is your assumption. Real returns change from year to year and can be negative.", tryIt: "Change the years from 10 to 20. Notice how much more of the ending balance is growth rather than your own contributions." },
+  growth: { when: "Use it before you set a monthly amount in the planner, to see a low, a middle and a high case instead of one number.", not: "The low case is not a worst case. Returns can be lower than the low case, and you can lose money.", tryIt: "Lower the base return by two points and see how much the ending balance changes." },
+  retirement: { when: "Use it once, when you set long-term goals, to check that your monthly saving points in a sensible direction.", not: "It does not say how much income you will need or how long savings will last. It ignores tax, fees and pay rises.", tryIt: "Compare the two retirement ages to see what five more years of saving is worth." },
+  inflation: { when: "Use it when a goal is far away, to see what a future sum may buy in today's money.", not: "Inflation changes every year. The rate you enter is a guess, not a forecast.", tryIt: "Raise inflation by one point and watch the buying power of the amount fall." },
+  dividend: { when: "Use it for a holding that pays dividends, to estimate the income. It fits Phase 2, when you study how a company pays out its profit.", not: "Dividends can be cut or stopped. Past payments do not promise future ones, and a very high yield can be a warning sign.", tryIt: "Halve the dividend per payment, as if the company cut it, and see what happens to your income." },
+  allocation: { when: "Use it in Phase 3 once you have set targets, to see how far your holdings have drifted and how concentrated they are.", not: "It does not tell you which targets are right for you, and it does not tell you what to buy or sell.", tryIt: "Press Fill from my portfolio, then set a target for each holding and read the gaps." },
+  drawdown: { when: "Use it before you size positions, to feel what a fall does to your portfolio and what gain it takes to recover.", not: "It does not forecast a fall. It shows arithmetic: a 50% fall needs a 100% gain to get back to where you were.", tryIt: "Try a 20% fall, then 40%, and compare the gain needed to recover each one." },
+  dca: { when: "Use it to compare investing the same amount each time with the average of the prices you list.", not: "It does not show that spreading purchases beats investing everything at once. It only shows what your listed prices would have given.", tryIt: "List prices that fall and then recover, and compare the average cost per unit with the simple average price." },
+  position: { when: "Use it before every trade, to turn the most you can afford to lose into a number of shares.",
+    example: "Invented example: a $500 pot and 1% risk give a $5.00 risk budget. An entry at $20 and a stop at $18 risk $2.00 a share, so 2 shares fit (2.5 rounded down). That costs $40 and the planned loss is $4.00. The boxes below start with a harder case: at 0.5% risk, a $100 entry and a $92 stop, the $2.50 budget is smaller than the $8.00 risk on one share, so the answer is 0 shares. That is the tool telling you the trade does not fit.",
+    not: "It does not make a trade safe. A price gap past your stop loses more than planned, and trading costs are not included.", tryIt: "In the 1% example, move the stop to $19. The same risk now buys 5 shares, but a tighter stop is hit more often." },
+  mos: { when: "Use it before you buy a company you have researched, with per-share figures from its reports.",
+    example: "Invented example: price $48.20, normalized earnings $3.00 a share, book value $31.50 and a required return of 8%. The value range is $37.50 to $46.11, so the price is above everything the numbers support and the tool says there is no margin of safety. At a price of $30.00 the same company has a 20% cushion under the low end.",
+    not: "It does not predict returns. Wrong or optimistic inputs, especially a peak year's earnings, give an answer that looks precise and is wrong.", tryIt: "Enter your best recent year's earnings instead of an average and see how far the range moves. Then use the average." }
+};
+function guideExample(def){
+  const keep = S.fin; S.fin = {};
+  let r; try { r = runCalc(def); } finally { S.fin = keep; }
+  if (!r || r.error || !r.stats) return "";
+  return "Every box starts with an invented example, not a forecast. With those numbers: " + r.stats.slice(0, 3).map(x => x[0].toLowerCase() + " " + x[1]).join("; ") + ".";
+}
+function guideCard(id, def){
+  const g = GUIDE_TEXT[id]; if (!g) return "";
+  const ex = g.example || (def ? guideExample(def) : "");
+  return card("How to use this", "", `<ul class="plain">
+    <li><strong>When to use it.</strong> ${esc(g.when)}</li>
+    ${ex ? `<li><strong>Worked example.</strong> ${esc(ex)}</li>` : ""}
+    <li><strong>What it does not mean.</strong> ${esc(g.not)}</li>
+    <li><strong>Try this.</strong> ${esc(g.tryIt)}</li></ul>`);
+}
+
 function viewFinTools(){
   const def = CALCS.find(c => c.id === finTab) || CALCS[0];
   return `
@@ -4960,7 +4996,8 @@ function viewFinTools(){
     ${def.id === "allocation" ? `<p><button class="btn sm" data-act="fin-fill-alloc">Fill from my portfolio</button> <span class="small">Replaces the lines above with your recorded holdings and cash.</span></p>` : ""}
     <div class="divider"></div>
     <div class="live-out" aria-live="polite">${calcOutputHTML(def)}</div>
-  </section>`;
+  </section>
+  ${guideCard(def.id, def)}`;
 }
 
 /* ============================================================
