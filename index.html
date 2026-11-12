@@ -2087,6 +2087,14 @@ function journalNoticeHTML(){
   const n = jrNotice; jrNotice = "";
   return n ? `<div class="notice ${/Incomplete|Still needed/.test(n) ? "warn" : "ok"}" role="status"><strong>${esc(n)}</strong></div>` : "";
 }
+function journalAttentionHTML(){
+  const rows = S.journal.map(t => ({ t, need: planMissing(t).concat(reviewMissing(t) ? ["process review"] : []), open: t.status === "open" }))
+    .filter(x => x.need.length || x.open);
+  if (!rows.length) return "";
+  return card("Needs your attention", rows.length + " trade" + (rows.length === 1 ? "" : "s") + " to finish or close", `<ul class="plain">${rows.slice(0, 8).map(x => `<li style="display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px">
+    <span><strong>${esc(x.t.ticker || "Trade")}</strong> (entry ${esc(x.t.num)}): ${x.need.length ? "missing " + esc(x.need.join(", ")) : "open, not yet closed"}</span>
+    <button class="btn sm" data-act="jr-edit" data-id="${esc(x.t.id)}">Update</button></li>`).join("")}</ul>${rows.length > 8 ? `<p class="small">And ${rows.length - 8} more in the table below.</p>` : ""}`);
+}
 function journalEditPanel(){
   const t = S.journal.find(x => x.id === jrEdit); if (!t) return "";
   const v = k => esc(t[k] === undefined ? "" : t[k]);
@@ -2130,6 +2138,7 @@ function viewJournal(){
   ${pageHeader("Trade Journal", "Record every trade. The journal is the single most valuable artefact this plan produces.")}
   ${journalNoticeHTML()}
   ${journalEditPanel()}
+  ${journalAttentionHTML()}
 
   <section class="card">
     <div class="card-head"><div><h2>New entry</h2>
