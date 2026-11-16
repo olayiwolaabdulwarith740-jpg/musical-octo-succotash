@@ -976,6 +976,7 @@ const NAV = [
     { id:"financial-tools",label:"Financial tools" }
   ]},
   { group:"Practice", items:[
+    { id:"first-trade", label:"Guided paper trade" },
     { id:"journal",    label:"Trade Journal" },
     { id:"metrics",    label:"Metrics" },
     { id:"thesis",     label:"Thesis Builder" },
@@ -2157,6 +2158,7 @@ function viewJournal(){
 
   return `
   ${pageHeader("Trade Journal", "Record every trade. The journal is the single most valuable artefact this plan produces.")}
+  ${S.journal.length ? "" : `<div class="notice" role="status"><strong>New here?</strong> <a href="#first-trade">Let me walk you through your first practice trade</a>, one question at a time.</div>`}
   ${journalNoticeHTML()}
   ${journalEditPanel()}
   ${journalAttentionHTML()}
@@ -2268,6 +2270,87 @@ function riskReadoutHTML(f){
   if (miss.length) out.push("Still needed for a complete entry: " + miss.join(", ") + ". Without them the trade is saved as Incomplete.");
   return out.map(x => "<p style=\"margin:0 0 4px\">" + x + "</p>").join("") || "<p style=\"margin:0\">Enter the entry, stop and shares to see what this trade could cost you.</p>";
 }
+let WZ = { step:0, d:{}, err:"", done:false };
+const WZ_STEPS = [
+  { title:"What are you practising on?", help:"Type the name or ticker of any company or fund you have heard of. Nothing is bought. This is pretend money.",
+    fields:[["ticker","text","Company or ticker, for example AAPL or Coca-Cola"]] },
+  { title:"What price would you buy at?", help:"Look up the current price anywhere you like and type it in. This is your entry price.",
+    fields:[["entry","number","Price per share, for example 25.50"]] },
+  { title:"At what price would you admit you were wrong?", help:"This is your stop price. If the price falls to it, you sell and accept a small loss instead of hoping. It must be below the price you bought at.",
+    fields:[["stop","number","Price per share, lower than your buy price"]] },
+  { title:"How many shares?", help:"Start small. The box below shows what you would lose if the price hits your stop.",
+    fields:[["size","number","Number of shares, for example 10"]], risk:true },
+  { title:"Why this one, and what would prove you wrong?", help:"One sentence each. Writing the reason now lets you check later whether you were right for the right reason.",
+    fields:[["rationale","text","Why do you want this?"],["invalidation","text","What fact or price would show the idea is wrong?"]] },
+  { title:"Is this an investment or a speculation?", help:"An investment is backed by study of the business and aims to protect your money. A speculation is a bet on the price moving. If you are not sure, choose Not sure. That is an honest answer.",
+    choice:true }
+];
+function wzRisk(){
+  const e = parseFloat(WZ.d.entry), st = parseFloat(WZ.d.stop), n = parseFloat(WZ.d.size), cap = num(S.phase3.heat.capital) || 500;
+  if (!(e > 0 && st > 0 && n > 0)) return "Enter a number of shares to see the possible loss.";
+  const risk = Math.abs(e - st) * n, p = risk / cap;
+  return `<strong>If the price hits your stop you lose about ${money(risk)}</strong>, which is ${pct(p, 1)} of a ${money(cap, 0)} trading pot.` + (p > 0.02 ? " That is above the 2% ceiling. Try fewer shares." : " That is within the 2% ceiling.");
+}
+function wzCheck(i){
+  const d = WZ.d, st = WZ_STEPS[i];
+  if (i === 0 && !(d.ticker || "").trim()) return "Type a company name or ticker.";
+  if (i === 1 && !(parseFloat(d.entry) > 0)) return "Enter a price above zero.";
+  if (i === 2){ if (!(parseFloat(d.stop) > 0)) return "Enter a price above zero."; if (parseFloat(d.stop) >= parseFloat(d.entry)) return "The stop must be below your buy price of " + d.entry + "."; }
+  if (i === 3 && !(parseFloat(d.size) > 0)) return "Enter a number of shares above zero.";
+  if (i === 4){ if (!(d.rationale || "").trim()) return "Write one sentence on why."; if (!(d.invalidation || "").trim()) return "Write what would prove you wrong."; }
+  if (i === 5 && !d.classification) return "Choose one. If you cannot decide, choose Not sure.";
+  return "";
+}
+function viewFirstTrade(){
+  const head = pageHeader("Guided paper trade", "Six short questions. Nothing is real. You are practising the habit of planning before you buy.");
+  if (WZ.done) return head + card("Saved", "", `<p>Your practice trade is in the journal with its stop and reason. Come back when the price moves and close it with the Update button.</p>
+    <div class="inline"><a class="btn primary" href="#journal">Open the journal</a><button class="btn" data-act="wz-restart">Do another</button></div>`);
+  const last = WZ_STEPS.length, i = WZ.step;
+  if (i >= last){
+    const d = WZ.d, risk = Math.abs(parseFloat(d.entry) - parseFloat(d.stop)) * parseFloat(d.size);
+    const cls = { investment:"Investment", speculation:"Speculation", unclear:"Not sure" }[d.classification];
+    return head + card("Check your plan", "Step 7 of 7", `<table class="tbl"><tbody>
+      <tr><th>Practising on</th><td>${esc(d.ticker)}</td></tr><tr><th>Buy at</th><td>${money(parseFloat(d.entry))}</td></tr>
+      <tr><th>Admit wrong at</th><td>${money(parseFloat(d.stop))}</td></tr><tr><th>Shares</th><td>${esc(d.size)}</td></tr>
+      <tr><th>Possible loss</th><td>${money(risk)}</td></tr><tr><th>Why</th><td>${esc(d.rationale)}</td></tr>
+      <tr><th>Proven wrong if</th><td>${esc(d.invalidation)}</td></tr><tr><th>Type</th><td>${esc(cls)}</td></tr></tbody></table>
+      <div class="inline" style="margin-top:12px"><button class="btn primary" data-act="wz-save">Save to my journal</button><button class="btn" data-act="wz-back">Back</button></div>`);
+  }
+  const st = WZ_STEPS[i];
+  const body = st.choice
+    ? `<div class="inline" role="group" aria-label="Type of trade">${[["investment","Investment"],["speculation","Speculation"],["unclear","Not sure"]].map(([v, l]) => `<button class="btn ${WZ.d.classification === v ? "primary" : ""}" data-act="wz-class" data-v="${v}" aria-pressed="${WZ.d.classification === v}">${l}</button>`).join("")}</div>`
+    : st.fields.map(([k, t, ph]) => `<div class="field"><label for="wz-${k}">${esc(ph)}</label><input id="wz-${k}" data-wz="${k}" type="${t}" ${t === "number" ? 'step="0.01" min="0" inputmode="decimal"' : ""} value="${esc(WZ.d[k] || "")}"></div>`).join("")
+      + (st.risk ? `<div class="notice" id="wz-risk" role="status">${wzRisk()}</div>` : "");
+  return head + card(st.title, "Step " + (i + 1) + " of 7", `<p>${esc(st.help)}</p>${body}
+    <p class="error" id="wz-err" role="alert" ${WZ.err ? "" : "hidden"} style="color:var(--danger)">${esc(WZ.err)}</p>
+    <div class="inline" style="margin-top:12px">${i > 0 ? '<button class="btn" data-act="wz-back">Back</button>' : ""}<button class="btn primary" data-act="wz-next">${i === last - 1 ? "Review" : "Next"}</button></div>`);
+}
+document.addEventListener("input", e => {
+  const k = e.target && e.target.dataset && e.target.dataset.wz; if (!k) return;
+  WZ.d[k] = e.target.value; WZ.err = "";
+  const r = document.getElementById("wz-risk"); if (r) r.innerHTML = wzRisk();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Enter" && e.target && e.target.dataset && e.target.dataset.wz){ e.preventDefault(); const b = document.querySelector('[data-act="wz-next"]'); if (b) b.click(); }
+});
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b || !/^wz-/.test(b.dataset.act)) return;
+  const a = b.dataset.act;
+  if (a === "wz-class"){ WZ.d.classification = b.dataset.v; WZ.err = ""; render(); return; }
+  if (a === "wz-next"){ const m = wzCheck(WZ.step); if (m){ WZ.err = m; render(); const el = document.querySelector("[data-wz]"); if (el) el.focus(); return; } WZ.err = ""; WZ.step++; render(); const el = document.querySelector("[data-wz]"); if (el) el.focus(); return; }
+  if (a === "wz-back"){ WZ.err = ""; WZ.step = Math.max(0, WZ.step - 1); render(); return; }
+  if (a === "wz-restart"){ WZ = { step:0, d:{}, err:"", done:false }; render(); return; }
+  if (a === "wz-save"){
+    const d = WZ.d;
+    const data = { id: uid(), num: String(S.journal.length + 1), date: todayISO(), ticker: d.ticker.trim(), secType: "Stock", strategy: "", mode: "paper",
+      status: "open", entry: d.entry, stop: d.stop, size: d.size, plannedRisk: "", rationale: d.rationale.trim(), evidence: "", target: "", exitPlan: "",
+      classification: d.classification, marginOfSafetyAtEntry: "", priceInfluencedDecision: "", ideaSource: "", sector: "", satisfiesLimits: "",
+      exitPrice: "", costs: "", marketConditions: "", emotionBefore: "", emotionAfter: "", violations: "", lessons: "",
+      invalidation: d.invalidation.trim(), followedPlan: "", brokenRule: "", outcomeCause: "" };
+    applyReview(data); S.journal.push(data); save(); WZ.done = true; render();
+  }
+});
+
 function quickTradeForm(){
   return `
   <details style="background:var(--panel);border-color:var(--line)" open>
@@ -5447,7 +5530,7 @@ function plReminders(){
 function dashboardFirstSteps(){
   const steps = [
     ["Set your two limits: the least return you accept and the most you can lose", has(S.graham.required.minReturn) && has(S.graham.required.maxLoss), "#settings", "Open Settings"],
-    ["Log one paper trade with a stop and a reason", S.journal.some(t => t.mode === "paper" && !planMissing(t).length), "#journal", "Open the journal"],
+    ["Log one paper trade with a stop and a reason", S.journal.some(t => t.mode === "paper" && !planMissing(t).length), "#first-trade", "Walk me through it"],
     ["Export a backup of your data", !!S.meta.lastBackup, "#settings", "Open Settings"]
   ];
   if (steps.every(x => x[1])) return "";
@@ -5457,7 +5540,7 @@ function dashboardFirstSteps(){
 function dashboardPractice(){
   const paper = S.journal.filter(t => t.mode === "paper"), m = computeMetrics("paper");
   if (!S.journal.length) return `<section class="card empty-card"><div class="txt"><h2>Practice trades</h2><p>Log a paper trade in under a minute. Each one is saved with your reason, so you can learn from it later.</p>
-    <a class="btn primary" href="#journal">Log your first paper trade</a></div></section>`;
+    <div class="inline"><a class="btn primary" href="#first-trade">Walk me through my first trade</a><a class="btn" href="#journal">Use the quick form</a></div></div></section>`;
   const open = paper.filter(t => t.status === "open").length, spec = S.journal.filter(t => classOf(t) !== "investment").length;
   return card("Practice trades", "From your trade journal.", `<div class="grid g4">
     ${statBox("Paper trades logged", String(paper.length), open + " still open")}
@@ -5632,6 +5715,7 @@ document.addEventListener("change", e => {
 
 
 const VIEWS = {
+  "first-trade": viewFirstTrade,
   portfolio: viewPortfolio,
   transactions: viewTransactions,
   planner: viewPlanner,
