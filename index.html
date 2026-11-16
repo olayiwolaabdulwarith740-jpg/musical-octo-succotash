@@ -615,7 +615,7 @@ const GLOSSARY = [
 function defaultState(){
   return {
     version:3,
-    meta:{ lastBackup:"", dismissed:"" },
+    meta:{ lastBackup:"", dismissed:"", simple:true },
     fin:{},
     portfolio:{ assets:[], tx:[], snapshots:[], concLimit:"25" },
     planner:{ created:false, startMonth:"", defaultMonthly:"", annualTarget:"", reminders:false, months:{}, goals:[] },
@@ -1023,28 +1023,49 @@ const ico = (n, c) => `<svg class="ic${c ? " " + c : ""}" viewBox="0 0 24 24" ar
 NAV_ICON.welcome = '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>';
 const iconSvg = id => `<svg viewBox="0 0 24 24" aria-hidden="true">${NAV_ICON[id] || ""}</svg>`;
 
+const SIMPLE_IDS = ["dashboard", "journal", "portfolio", "legal"];
+function simpleNav(){
+  const ph = S.profile.currentPhase;
+  const items = [
+    { id:"dashboard", label:"Dashboard" },
+    { id:"phase" + ph, label:"My phase: " + PHASES[ph].name, match: id => id.startsWith("phase") },
+    { id:"journal", label:"Trade Journal" },
+    { id:"portfolio", label:"Portfolio" },
+    { id:"legal", label:"Help and legal" },
+    { id:"settings", label:"Settings and backup" }
+  ];
+  if (!items.some(it => it.match ? it.match(route) : it.id === route)) {
+    const found = NAV.flatMap(g => g.items).find(i => i.id === route);
+    if (found) items.push(found);
+  }
+  return [{ group:"", items }];
+}
 function renderNav(){
   const nav = document.getElementById("sidebar");
   let html = "";
-  NAV.forEach(g => {
+  (S.meta.simple ? simpleNav() : NAV).forEach(g => {
     html += '<div class="nav-group">';
     if (g.group) html += `<div class="nav-group-title">${esc(g.group)}</div>`;
     g.items.forEach(it => {
       let cls = "nav-item";
-      if (it.id === route) cls += " active";
+      const here = it.match ? it.match(route) : it.id === route;
+      if (here) cls += " active";
       if (it.id.startsWith("phase")) {
         const n = parseInt(it.id.slice(5),10);
         if (gatePassed(n) && n < 4) cls += " done";
       }
-      const dim = effectiveType() === "defensive" && ["journal", "calculator", "phase4"].includes(it.id);
+      const dim = !S.meta.simple && effectiveType() === "defensive" && ["journal", "calculator", "phase4"].includes(it.id);
       if (dim) cls += " dim";
-      html += `<a class="${cls}" href="#${it.id}"${it.id === route ? ' aria-current="page"' : ""}>${navIcon(it.id)}<span>${esc(it.label)}</span>${dim ? '<span class="opt">optional</span>' : ""}</a>`;
+      html += `<a class="${cls}" href="#${it.id}"${here ? ' aria-current="page"' : ""}>${navIcon(it.match ? "phase1" : it.id)}<span>${esc(it.label)}</span>${dim ? '<span class="opt">optional</span>' : ""}</a>`;
     });
     html += "</div>";
   });
+  html += S.meta.simple
+    ? '<div class="nav-group"><p class="small" style="padding:0 12px;margin:8px 0">You are seeing the simple menu. The calculators, Graham tools, metrics and reference pages are hidden until you need them.</p><button class="btn sm" style="margin:0 12px" data-act="ui-simple-off">Show every page</button></div>'
+    : '<div class="nav-group"><button class="btn sm" style="margin:8px 12px" data-act="ui-simple-on">Switch to the simple menu</button></div>';
   nav.innerHTML = html;
 
-  const tabs = [["dashboard","Home"],["journal","Journal"],["calculator","Calculator"],["metrics","Metrics"]];
+  const tabs = S.meta.simple ? [["dashboard","Home"],["journal","Journal"],["portfolio","Portfolio"]] : [["dashboard","Home"],["journal","Journal"],["calculator","Calculator"],["metrics","Metrics"]];
   document.getElementById("tabbar").innerHTML = tabs.map(([id,l]) => `<a href="#${id}" class="${route===id?"on":""}">${l}</a>`).join("")
     + '<button data-act="toggle-nav">More</button>';
 
@@ -2102,9 +2123,9 @@ function journalEditPanel(){
   <form id="trade-update-form" data-id="${esc(t.id)}" novalidate>
     <h4>Risk plan</h4>
     <div class="row">
-      <div class="field"><label for="u-entry">Entry price</label><input id="u-entry" type="number" step="0.01" name="entry" value="${v("entry")}"></div>
-      <div class="field"><label for="u-stop">Stop price</label><input id="u-stop" type="number" step="0.01" name="stop" value="${v("stop")}"></div>
-      <div class="field"><label for="u-size">Shares</label><input id="u-size" type="number" step="0.0001" name="size" value="${v("size")}"></div>
+      <div class="field"><label for="u-entry">Price you bought at (entry price)</label><input id="u-entry" type="number" step="0.01" name="entry" value="${v("entry")}"></div>
+      <div class="field"><label for="u-stop">Get-out price if wrong (stop price)</label><input id="u-stop" type="number" step="0.01" name="stop" value="${v("stop")}"></div>
+      <div class="field"><label for="u-size">Shares (how many)</label><input id="u-size" type="number" step="0.0001" name="size" value="${v("size")}"></div>
     </div>
     <div class="notice accent risk-readout" aria-live="polite" style="font-size:.85rem"></div>
     <div class="field"><label for="u-why">Why this trade?</label><textarea id="u-why" name="rationale" style="min-height:48px">${v("rationale")}</textarea></div>
@@ -2252,13 +2273,13 @@ function quickTradeForm(){
   <details style="background:var(--panel);border-color:var(--line)" open>
     <summary>+ Quick paper trade (short form)</summary>
     <form id="quick-trade-form" novalidate>
-      <p class="small" style="margin:10px 0">It saves a paper trade. A trade missing its stop, shares, reason or invalidation is saved as Incomplete, so you can finish it later. Live trades need the full form.</p>
+      <p class="small" style="margin:10px 0"><strong>Paper trade</strong> means practice with pretend money. A <strong>stop price</strong> is the price where you admit you were wrong and sell, to limit the loss. It saves a paper trade. A trade missing its stop, shares, reason or invalidation is saved as Incomplete, so you can finish it later. Live trades need the full form.</p>
       <div class="row">
         <div class="field"><label for="q-ticker">Ticker or name</label><input id="q-ticker" name="ticker" required></div>
-        <div class="field"><label for="q-entry">Entry price</label><input id="q-entry" type="number" step="0.01" min="0" name="entry" required></div>
-        <div class="field"><label for="q-stop">Stop price (required for a complete entry)</label><input id="q-stop" type="number" step="0.01" min="0" name="stop"></div>
-        <div class="field"><label for="q-size">Shares</label><input id="q-size" type="number" step="0.0001" min="0" name="size" required></div>
-        <div class="field"><label for="q-exit">Exit price (leave blank if still open)</label><input id="q-exit" type="number" step="0.01" min="0" name="exitPrice"></div>
+        <div class="field"><label for="q-entry">Price you bought at (entry price)</label><input id="q-entry" type="number" step="0.01" min="0" name="entry" required></div>
+        <div class="field"><label for="q-stop">Get-out price if wrong (stop price)</label><input id="q-stop" type="number" step="0.01" min="0" name="stop"></div>
+        <div class="field"><label for="q-size">Shares (how many)</label><input id="q-size" type="number" step="0.0001" min="0" name="size" required></div>
+        <div class="field"><label for="q-exit">Price you sold at (exit price). Blank if still open</label><input id="q-exit" type="number" step="0.01" min="0" name="exitPrice"></div>
         <div class="field"><label for="q-class">Investment or speculation?</label><select id="q-class" name="classification"><option value="">Choose</option><option value="investment">Investment</option><option value="speculation">Speculation</option><option value="unclear">Unclear</option></select></div>
       </div>
       <div class="field"><label for="q-why">Why this trade? One sentence.</label><input id="q-why" name="rationale" maxlength="200"></div>
@@ -3025,6 +3046,11 @@ function viewSettings(){
       <div class="field"><label>Most you could lose without real harm ($)</label><input type="number" data-path="profile.maxLoss" value="${esc(p.maxLoss)}" placeholder="e.g. 500"></div>
     </div>
     <p class="small">If your answer to the last field is smaller than what you have in the sandbox, reduce the sandbox.</p>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><div><h2>Menu</h2><div class="sub">The simple menu shows six pages. Turn it off to see every page.</div></div></div>
+    <label class="check"><input type="checkbox" ${S.meta.simple ? "checked" : ""} data-act="ui-simple-${S.meta.simple ? "off" : "on"}"><span><span class="lbl">Use the simple menu</span><span class="hint">Hides the calculators, Graham tools, metrics and reference pages from the menu. They still open from links.</span></span></label>
   </section>
 
   ${settingsGrahamCard()}
@@ -5660,6 +5686,7 @@ document.addEventListener("click", e => {
   const b = e.target.closest("[data-act]"); if (!b) return;
   if (b.dataset.act === "backup-now"){ exportBackup(); render(); }
   if (b.dataset.act === "backup-dismiss"){ S.meta.dismissed = todayISO(); save(); render(); }
+  if (b.dataset.act === "ui-simple-off" || b.dataset.act === "ui-simple-on"){ S.meta.simple = b.dataset.act === "ui-simple-on"; save(); renderNav(); render(); }
 });
 function render(){
   const changed = lastRoute !== route;
