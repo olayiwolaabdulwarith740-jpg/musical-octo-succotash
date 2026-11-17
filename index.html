@@ -335,9 +335,75 @@ input[type=range]:focus{outline:2px solid var(--accent);outline-offset:3px}
   .check{min-height:44px;align-items:center}
   .check input{width:22px;height:22px;flex-basis:22px}
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+/* ---- polish and motion ---- */
+:root{--r:10px;--r-sm:8px;--r-lg:14px;
+  --shadow-1:0 1px 2px rgba(21,24,28,.05),0 2px 8px rgba(21,24,28,.05);
+  --shadow-2:0 2px 4px rgba(21,24,28,.06),0 10px 28px rgba(21,24,28,.10);
+  --hero-tint:linear-gradient(135deg,#FFFFFF 0%,#F1F7F6 100%);
+  --ease:cubic-bezier(.22,.8,.3,1)}
+html[data-theme="dark"]{--shadow-1:0 1px 2px rgba(0,0,0,.35),0 2px 8px rgba(0,0,0,.25);--shadow-2:0 2px 4px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.4);--hero-tint:linear-gradient(135deg,#181C1B 0%,#16302F 100%)}
+body{background:radial-gradient(1100px 520px at 85% -120px,color-mix(in srgb,var(--accent) 9%,transparent),transparent 70%),var(--bg);background-attachment:fixed}
+.topbar{background:color-mix(in srgb,var(--panel) 88%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(10px);backdrop-filter:saturate(1.4) blur(10px);box-shadow:0 1px 0 var(--line),0 4px 16px rgba(21,24,28,.04)}
+.card,.stat,.tbl-wrap{box-shadow:var(--shadow-1)}
+.card{padding:28px}
+.hero{background:var(--hero-tint);border-color:var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-2);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--amber) 22%,transparent),transparent 68%);pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.nav-item{border-radius:8px;transition:background-color .18s,color .18s,transform .18s var(--ease)}
+.nav-item:hover{transform:translateX(3px)}
+.nav-item.active{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+.nav-item.active:hover{transform:none}
+.btn{border-radius:8px;transition:background-color .18s,border-color .18s,color .18s,box-shadow .2s,transform .18s var(--ease)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(21,24,28,.12)}
+.btn:active{transform:translateY(0) scale(.97);box-shadow:none}
+.btn.primary{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 88%,#fff) 0%,var(--accent) 100%);box-shadow:0 1px 2px rgba(11,95,102,.35),0 4px 10px rgba(11,95,102,.18)}
+.btn.primary:hover{background:var(--accent-hover);box-shadow:0 6px 16px rgba(11,95,102,.3)}
+.btn.ghost:hover,.btn.danger:hover{box-shadow:none}
+.bar{height:10px;border-radius:999px;background:color-mix(in srgb,var(--line) 80%,transparent)}
+.bar>i{border-radius:999px;background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 70%,#6CC3BE));transform-origin:left}
+.bar.ok>i{background:linear-gradient(90deg,var(--ok),color-mix(in srgb,var(--ok) 70%,#7FD0A2))}
+.stat{border-radius:var(--r);transition:transform .22s var(--ease),box-shadow .22s,border-color .22s}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-2);border-color:var(--line-strong)}
+.card{transition:box-shadow .25s,border-color .25s}
+.card:hover{box-shadow:var(--shadow-2)}
+.pill{border-radius:999px;padding:4px 12px}
+.notice{border-radius:var(--r)}
+input,select,textarea{border-radius:var(--r-sm);transition:border-color .15s,box-shadow .2s,background-color .15s}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 16%,transparent)}
+.check input{transition:background-color .18s,border-color .18s,transform .18s var(--ease)}
+.check input:active{transform:scale(.88)}
+.check input::after{transition:opacity .15s}
+.hero-mark .logo{filter:drop-shadow(0 6px 10px rgba(11,95,102,.25))}
+@keyframes sy-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes sy-fade{from{opacity:0}to{opacity:1}}
+@keyframes sy-slide{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+@keyframes sy-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes sy-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes sy-pop{0%{opacity:0;transform:scale(.94)}60%{transform:scale(1.02)}100%{opacity:1;transform:none}}
+@keyframes sy-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--amber) 55%,transparent)}100%{box-shadow:0 0 0 12px transparent}}
+@media(prefers-reduced-motion:no-preference){
+  .page-enter>*{animation:sy-rise .55s var(--ease) backwards}
+  .page-enter>*:nth-child(2){animation-delay:.06s}.page-enter>*:nth-child(3){animation-delay:.12s}
+  .page-enter>*:nth-child(4){animation-delay:.18s}.page-enter>*:nth-child(5){animation-delay:.24s}
+  .page-enter>*:nth-child(6){animation-delay:.3s}.page-enter>*:nth-child(n+7){animation-delay:.36s}
+  .page-enter .grid>*{animation:sy-rise .5s var(--ease) backwards}
+  .page-enter .grid>*:nth-child(2){animation-delay:.1s}.page-enter .grid>*:nth-child(3){animation-delay:.16s}
+  .page-enter .grid>*:nth-child(4){animation-delay:.22s}.page-enter .grid>*:nth-child(n+5){animation-delay:.28s}
+  .page-enter .bar>i{animation:sy-grow 1s var(--ease) .25s backwards}
+  .page-enter .lp>*{animation:sy-rise .65s var(--ease) backwards}
+  .page-enter .lp>*:nth-child(2){animation-delay:.08s}.page-enter .lp>*:nth-child(3){animation-delay:.16s}.page-enter .lp>*:nth-child(n+4){animation-delay:.24s}
+  .step-enter>.card{animation:sy-slide .38s var(--ease) backwards}
+  .step-enter.step-back>.card{animation-name:sy-fade}
+  .hero-mark .logo{animation:sy-float 5s ease-in-out infinite}
+  .nav-item.active .nav-ico{animation:sy-pop .4s var(--ease) backwards}
+  .notice.accent,.notice.warn{animation:sy-fade .5s ease backwards}
+  #wz-risk{animation:sy-fade .25s ease backwards}
+  .empty-card .btn.primary{animation:sy-pulse 2.4s ease-out 1.2s 3}
+}
+
 @media print{
-  *,*::before,*::after{transition:none!important}
+  *,*::before,*::after{transition:none!important;animation:none!important}
   body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .cover{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:90vh;page-break-after:always;break-after:page}
   .cover .logo{width:130px;height:130px;flex:none}
@@ -2270,7 +2336,7 @@ function riskReadoutHTML(f){
   if (miss.length) out.push("Still needed for a complete entry: " + miss.join(", ") + ". Without them the trade is saved as Incomplete.");
   return out.map(x => "<p style=\"margin:0 0 4px\">" + x + "</p>").join("") || "<p style=\"margin:0\">Enter the entry, stop and shares to see what this trade could cost you.</p>";
 }
-let WZ = { step:0, d:{}, err:"", done:false };
+let WZ = { step:0, d:{}, err:"", done:false, back:false };
 const WZ_STEPS = [
   { title:"What are you practising on?", help:"Type the name or ticker of any company or fund you have heard of. Nothing is bought. This is pretend money.",
     fields:[["ticker","text","Company or ticker, for example AAPL or Coca-Cola"]] },
@@ -2337,8 +2403,8 @@ document.addEventListener("click", e => {
   const b = e.target.closest("[data-act]"); if (!b || !/^wz-/.test(b.dataset.act)) return;
   const a = b.dataset.act;
   if (a === "wz-class"){ WZ.d.classification = b.dataset.v; WZ.err = ""; render(); return; }
-  if (a === "wz-next"){ const m = wzCheck(WZ.step); if (m){ WZ.err = m; render(); const el = document.querySelector("[data-wz]"); if (el) el.focus(); return; } WZ.err = ""; WZ.step++; render(); const el = document.querySelector("[data-wz]"); if (el) el.focus(); return; }
-  if (a === "wz-back"){ WZ.err = ""; WZ.step = Math.max(0, WZ.step - 1); render(); return; }
+  if (a === "wz-next"){ WZ.back = false; const m = wzCheck(WZ.step); if (m){ WZ.err = m; render(); const el = document.querySelector("[data-wz]"); if (el) el.focus(); return; } WZ.err = ""; WZ.step++; render(); const el = document.querySelector("[data-wz]"); if (el) el.focus(); return; }
+  if (a === "wz-back"){ WZ.back = true; WZ.err = ""; WZ.step = Math.max(0, WZ.step - 1); render(); return; }
   if (a === "wz-restart"){ WZ = { step:0, d:{}, err:"", done:false }; render(); return; }
   if (a === "wz-save"){
     const d = WZ.d;
@@ -5772,6 +5838,7 @@ document.addEventListener("click", e => {
   if (b.dataset.act === "backup-dismiss"){ S.meta.dismissed = todayISO(); save(); render(); }
   if (b.dataset.act === "ui-simple-off" || b.dataset.act === "ui-simple-on"){ S.meta.simple = b.dataset.act === "ui-simple-on"; save(); renderNav(); render(); }
 });
+let lastMotionKey = "";
 function render(){
   const changed = lastRoute !== route;
   const keepY = changed ? 0 : window.scrollY;
@@ -5779,7 +5846,16 @@ function render(){
   document.body.classList.toggle("is-landing", route === "welcome");
   if (route !== "welcome") { try { localStorage.setItem("t12mip_seen", "1"); } catch(e){} }
   const main = document.getElementById("main");
+  const motionKey = changed ? "p:" + route : (route === "first-trade" ? "w:" + WZ.step + ":" + WZ.done : "");
+  const motionChanged = motionKey !== "" && motionKey !== lastMotionKey;
+  if (motionKey !== "") lastMotionKey = motionKey;
   main.innerHTML = (VIEWS[route] || viewDashboard)();
+  main.classList.remove("page-enter", "step-enter", "step-back");
+  if (motionChanged){
+    void main.offsetWidth;
+    main.classList.add(changed ? "page-enter" : "step-enter");
+    if (!changed && WZ.back) main.classList.add("step-back");
+  }
   if (BACKUP_ROUTES.includes(route)) main.insertAdjacentHTML("afterbegin", backupBanner());
   renderNav();
   closeNav();
